@@ -7,8 +7,10 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/apps/forms)
 
 set(APP_NAME math-crypto-app)
-set(APP_SOURCES math_crypto_app.cpp views/math_crypto.cpp views/math_crypto.h
-                forms/math_crypto.ui)
+set(APP_SOURCES
+    math_crypto_app.cpp views/math_crypto.cpp views/math_crypto.h
+    forms/math_crypto.ui controllers/cipher_controller.hpp
+    controllers/cipher_controller.cpp)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
   qt_add_executable(${APP_NAME} MANUAL_FINALIZATION ${APP_SOURCES})

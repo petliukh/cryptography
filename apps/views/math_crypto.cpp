@@ -9,7 +9,18 @@ math_crypto::~math_crypto() {
     delete ui;
 }
 
+// ===========================================================================
+//                             Meny Bar Slots
+// ===========================================================================
+
 void math_crypto::on_open_action_triggered() {
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::ExistingFile);
+    QString filename = dialog.getOpenFileName(this, "Open File");
+
+    m_controller.set_filename(filename.toStdString());
+    m_controller.read_file();
+    ui->initial_txt_edit->setPlainText(m_controller.get_filecontent().c_str());
 }
 
 void math_crypto::on_save_action_triggered() {
@@ -34,6 +45,10 @@ void math_crypto::on_about_action_triggered() {
 void math_crypto::on_exit_action_triggered() {
     QApplication::quit();
 }
+
+// ===========================================================================
+//                             Cipher Buttons Slots
+// ===========================================================================
 
 void math_crypto::on_encrypt_btn_clicked() {
 }

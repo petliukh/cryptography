@@ -1,23 +1,18 @@
 #pragma once
 
+#include "controllers/cipher_controller.hpp"
 #include "ui_math_crypto.h"
 
 #include <QFileDialog>
-#include <QMainWindow>
 #include <QMessageBox>
-#include <QTabWidget>
-#include <QTextStream>
-#include <QtPrintSupport/QPrintDialog>
-#include <QtPrintSupport/QPrinter>
-#include <qactiongroup.h>
-#include <qtextedit.h>
-#include <vector>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class math_crypto;
 }
 QT_END_NAMESPACE
+
+namespace ctrl = petliukh::controllers;
 
 class math_crypto : public QMainWindow {
     Q_OBJECT
@@ -61,5 +56,5 @@ private slots:
 
 private:
     Ui::math_crypto* ui;
-    QString current_file_name;
+    ctrl::cipher_controller m_controller;
 };
