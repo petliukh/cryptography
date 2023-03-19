@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.0)
 set(TEST_NAME math-crypto-tests)
 
 # Add all source files to the test executable target
-add_executable(${TEST_NAME} shift_cipher_tests.cpp)
+add_executable(${TEST_NAME} shift_cipher_tests.cpp cipher_base_tests.cpp)
 
 # Include the googletest directory and specify its binary directory
 add_subdirectory(${CMAKE_SOURCE_DIR}/external/googletest
