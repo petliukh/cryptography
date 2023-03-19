@@ -23,6 +23,8 @@ public:
 
     void read_file();
 
+    std::string get_filename() const;
+
     std::string get_filecontent() const;
 
     void set_filecontent(const std::string& content);

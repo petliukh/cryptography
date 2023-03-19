@@ -3,6 +3,9 @@
 math_crypto::math_crypto(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::math_crypto) {
     ui->setupUi(this);
+    ui->savefile_btn_group->setId(ui->initial_rbtn, 0);
+    ui->savefile_btn_group->setId(ui->encrypted_rbtn, 1);
+    ui->savefile_btn_group->setId(ui->decrypted_rbtn, 2);
 }
 
 math_crypto::~math_crypto() {
@@ -18,16 +21,28 @@ void math_crypto::on_open_action_triggered() {
     dialog.setFileMode(QFileDialog::ExistingFile);
     QString filename = dialog.getOpenFileName(this, "Open File");
 
+    if (filename.isEmpty()) {
+        QMessageBox::warning(this, "Warning", "No filename to open.");
+        return;
+    }
+
     m_controller.set_filename(filename.toStdString());
     m_controller.read_file();
-    ui->initial_txt_edit->setPlainText(m_controller.get_filecontent().c_str());
+
+    QPlainTextEdit* tedit = get_text_edit_to_save();
+    tedit->setPlainText(m_controller.get_filecontent().c_str());
 }
 
 void math_crypto::on_save_action_triggered() {
-    std::string content = ui->encrypted_txt_edit->toPlainText().toStdString();
+    QPlainTextEdit* tedit = get_text_edit_to_save();
+    std::string content = tedit->toPlainText().toStdString();
 
+    if (m_controller.get_filename().empty()) {
+        QMessageBox::warning(this, "Warning", "No filename to save.");
+        return;
+    }
     if (content.empty()) {
-        QMessageBox::warning(this, "Warning", "No encrypted text to save.");
+        QMessageBox::warning(this, "Warning", "No text to save.");
         return;
     }
 
@@ -39,12 +54,17 @@ void math_crypto::on_saveas_action_triggered() {
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::AnyFile);
     QString filename = dialog.getSaveFileName(this, "Save File As");
+    QPlainTextEdit* tedit = get_text_edit_to_save();
 
     std::string filename_str = filename.toStdString();
-    std::string content = ui->encrypted_txt_edit->toPlainText().toStdString();
+    std::string content = tedit->toPlainText().toStdString();
 
-    if (!content.empty()) {
-        QMessageBox::warning(this, "Warning", "No encrypted text to save.");
+    if (filename_str.empty()) {
+        QMessageBox::warning(this, "Warning", "No filename to save.");
+        return;
+    }
+    if (content.empty()) {
+        QMessageBox::warning(this, "Warning", "No text to save.");
         return;
     }
 
@@ -56,6 +76,8 @@ void math_crypto::on_saveas_action_triggered() {
 void math_crypto::on_create_new_action_triggered() {
     ui->initial_txt_edit->clear();
     ui->encrypted_txt_edit->clear();
+    ui->decrypted_txt_edit->clear();
+
     ui->lang_cbox->setCurrentIndex(0);
     ui->cipher_cbox->setCurrentIndex(0);
     ui->bytes_cbox->setChecked(false);

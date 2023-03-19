@@ -27,6 +27,10 @@ void cipher_controller::set_lang(const std::string& lang) {
     m_ciphers[m_curr_idx]->set_lang(u16lang);
 }
 
+std::string cipher_controller::get_filename() const {
+    return m_filename;
+}
+
 void cipher_controller::set_filename(const std::string& filename) {
     m_filename = filename;
 }
