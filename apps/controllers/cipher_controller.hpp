@@ -11,7 +11,7 @@ class cipher_controller {
 public:
     cipher_controller();
 
-    // Setters
+    // Misc
 
     void set_cipher(int idx);
 
@@ -21,11 +21,13 @@ public:
 
     void set_filename(const std::string& filename);
 
-    // File methods
-
     void read_file();
 
     std::string get_filecontent() const;
+
+    void set_filecontent(const std::string& content);
+
+    void save_file();
 
     // Cipher methods
 

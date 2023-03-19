@@ -24,15 +24,51 @@ void math_crypto::on_open_action_triggered() {
 }
 
 void math_crypto::on_save_action_triggered() {
+    std::string content = ui->encrypted_txt_edit->toPlainText().toStdString();
+
+    if (content.empty()) {
+        QMessageBox::warning(this, "Warning", "No encrypted text to save.");
+        return;
+    }
+
+    m_controller.set_filecontent(content);
+    m_controller.save_file();
 }
 
 void math_crypto::on_saveas_action_triggered() {
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::AnyFile);
+    QString filename = dialog.getSaveFileName(this, "Save File As");
+
+    std::string filename_str = filename.toStdString();
+    std::string content = ui->encrypted_txt_edit->toPlainText().toStdString();
+
+    if (!content.empty()) {
+        QMessageBox::warning(this, "Warning", "No encrypted text to save.");
+        return;
+    }
+
+    m_controller.set_filename(filename_str);
+    m_controller.set_filecontent(content);
+    m_controller.save_file();
 }
 
 void math_crypto::on_create_new_action_triggered() {
+    ui->initial_txt_edit->clear();
+    ui->encrypted_txt_edit->clear();
+    ui->lang_cbox->setCurrentIndex(0);
+    ui->cipher_cbox->setCurrentIndex(0);
+    ui->bytes_cbox->setChecked(false);
+    ui->cipher_specific_ops_stacked_widget->setCurrentIndex(0);
+
+    m_controller.set_filename("");
+    m_controller.set_filecontent("");
+    m_controller.set_lang("EN");
+    m_controller.set_cipher(0);
 }
 
 void math_crypto::on_print_action_triggered() {
+    QMessageBox::warning(this, "Warning", "Not implemented yet.");
 }
 
 void math_crypto::on_about_action_triggered() {

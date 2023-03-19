@@ -10,7 +10,7 @@ cipher_controller::cipher_controller() {
 }
 
 // ===========================================================================
-//                             Setters
+//                             Misc
 // ===========================================================================
 
 void cipher_controller::set_cipher(int idx) {
@@ -31,9 +31,9 @@ void cipher_controller::set_filename(const std::string& filename) {
     m_filename = filename;
 }
 
-// ===========================================================================
-//                             File methods
-// ===========================================================================
+void cipher_controller::set_filecontent(const std::string& content) {
+    m_filecontent = content;
+}
 
 void cipher_controller::read_file() {
     std::ifstream file(m_filename);
@@ -45,6 +45,11 @@ void cipher_controller::read_file() {
 
 std::string cipher_controller::get_filecontent() const {
     return m_filecontent;
+}
+
+void cipher_controller::save_file() {
+    std::ofstream file(m_filename, std::ios::trunc | std::ios::binary);
+    file << m_filecontent;
 }
 
 // ===========================================================================

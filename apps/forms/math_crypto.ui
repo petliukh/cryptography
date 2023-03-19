@@ -130,6 +130,9 @@
           <item>
            <widget class="QPlainTextEdit" name="encrypted_txt_edit"/>
           </item>
+          <item>
+           <widget class="QPlainTextEdit" name="decrypted_txt_edit"/>
+          </item>
          </layout>
         </item>
        </layout>
