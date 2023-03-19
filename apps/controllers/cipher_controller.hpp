@@ -19,9 +19,11 @@ public:
 
     void set_lang(const std::string& lang);
 
+    std::string get_lang() const;
+
     void set_filename(const std::string& filename);
 
-    void read_file();
+    void read_file(std::ios_base::openmode mode = std::ios_base::in);
 
     std::string get_filename() const;
 
@@ -46,6 +48,7 @@ private:
     int m_curr_idx;
     std::string m_filename;
     std::string m_filecontent;
+    std::string m_lang;
 };
 
 }  // namespace petliukh::controllers

@@ -23,8 +23,13 @@ void cipher_controller::set_key(const std::string& key) {
 }
 
 void cipher_controller::set_lang(const std::string& lang) {
+    m_lang = lang;
     std::u16string u16lang = cr::utf8_to_utf16(lang);
     m_ciphers[m_curr_idx]->set_lang(u16lang);
+}
+
+std::string cipher_controller::get_lang() const {
+    return m_lang;
 }
 
 std::string cipher_controller::get_filename() const {
@@ -39,8 +44,8 @@ void cipher_controller::set_filecontent(const std::string& content) {
     m_filecontent = content;
 }
 
-void cipher_controller::read_file() {
-    std::ifstream file(m_filename);
+void cipher_controller::read_file(std::ios_base::openmode mode) {
+    std::ifstream file(m_filename, mode);
     std::string content(
             (std::istreambuf_iterator<char>(file)),
             (std::istreambuf_iterator<char>()));

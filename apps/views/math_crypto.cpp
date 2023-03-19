@@ -110,7 +110,6 @@ void math_crypto::on_exit_action_triggered() {
 
 QPlainTextEdit* math_crypto::get_text_edit_to_save() {
     int idx = ui->savefile_btn_group->checkedId();
-
     switch (idx) {
     case 0:
         return ui->initial_txt_edit;
@@ -128,15 +127,37 @@ QPlainTextEdit* math_crypto::get_text_edit_to_save() {
 // ===========================================================================
 
 void math_crypto::on_encrypt_btn_clicked() {
+    std::string cont = ui->initial_txt_edit->toPlainText().toStdString();
+    if (cont.empty()) {
+        QMessageBox::warning(this, "Warning", "No message/bytes to encrypt.");
+        return;
+    }
+
+    std::string encr_cont;
+    if (ui->bytes_cbox->isChecked()) {
+        encr_cont = m_controller.encrypt_raw_bytes(cont);
+    } else {
+        encr_cont = m_controller.encrypt(cont);
+    }
+
+    ui->encrypted_txt_edit->setPlainText(encr_cont.c_str());
 }
 
 void math_crypto::on_decrypt_btn_clicked() {
-}
+    std::string cont = ui->encrypted_txt_edit->toPlainText().toStdString();
+    if (cont.empty()) {
+        QMessageBox::warning(this, "Warning", "No message/bytes to decrypt.");
+        return;
+    }
 
-void math_crypto::on_ecnrypt_fbytes_btn_clicked() {
-}
+    std::string decr_cont;
+    if (ui->bytes_cbox->isChecked()) {
+        decr_cont = m_controller.decrypt_raw_bytes(cont);
+    } else {
+        decr_cont = m_controller.decrypt(cont);
+    }
 
-void math_crypto::on_decrypt_fbytes_btn_clicked() {
+    ui->decrypted_txt_edit->setPlainText(decr_cont.c_str());
 }
 
 void math_crypto::on_bruteforce_btn_clicked() {
@@ -151,4 +172,8 @@ void math_crypto::on_cipher_cbox_currentIndexChanged(int index) {
 
 void math_crypto::on_bytes_cbox_stateChanged(int arg1) {
     ui->lang_cbox->setEnabled(arg1 == Qt::Unchecked);
+}
+
+void math_crypto::on_lang_cbox_currentIndexChanged(const QString& arg1) {
+    m_controller.set_lang(arg1.toStdString());
 }
