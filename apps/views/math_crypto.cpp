@@ -83,6 +83,25 @@ void math_crypto::on_exit_action_triggered() {
 }
 
 // ===========================================================================
+//                             Getters
+// ===========================================================================
+
+QPlainTextEdit* math_crypto::get_text_edit_to_save() {
+    int idx = ui->savefile_btn_group->checkedId();
+
+    switch (idx) {
+    case 0:
+        return ui->initial_txt_edit;
+    case 1:
+        return ui->encrypted_txt_edit;
+    case 2:
+        return ui->decrypted_txt_edit;
+    default:
+        return nullptr;
+    }
+}
+
+// ===========================================================================
 //                             Cipher Buttons Slots
 // ===========================================================================
 

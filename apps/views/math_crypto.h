@@ -37,6 +37,10 @@ private slots:
 
     void on_about_action_triggered();
 
+    // Getters
+
+    QPlainTextEdit* get_text_edit_to_save();
+
     // Cipher operations
     void on_encrypt_btn_clicked();
 

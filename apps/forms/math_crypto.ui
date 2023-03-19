@@ -125,13 +125,58 @@
         <item row="1" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QPlainTextEdit" name="initial_txt_edit"/>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <widget class="QRadioButton" name="initial_rbtn">
+              <property name="text">
+               <string>Initial</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">savefile_btn_group</string>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="initial_txt_edit"/>
+            </item>
+           </layout>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="encrypted_txt_edit"/>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <widget class="QRadioButton" name="encrypted_rbtn">
+              <property name="text">
+               <string>Encrypted</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">savefile_btn_group</string>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="encrypted_txt_edit"/>
+            </item>
+           </layout>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="decrypted_txt_edit"/>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <item>
+             <widget class="QRadioButton" name="decrypted_rbtn">
+              <property name="text">
+               <string>Decrypted</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">savefile_btn_group</string>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="decrypted_txt_edit"/>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
@@ -350,4 +395,7 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="savefile_btn_group"/>
+ </buttongroups>
 </ui>
