@@ -37,7 +37,7 @@ public:
     virtual void set_lang(const language& lang) = 0;
 };
 
-std::unordered_map<std::u16string, int>
+std::unordered_map<char16_t, int>
 get_message_freqs(const std::u16string& message, const language& lang);
 
 bool validate_message(const std::u16string& message, const language& lang);
