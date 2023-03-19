@@ -1,5 +1,8 @@
 #pragma once
 #include <codecvt>
+#include <cstdio>
+#include <fstream>
+#include <iostream>
 #include <locale>
 #include <openssl/sha.h>
 #include <stdexcept>
