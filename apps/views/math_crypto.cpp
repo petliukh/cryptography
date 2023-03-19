@@ -168,6 +168,7 @@ void math_crypto::on_print_freq_clicked() {
 
 void math_crypto::on_cipher_cbox_currentIndexChanged(int index) {
     ui->cipher_specific_ops_stacked_widget->setCurrentIndex(index);
+    m_controller.set_cipher(index);
 }
 
 void math_crypto::on_bytes_cbox_stateChanged(int arg1) {

@@ -45,7 +45,7 @@ public:
 
 private:
     std::array<std::unique_ptr<cr::cipher>, 2> m_ciphers;
-    int m_curr_idx;
+    int m_curr_idx{};
     std::string m_filename;
     std::string m_filecontent;
     std::string m_lang;
