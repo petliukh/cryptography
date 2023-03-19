@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 namespace cr = petliukh::cryptography;
+namespace fs = std::filesystem;
 
 TEST(shift_cipher_test, sets_key_correctly) {
     cr::shift_cipher cipher;
@@ -75,7 +76,7 @@ TEST(shift_cipher_test, encrypts_decrypts_raw_bytes_correctly) {
 
     EXPECT_EQ(checksum1, checksum2);
 
-    remove(tmp_fname.c_str());
+    fs::remove(tmp_fname);
 }
 
 TEST(shift_cipher_test, bruteforce_breaks_cipher_en) {
