@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>949</width>
-    <height>602</height>
+    <width>1182</width>
+    <height>774</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -17,181 +17,238 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Shift Cipher</string>
+   <string>Math Cryptography</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <layout class="QHBoxLayout" name="key_hlayout" stretch="0,0,0">
-      <property name="spacing">
-       <number>6</number>
-      </property>
-      <property name="sizeConstraint">
-       <enum>QLayout::SetDefaultConstraint</enum>
-      </property>
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
-       <widget class="QLabel" name="key_label">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>200</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
+       <widget class="QLabel" name="cipher_lbl">
         <property name="text">
-         <string>Key:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-        </property>
-        <property name="indent">
-         <number>0</number>
+         <string>Cipher Method:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QSpinBox" name="key_spinbox">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>200</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="value">
-         <number>3</number>
-        </property>
+       <widget class="QComboBox" name="cipher_cbox">
+        <item>
+         <property name="text">
+          <string>Shift Cipher</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Tritemius Cipher</string>
+         </property>
+        </item>
        </widget>
-      </item>
-      <item>
-       <spacer name="key_hspacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </item>
-    <item>
-     <widget class="QTabWidget" name="tab_widget">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>120</height>
-       </size>
-      </property>
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="key_lbl">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Cipher Key:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="key_ln_edit"/>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="0">
+     <widget class="QTabWidget" name="encryption_tabs">
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="plaintext_tab">
+      <widget class="QWidget" name="encrypt_tab">
        <attribute name="title">
-        <string>Plaintext</string>
+        <string>Encryption</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QLabel" name="lang_label">
-          <property name="text">
-           <string>Language:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="lang_cbox">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <property name="text">
-            <string>EN</string>
-           </property>
+           <widget class="QPushButton" name="encrypt_btn">
+            <property name="text">
+             <string>Encrypt</string>
+            </property>
+           </widget>
           </item>
           <item>
-           <property name="text">
-            <string>UKR</string>
-           </property>
+           <widget class="QPushButton" name="decrypt_btn">
+            <property name="text">
+             <string>Decrypt</string>
+            </property>
+           </widget>
           </item>
-         </widget>
+          <item>
+           <widget class="QCheckBox" name="bytes_cbox">
+            <property name="text">
+             <string>Raw Bytes</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Language:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="lang_cbox">
+            <item>
+             <property name="text">
+              <string>EN</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>UKR</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
         </item>
-        <item>
-         <widget class="QPushButton" name="encrypt_btn">
-          <property name="text">
-           <string>Encrypt</string>
-          </property>
-         </widget>
+        <item row="1" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPlainTextEdit" name="initial_txt_edit"/>
+          </item>
+          <item>
+           <widget class="QPlainTextEdit" name="encrypted_txt_edit"/>
+          </item>
+         </layout>
         </item>
-        <item>
-         <widget class="QPushButton" name="decrypt_btn">
-          <property name="toolTip">
-           <string/>
-          </property>
-          <property name="text">
-           <string>Decrypt</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="bruteforce_btn">
-          <property name="text">
-           <string>Brute Force</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="print_freq">
-          <property name="text">
-           <string>Print Frequency Table</string>
-          </property>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="freq_table_tab">
+       <attribute name="title">
+        <string>Frequency Table</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QTableWidget" name="freq_table_widget">
+          <column>
+           <property name="text">
+            <string>Character</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Frequency</string>
+           </property>
+          </column>
          </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="filebytes_tab">
+      <widget class="QWidget" name="cipher_spec_ops_tab">
        <attribute name="title">
-        <string>Filebytes</string>
+        <string>Cipher Specific Operations</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QPushButton" name="ecnrypt_fbytes_btn">
-          <property name="text">
-           <string>Encrypt Bytes</string>
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="0" column="0">
+         <widget class="QStackedWidget" name="cipher_specific_ops_stacked_widget">
+          <property name="currentIndex">
+           <number>0</number>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="decrypt_fbytes_btn">
-          <property name="text">
-           <string>Decrypt Bytes</string>
-          </property>
+          <widget class="QWidget" name="ceasar_page">
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0">
+             <widget class="QPushButton" name="brute_force_btn">
+              <property name="text">
+               <string>Brute Force</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QTextEdit" name="brute_force_txt_edit"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tritemius_page">
+           <layout class="QGridLayout" name="gridLayout_5">
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_2">
+                  <item>
+                   <widget class="QPushButton" name="load_freq_tables_btn">
+                    <property name="text">
+                     <string>Load Freq Tables</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QTableWidget" name="loaded_freq_table"/>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout">
+                  <item>
+                   <widget class="QPushButton" name="load_msg_pair">
+                    <property name="text">
+                     <string>Load Message Pair</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QTextEdit" name="loaded_msg_pair_txt_edit"/>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_3">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_5">
+                  <item>
+                   <widget class="QPushButton" name="freq_table_attack_btn">
+                    <property name="text">
+                     <string>Attack Using Freq Table</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="msg_pair_attack_btn">
+                    <property name="text">
+                     <string>Attack Using Message Pair(Decrypted - Encrypted)</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QTextEdit" name="broken_msg_txt_edit"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
       </widget>
      </widget>
-    </item>
-    <item>
-     <widget class="QPlainTextEdit" name="ptext_text_edit_t1"/>
     </item>
    </layout>
   </widget>
@@ -201,7 +258,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>949</width>
+     <width>1182</width>
      <height>24</height>
     </rect>
    </property>

@@ -1,125 +1,99 @@
 #include "shift_cipher.hpp"
 
-#include <fstream>
-#include <stdexcept>
-
-using std::ifstream, std::ofstream, std::ios;
-using std::string, std::u16string;
-using std::unordered_map;
-using std::vector;
-
 namespace petliukh::cryptography {
 
-const u16string shift_cipher::special_chars = u" ,.?!:;()[]{}-_=+*/\\\"\'\n";
-const unordered_map<u16string, language> shift_cipher::languages = {
-    { u"EN",
-      { u"EN", u"English",
-        u"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" } },
-    { u"UKR",
-      { u"UKR", u"Ukrainian",
-        u"абвгґдеєжзиіїйклмнопрстуфхцчшщьюяАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮ"
-        u"Я" } }
-};
-
-shift_cipher::shift_cipher()
-    : m_lang(languages.at(u"EN")), m_max_msg_length(1000) {
+shift_cipher::shift_cipher() : m_key(0), m_lang(languages.at(u"EN")) {
 }
 
-shift_cipher::shift_cipher(language lang, int max_text_length)
-    : m_lang(lang), m_max_msg_length(max_text_length) {
+std::u16string shift_cipher::encrypt(const std::u16string& message) {
+    return encrypt_(message, m_key);
 }
 
-shift_cipher::shift_cipher(u16string lang, int max_data_size)
-    : m_lang(languages.at(lang)), m_max_msg_length(max_data_size) {
+std::u16string shift_cipher::decrypt(const std::u16string& message) {
+    return decrypt_(message, m_key);
 }
 
-u16string
-shift_cipher::encrypt_text(const u16string& plaintext, int key) const {
-    validate_key(key);
-    validate_message(plaintext);
-    u16string ciphertext;
-    for (char16_t c : plaintext) {
-        int pos = m_lang.alphabet.find(c);
-        if (pos != u16string::npos) {
-            pos = (pos + key) % m_lang.alphabet.size();
-            ciphertext += m_lang.alphabet[pos];
-        } else {
-            ciphertext += c;
-        }
+std::string shift_cipher::encrypt_raw_bytes(const std::string& bytes) {
+    return encrypt_raw_bytes_(bytes, m_key);
+}
+
+std::string shift_cipher::decrypt_raw_bytes(const std::string& bytes) {
+    return decrypt_raw_bytes_(bytes, m_key);
+}
+
+void shift_cipher::set_key(const std::u16string& key) {
+    std::string key_str = utf16_to_utf8(key);
+    int ikey = std::stoi(key_str);
+
+    if (ikey < 0 || ikey >= m_lang.alphabet.size()) {
+        throw std::invalid_argument("Invalid key");
     }
-    return ciphertext;
+
+    m_key = ikey;
 }
 
-u16string
-shift_cipher::decrypt_text(const u16string& ciphertext, int key) const {
-    return encrypt_text(ciphertext, m_lang.alphabet.size() - key);
+void shift_cipher::set_key(int key) {
+    if (key < 0 || key >= m_lang.alphabet.size()) {
+        throw std::invalid_argument("Invalid key");
+    }
+
+    m_key = key;
 }
 
-vector<message> shift_cipher::brute_force(const u16string& ciphertext) const {
-    vector<message> messages;
+void shift_cipher::set_lang(const std::u16string& lang) {
+    m_lang = languages.at(lang);
+}
+
+void shift_cipher::set_lang(const language& lang) {
+    m_lang = lang;
+}
+
+std::unordered_map<int, std::u16string>
+shift_cipher::brute_force(const std::u16string& message) {
+    std::unordered_map<int, std::u16string> messages;
     messages.reserve(m_lang.alphabet.size());
+
     for (int key = 0; key < m_lang.alphabet.size(); key++) {
-        messages.push_back({ decrypt_text(ciphertext, key), key });
+        std::u16string decrypted_msg = decrypt_(message, key);
+        messages[key] = decrypted_msg;
     }
+
     return messages;
 }
 
-void shift_cipher::encrypt_file(
-        const string& input_file, int key, const string& output_file) const {
-    string output_file_name
-            = output_file.empty() ? input_file + ".tmp" : output_file;
-    ifstream ifs(input_file, ios::binary);
-    ofstream ofs(output_file_name, ios::binary);
-    char c;
-
-    while (ifs.get(c)) {
-        c = (c + key) % 256;
-        ofs.put(c);
-    }
-
-    ifs.close();
-    ofs.close();
-
-    if (output_file.empty())
-        rename(output_file_name.c_str(), input_file.c_str());
-}
-
-void shift_cipher::decrypt_file(
-        const string& input_file, int key, const string& output_file) const {
-    encrypt_file(input_file, 256 - key, output_file);
-}
-
-void shift_cipher::validate_key(int key) const {
-    if (key < 0 || key > m_lang.alphabet.size())
-        throw std::invalid_argument(
-                "Invalid key: key is out of range of the "
-                "alphabet");
-}
-
-void shift_cipher::validate_message(const u16string& message) const {
-    int i = 0;
+std::u16string shift_cipher::encrypt_(const std::u16string& message, int key) {
+    std::u16string output;
     for (char16_t c : message) {
-        if (m_lang.alphabet.find(c) == u16string::npos
-            && special_chars.find(c) == u16string::npos) {
-            throw std::invalid_argument(
-                    "Can't encrypt the message as it contains "
-                    "characters that are not in the alphabet");
+        int pos = m_lang.alphabet.find(c);
+        if (pos != std::u16string::npos) {
+            pos = (pos + key) % m_lang.alphabet.size();
+            output += m_lang.alphabet[pos];
+        } else {
+            output += c;
         }
-        i++;
     }
+    return output;
 }
 
-unordered_map<char16_t, int>
-shift_cipher::get_frequency(const u16string& text) const {
-    unordered_map<char16_t, int> char_frequency;
-    for (char16_t c : text) {
-        if (char_frequency.find(c) == char_frequency.end()) {
-            char_frequency[c] = 1;
-        } else {
-            char_frequency[c]++;
-        }
+std::u16string shift_cipher::decrypt_(const std::u16string& message, int key) {
+    return encrypt_(message, m_lang.alphabet.size() - key);
+}
+
+std::string
+shift_cipher::encrypt_raw_bytes_(const std::string& bytes, int key) {
+    std::string output;
+    output.reserve(bytes.size());
+
+    for (char c : bytes) {
+        output += (c + key) % 256;
     }
-    return char_frequency;
+
+    return output;
+}
+
+std::string
+shift_cipher::decrypt_raw_bytes_(const std::string& bytes, int key) {
+    return encrypt_raw_bytes_(bytes, 256 - key);
 }
 
 }  // namespace petliukh::cryptography

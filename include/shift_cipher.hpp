@@ -1,58 +1,42 @@
 #pragma once
-
-#include <string>
-#include <unordered_map>
-#include <vector>
+#include "cipher_base.hpp"
 
 namespace petliukh::cryptography {
 
-struct language {
-    std::u16string code;
-    std::u16string name;
-    std::u16string alphabet;
-};
-
-struct message {
-    std::u16string text;
-    int key;
-};
-
-class shift_cipher {
+class shift_cipher : public cipher {
 public:
-    static const std::u16string special_chars;
-
-    static const std::unordered_map<std::u16string, language> languages;
-
     shift_cipher();
 
-    shift_cipher(language lang, int max_data_size = 1000);
+    virtual std::u16string encrypt(const std::u16string& message) override;
 
-    shift_cipher(std::u16string lang, int max_data_size = 1000);
+    virtual std::u16string decrypt(const std::u16string& message) override;
 
-    std::u16string encrypt_text(const std::u16string& plaintext, int key) const;
+    virtual std::string encrypt_raw_bytes(const std::string& bytes) override;
 
-    void encrypt_file(
-            const std::string& input_file, int key,
-            const std::string& output_file = "") const;
+    virtual std::string decrypt_raw_bytes(const std::string& bytes) override;
 
-    std::u16string
-    decrypt_text(const std::u16string& ciphertext, int key) const;
+    virtual void set_key(const std::u16string& key) override;
 
-    void decrypt_file(
-            const std::string& input_file, int key,
-            const std::string& output_file = "") const;
+    void set_key(int key);
 
-    std::vector<message> brute_force(const std::u16string& ciphertext) const;
+    virtual void set_lang(const std::u16string& lang) override;
 
-    void validate_key(int key) const;
+    virtual void set_lang(const language& lang) override;
 
-    void validate_message(const std::u16string& message) const;
-
-    std::unordered_map<char16_t, int>
-    get_frequency(const std::u16string& text) const;
+    std::unordered_map<int, std::u16string>
+    brute_force(const std::u16string& message);
 
 private:
+    std::u16string encrypt_(const std::u16string& message, int key);
+
+    std::u16string decrypt_(const std::u16string& message, int key);
+
+    std::string encrypt_raw_bytes_(const std::string& bytes, int key);
+
+    std::string decrypt_raw_bytes_(const std::string& bytes, int key);
+
+    int m_key;
     language m_lang;
-    int m_max_msg_length;
 };
+
 }  // namespace petliukh::cryptography

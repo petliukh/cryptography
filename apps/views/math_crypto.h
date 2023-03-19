@@ -27,8 +27,7 @@ public:
     ~math_crypto();
 
 private slots:
-    void read_file(const QString& file_name);
-
+    // File operations
     void on_open_action_triggered();
 
     void on_save_action_triggered();
@@ -39,10 +38,11 @@ private slots:
 
     void on_print_action_triggered();
 
-    void on_about_action_triggered();
-
     void on_exit_action_triggered();
 
+    void on_about_action_triggered();
+
+    // Cipher operations
     void on_encrypt_btn_clicked();
 
     void on_decrypt_btn_clicked();
@@ -54,6 +54,10 @@ private slots:
     void on_bruteforce_btn_clicked();
 
     void on_print_freq_clicked();
+
+    void on_cipher_cbox_currentIndexChanged(int index);
+
+    void on_bytes_cbox_stateChanged(int arg1);
 
 private:
     Ui::math_crypto* ui;
