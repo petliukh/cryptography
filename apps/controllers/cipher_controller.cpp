@@ -18,8 +18,13 @@ void cipher_controller::set_cipher(int idx) {
 }
 
 void cipher_controller::set_key(const std::string& key) {
+    m_key = key;
     std::u16string u16key = cr::utf8_to_utf16(key);
     m_ciphers[m_curr_idx]->set_key(u16key);
+}
+
+std::string cipher_controller::get_key() const {
+    return m_key;
 }
 
 void cipher_controller::set_lang(const std::string& lang) {

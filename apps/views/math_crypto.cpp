@@ -27,6 +27,7 @@ void math_crypto::on_open_action_triggered() {
     }
 
     m_controller.set_filename(filename.toStdString());
+    ui->centralwidget->setWindowTitle("Math Crypto - " + filename);
     m_controller.read_file();
 
     QPlainTextEdit* tedit = get_text_edit_to_save();
@@ -69,6 +70,7 @@ void math_crypto::on_saveas_action_triggered() {
     }
 
     m_controller.set_filename(filename_str);
+    ui->centralwidget->setWindowTitle("Math Crypto - " + filename);
     m_controller.set_filecontent(content);
     m_controller.save_file();
 }
@@ -77,6 +79,7 @@ void math_crypto::on_create_new_action_triggered() {
     ui->initial_txt_edit->clear();
     ui->encrypted_txt_edit->clear();
     ui->decrypted_txt_edit->clear();
+    ui->key_ln_edit->clear();
 
     ui->lang_cbox->setCurrentIndex(0);
     ui->cipher_cbox->setCurrentIndex(0);
@@ -84,6 +87,7 @@ void math_crypto::on_create_new_action_triggered() {
     ui->cipher_specific_ops_stacked_widget->setCurrentIndex(0);
 
     m_controller.set_filename("");
+    ui->centralwidget->setWindowTitle("Math Crypto");
     m_controller.set_filecontent("");
     m_controller.set_lang("EN");
     m_controller.set_cipher(0);
@@ -128,8 +132,21 @@ QPlainTextEdit* math_crypto::get_text_edit_to_save() {
 
 void math_crypto::on_encrypt_btn_clicked() {
     std::string cont = ui->initial_txt_edit->toPlainText().toStdString();
+    std::string key = ui->key_ln_edit->text().toStdString();
+
     if (cont.empty()) {
         QMessageBox::warning(this, "Warning", "No message/bytes to encrypt.");
+        return;
+    }
+    if (key.empty()) {
+        QMessageBox::warning(this, "Warning", "No key to encrypt.");
+        return;
+    }
+
+    try {
+        m_controller.set_key(key);
+    } catch (const std::exception& e) {
+        QMessageBox::warning(this, "Warning", e.what());
         return;
     }
 
@@ -145,8 +162,21 @@ void math_crypto::on_encrypt_btn_clicked() {
 
 void math_crypto::on_decrypt_btn_clicked() {
     std::string cont = ui->encrypted_txt_edit->toPlainText().toStdString();
+    std::string key = ui->key_ln_edit->text().toStdString();
+
     if (cont.empty()) {
         QMessageBox::warning(this, "Warning", "No message/bytes to decrypt.");
+        return;
+    }
+    if (key.empty()) {
+        QMessageBox::warning(this, "Warning", "No key to decrypt.");
+        return;
+    }
+
+    try {
+        m_controller.set_key(key);
+    } catch (const std::exception& e) {
+        QMessageBox::warning(this, "Warning", e.what());
         return;
     }
 

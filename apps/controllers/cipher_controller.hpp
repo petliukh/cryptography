@@ -17,6 +17,8 @@ public:
 
     void set_key(const std::string& key);
 
+    std::string get_key() const;
+
     void set_lang(const std::string& lang);
 
     std::string get_lang() const;
@@ -46,6 +48,7 @@ public:
 private:
     std::array<std::unique_ptr<cr::cipher>, 2> m_ciphers;
     int m_curr_idx{};
+    std::string m_key;
     std::string m_filename;
     std::string m_filecontent;
     std::string m_lang;
