@@ -70,3 +70,28 @@ TEST(shift_cipher_test, encrypts_decrypts_raw_bytes_correctly) {
 
     remove(tmp_fname.c_str());
 }
+
+TEST(shift_cipher_test, bruteforce_breaks_cipher_en) {
+    int key = 6;
+    std::u16string message = u"Hello, world!";
+
+    cr::shift_cipher cipher;
+    cipher.set_lang(u"EN");
+    cipher.set_key(key);
+
+    std::string checksum1 = cr::sha256(message);
+
+    std::u16string encrypted = cipher.encrypt(message);
+    auto messages = cipher.brute_force(encrypted);
+
+    ASSERT_FALSE(messages.empty());
+
+    auto is_decr = [&](const auto& pair) {
+        std::string checksum2 = cr::sha256(pair.second);
+        return checksum1 == checksum2 && pair.first == key;
+    };
+
+    auto decr_msg = std::find_if(messages.begin(), messages.end(), is_decr);
+
+    EXPECT_NE(decr_msg, messages.end());
+}

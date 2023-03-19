@@ -23,6 +23,8 @@ public:
 
     virtual void set_lang(const language& lang) override;
 
+    int get_key() const;
+
     std::unordered_map<int, std::u16string>
     brute_force(const std::u16string& message);
 

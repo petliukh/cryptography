@@ -48,6 +48,10 @@ void shift_cipher::set_lang(const language& lang) {
     m_lang = lang;
 }
 
+int shift_cipher::get_key() const {
+    return m_key;
+}
+
 std::unordered_map<int, std::u16string>
 shift_cipher::brute_force(const std::u16string& message) {
     std::unordered_map<int, std::u16string> messages;
