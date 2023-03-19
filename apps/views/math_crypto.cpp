@@ -27,11 +27,11 @@ void math_crypto::on_open_action_triggered() {
     }
 
     m_controller.set_filename(filename.toStdString());
-    ui->centralwidget->setWindowTitle("Math Crypto - " + filename);
+    this->setWindowTitle("Math Crypto - " + filename);
     m_controller.read_file();
 
     QPlainTextEdit* tedit = get_text_edit_to_save();
-    tedit->setPlainText(m_controller.get_filecontent().c_str());
+    tedit->setPlainText(QString::fromStdString(m_controller.get_filecontent()));
 }
 
 void math_crypto::on_save_action_triggered() {
@@ -70,7 +70,7 @@ void math_crypto::on_saveas_action_triggered() {
     }
 
     m_controller.set_filename(filename_str);
-    ui->centralwidget->setWindowTitle("Math Crypto - " + filename);
+    this->setWindowTitle("Math Crypto - " + filename);
     m_controller.set_filecontent(content);
     m_controller.save_file();
 }
@@ -87,7 +87,7 @@ void math_crypto::on_create_new_action_triggered() {
     ui->cipher_specific_ops_stacked_widget->setCurrentIndex(0);
 
     m_controller.set_filename("");
-    ui->centralwidget->setWindowTitle("Math Crypto");
+    this->setWindowTitle("Math Crypto");
     m_controller.set_filecontent("");
     m_controller.set_lang("EN");
     m_controller.set_cipher(0);
@@ -131,7 +131,8 @@ QPlainTextEdit* math_crypto::get_text_edit_to_save() {
 // ===========================================================================
 
 void math_crypto::on_encrypt_btn_clicked() {
-    std::string cont = ui->initial_txt_edit->toPlainText().toStdString();
+    QByteArray qcont = ui->initial_txt_edit->toPlainText().toUtf8();
+    std::string cont = qcont.toStdString();
     std::string key = ui->key_ln_edit->text().toStdString();
 
     if (cont.empty()) {
@@ -157,11 +158,12 @@ void math_crypto::on_encrypt_btn_clicked() {
         encr_cont = m_controller.encrypt(cont);
     }
 
-    ui->encrypted_txt_edit->setPlainText(encr_cont.c_str());
+    ui->encrypted_txt_edit->setPlainText(QString::fromStdString(encr_cont));
 }
 
 void math_crypto::on_decrypt_btn_clicked() {
-    std::string cont = ui->encrypted_txt_edit->toPlainText().toStdString();
+    QByteArray qcont = ui->encrypted_txt_edit->toPlainText().toUtf8();
+    std::string cont = qcont.toStdString();
     std::string key = ui->key_ln_edit->text().toStdString();
 
     if (cont.empty()) {
@@ -187,7 +189,7 @@ void math_crypto::on_decrypt_btn_clicked() {
         decr_cont = m_controller.decrypt(cont);
     }
 
-    ui->decrypted_txt_edit->setPlainText(decr_cont.c_str());
+    ui->decrypted_txt_edit->setPlainText(QString::fromStdString(decr_cont));
 }
 
 void math_crypto::on_bruteforce_btn_clicked() {

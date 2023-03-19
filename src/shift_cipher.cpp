@@ -89,7 +89,8 @@ shift_cipher::encrypt_raw_bytes_(const std::string& bytes, int key) {
     output.reserve(bytes.size());
 
     for (char c : bytes) {
-        output += (c + key) % 256;
+        output += static_cast<char>(
+                (static_cast<unsigned char>(c) + key) % 256);
     }
 
     return output;
