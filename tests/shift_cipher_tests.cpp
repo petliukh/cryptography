@@ -4,6 +4,13 @@
 
 namespace cr = petliukh::cryptography;
 
+TEST(shift_cipher_test, sets_key_correctly) {
+    cr::shift_cipher cipher;
+    cipher.set_key(u"6");
+
+    EXPECT_EQ(cipher.get_key(), 6);
+}
+
 TEST(shift_cipher_test, encrypts_decrypts_correctly_en) {
     cr::shift_cipher cipher;
     cipher.set_key(6);
