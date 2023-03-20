@@ -41,8 +41,6 @@ private slots:
 
     QPlainTextEdit* get_text_edit_to_save() const;
 
-    std::string get_bytes_to_save() const;
-
     // Cipher operations
     void on_encrypt_btn_clicked();
 

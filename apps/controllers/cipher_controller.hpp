@@ -11,43 +11,38 @@ class cipher_controller {
 public:
     cipher_controller();
 
-    // Misc
-
-    void set_cipher(int idx);
-
-    void set_key(const std::string& key);
+    // Getters
+    std::string get_filename() const;
 
     std::string get_key() const;
 
-    void set_lang(const std::string& lang);
-
     std::string get_lang() const;
+
+    std::string get_content(int index) const;
+
+    int get_curr_state() const;
+
+    // Setters
+    void set_cipher_index(int idx);
+
+    void set_key(const std::string& key);
+
+    void set_lang(const std::string& lang);
 
     void set_filename(const std::string& filename);
 
-    void read_file(
-            std::ios_base::openmode mode
-            = std::ios_base::in | std::ios::binary);
+    void set_content(int index, const std::string& content);
 
-    std::string get_filename() const;
+    void set_curr_state(int index);
 
-    std::string get_filecontent() const;
+    // Misc
+    std::string read_file();
 
-    std::string get_filecontent_enc() const;
+    void save_file(int content_index);
 
-    std::string get_filecontent_dec() const;
+    void save_file(const std::string& content);
 
-    std::string get_filecontent_save() const;
-
-    void set_filecontent_save(const std::string& content);
-
-    void set_filecontent(const std::string& content);
-
-    void set_filecontent_enc(const std::string& content);
-
-    void set_filecontent_dec(const std::string& content);
-
-    void save_file();
+    void reset();
 
     // Cipher methods
 
@@ -59,15 +54,17 @@ public:
 
     std::string decrypt_raw_bytes(const std::string& bytes);
 
+    std::unordered_map<char16_t, int> calc_freqs(int content_index);
+
 private:
     std::array<std::unique_ptr<cr::cipher>, 2> m_ciphers;
-    int m_curr_idx{};
-    std::string m_key;
+    std::array<std::string, 3> m_content_arr;
+
+    int m_curr_cipher{};
+    int m_curr_state{};
+
     std::string m_filename;
-    std::string m_filecontent;
-    std::string m_filecontent_enc;
-    std::string m_filecontent_dec;
-    std::string m_save_filecontent;
+    std::string m_key;
     std::string m_lang;
 };
 
