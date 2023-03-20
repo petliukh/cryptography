@@ -28,7 +28,7 @@ void math_crypto::on_open_action_triggered() {
 
     m_controller.set_filename(filename.toStdString());
     m_controller.set_curr_state(ui->savefile_btn_group->checkedId());
-    QPlainTextEdit* tedit = get_text_edit_to_save();
+    QPlainTextEdit* tedit = get_curr_text_edit();
     tedit->setPlainText(QString::fromStdString(m_controller.read_file()));
     this->setWindowTitle("Math Crypto - " + filename);
 }
@@ -42,7 +42,7 @@ void math_crypto::on_save_action_triggered() {
     if (ui->bytes_cbox->isChecked()) {
         m_controller.save_file(ui->savefile_btn_group->checkedId());
     } else {
-        QPlainTextEdit* txt_edit = get_text_edit_to_save();
+        QPlainTextEdit* txt_edit = get_curr_text_edit();
         QString text = txt_edit->toPlainText();
         m_controller.save_file(text.toStdString());
     }
@@ -63,7 +63,7 @@ void math_crypto::on_saveas_action_triggered() {
     if (ui->bytes_cbox->isChecked()) {
         m_controller.save_file(ui->savefile_btn_group->checkedId());
     } else {
-        QPlainTextEdit* txt_edit = get_text_edit_to_save();
+        QPlainTextEdit* txt_edit = get_curr_text_edit();
         QString text = txt_edit->toPlainText();
         m_controller.save_file(text.toStdString());
     }
@@ -103,7 +103,7 @@ void math_crypto::on_exit_action_triggered() {
 //                             Getters
 // ===========================================================================
 
-QPlainTextEdit* math_crypto::get_text_edit_to_save() const {
+QPlainTextEdit* math_crypto::get_curr_text_edit() const {
     int idx = ui->savefile_btn_group->checkedId();
     switch (idx) {
     case 0:
@@ -169,9 +169,17 @@ void math_crypto::on_bruteforce_btn_clicked() {
 }
 
 void math_crypto::on_print_freq_clicked() {
-    int idx = ui->savefile_btn_group->checkedId();
-    auto freqs = m_controller.calc_freqs(idx);
+    if (ui->bytes_cbox->isChecked()) {
+        QMessageBox::warning(
+                this, "Warning", "Cannot print frequencies of bytes.");
+        return;
+    }
 
+    int idx = ui->savefile_btn_group->checkedId();
+    QString text = get_curr_text_edit()->toPlainText();
+    auto freqs = m_controller.calc_freqs(text.toStdString());
+
+    ui->freq_table_widget->clear();
     int row = 0;
     for (const auto& [k, v] : freqs) {
         ui->freq_table_widget->setItem(row, 0, new QTableWidgetItem(k));

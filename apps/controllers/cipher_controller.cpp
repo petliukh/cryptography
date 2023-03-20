@@ -122,10 +122,9 @@ std::string cipher_controller::decrypt_raw_bytes(const std::string& bytes) {
 }
 
 std::unordered_map<char16_t, int>
-cipher_controller::calc_freqs(int content_index) {
+cipher_controller::calc_freqs(std::string content) {
     cr::language lang = cr::languages.at(cr::utf8_to_utf16(m_lang));
-    auto freqs = cr::get_message_freqs(
-            cr::utf8_to_utf16(m_content_arr[content_index]), lang);
+    auto freqs = cr::get_message_freqs(cr::utf8_to_utf16(content), lang);
     return freqs;
 }
 

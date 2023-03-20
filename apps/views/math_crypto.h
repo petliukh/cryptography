@@ -39,7 +39,7 @@ private slots:
 
     // Getters
 
-    QPlainTextEdit* get_text_edit_to_save() const;
+    QPlainTextEdit* get_curr_text_edit() const;
 
     // Cipher operations
     void on_encrypt_btn_clicked();

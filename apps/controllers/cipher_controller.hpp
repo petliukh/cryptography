@@ -54,7 +54,7 @@ public:
 
     std::string decrypt_raw_bytes(const std::string& bytes);
 
-    std::unordered_map<char16_t, int> calc_freqs(int content_index);
+    std::unordered_map<char16_t, int> calc_freqs(std::string content);
 
 private:
     std::array<std::unique_ptr<cr::cipher>, 2> m_ciphers;
