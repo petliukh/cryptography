@@ -49,6 +49,14 @@ void cipher_controller::set_filecontent(const std::string& content) {
     m_filecontent = content;
 }
 
+void cipher_controller::set_filecontent_enc(const std::string& content) {
+    m_filecontent_enc = content;
+}
+
+void cipher_controller::set_filecontent_dec(const std::string& content) {
+    m_filecontent_dec = content;
+}
+
 void cipher_controller::read_file(std::ios_base::openmode mode) {
     std::ifstream file(m_filename, mode);
     std::string content(
@@ -59,6 +67,14 @@ void cipher_controller::read_file(std::ios_base::openmode mode) {
 
 std::string cipher_controller::get_filecontent() const {
     return m_filecontent;
+}
+
+std::string cipher_controller::get_filecontent_enc() const {
+    return m_filecontent_enc;
+}
+
+std::string cipher_controller::get_filecontent_dec() const {
+    return m_filecontent_dec;
 }
 
 void cipher_controller::save_file() {

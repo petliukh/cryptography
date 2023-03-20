@@ -131,65 +131,49 @@ QPlainTextEdit* math_crypto::get_text_edit_to_save() {
 // ===========================================================================
 
 void math_crypto::on_encrypt_btn_clicked() {
-    QByteArray qcont = ui->initial_txt_edit->toPlainText().toUtf8();
-    std::string cont = qcont.toStdString();
     std::string key = ui->key_ln_edit->text().toStdString();
-
-    if (cont.empty()) {
-        QMessageBox::warning(this, "Warning", "No message/bytes to encrypt.");
-        return;
-    }
-    if (key.empty()) {
-        QMessageBox::warning(this, "Warning", "No key to encrypt.");
-        return;
-    }
 
     try {
         m_controller.set_key(key);
     } catch (const std::exception& e) {
-        QMessageBox::warning(this, "Warning", e.what());
+        QMessageBox::warning(this, "Warning", "Invalid key.");
         return;
     }
 
-    std::string encr_cont;
     if (ui->bytes_cbox->isChecked()) {
-        encr_cont = m_controller.encrypt_raw_bytes(cont);
-    } else {
-        encr_cont = m_controller.encrypt(cont);
+        std::string bytes = m_controller.get_filecontent();
+        std::string enc_bytes = m_controller.encrypt_raw_bytes(bytes);
+        m_controller.set_filecontent_enc(enc_bytes);
+        ui->encrypted_txt_edit->setPlainText(QString::fromStdString(enc_bytes));
+        return;
     }
 
-    ui->encrypted_txt_edit->setPlainText(QString::fromStdString(encr_cont));
+    std::string cont = ui->initial_txt_edit->toPlainText().toStdString();
+    std::string enc_cont = m_controller.encrypt(cont);
+    ui->encrypted_txt_edit->setPlainText(QString::fromStdString(enc_cont));
 }
 
 void math_crypto::on_decrypt_btn_clicked() {
-    QByteArray qcont = ui->encrypted_txt_edit->toPlainText().toUtf8();
-    std::string cont = qcont.toStdString();
     std::string key = ui->key_ln_edit->text().toStdString();
-
-    if (cont.empty()) {
-        QMessageBox::warning(this, "Warning", "No message/bytes to decrypt.");
-        return;
-    }
-    if (key.empty()) {
-        QMessageBox::warning(this, "Warning", "No key to decrypt.");
-        return;
-    }
 
     try {
         m_controller.set_key(key);
     } catch (const std::exception& e) {
-        QMessageBox::warning(this, "Warning", e.what());
+        QMessageBox::warning(this, "Warning", "Invalid key.");
         return;
     }
 
-    std::string decr_cont;
     if (ui->bytes_cbox->isChecked()) {
-        decr_cont = m_controller.decrypt_raw_bytes(cont);
-    } else {
-        decr_cont = m_controller.decrypt(cont);
+        std::string bytes = m_controller.get_filecontent_enc();
+        std::string dec_bytes = m_controller.decrypt_raw_bytes(bytes);
+        m_controller.set_filecontent_dec(dec_bytes);
+        ui->decrypted_txt_edit->setPlainText(QString::fromStdString(dec_bytes));
+        return;
     }
 
-    ui->decrypted_txt_edit->setPlainText(QString::fromStdString(decr_cont));
+    std::string cont = ui->encrypted_txt_edit->toPlainText().toStdString();
+    std::string dec_cont = m_controller.decrypt(cont);
+    ui->decrypted_txt_edit->setPlainText(QString::fromStdString(dec_cont));
 }
 
 void math_crypto::on_bruteforce_btn_clicked() {

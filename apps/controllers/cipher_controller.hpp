@@ -25,13 +25,23 @@ public:
 
     void set_filename(const std::string& filename);
 
-    void read_file(std::ios_base::openmode mode = std::ios_base::in);
+    void read_file(
+            std::ios_base::openmode mode
+            = std::ios_base::in | std::ios::binary);
 
     std::string get_filename() const;
 
     std::string get_filecontent() const;
 
+    std::string get_filecontent_enc() const;
+
+    std::string get_filecontent_dec() const;
+
     void set_filecontent(const std::string& content);
+
+    void set_filecontent_enc(const std::string& content);
+
+    void set_filecontent_dec(const std::string& content);
 
     void save_file();
 
@@ -51,6 +61,8 @@ private:
     std::string m_key;
     std::string m_filename;
     std::string m_filecontent;
+    std::string m_filecontent_enc;
+    std::string m_filecontent_dec;
     std::string m_lang;
 };
 
