@@ -77,9 +77,17 @@ std::string cipher_controller::get_filecontent_dec() const {
     return m_filecontent_dec;
 }
 
+std::string cipher_controller::get_filecontent_save() const {
+    return m_save_filecontent;
+}
+
+void cipher_controller::set_filecontent_save(const std::string& content) {
+    m_save_filecontent = content;
+}
+
 void cipher_controller::save_file() {
     std::ofstream file(m_filename, std::ios::trunc | std::ios::binary);
-    file << m_filecontent;
+    file << m_save_filecontent;
 }
 
 // ===========================================================================

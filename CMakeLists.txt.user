@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 8.0.1, 2023-03-19T01:24:30. -->
+<!-- Written by QtCreator 8.0.1, 2023-03-20T11:24:22. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -68,11 +68,15 @@
     <value type="bool" key="AutoTest.Framework.QtTest">true</value>
    </valuemap>
    <valuemap type="QVariantMap" key="AutoTest.CheckStates">
-    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:BruteForceWorksCorrectly">Checked</value>
-    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:EncryptsAndDecryptsCorrectly">Checked</value>
-    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:EncryptsAndDecryptsCorrectlyWithFile">Checked</value>
-    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:EncryptsAndDecryptsCorrectlyWithFileOverwrite">Checked</value>
-    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:ShiftCipherTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/cipher_base_tests.cpp:calculates_frequency_table_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/cipher_base_tests.cpp:cipher_base_test">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/cipher_base_tests.cpp:validates_message_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:bruteforce_breaks_cipher_en">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:encrypts_decrypts_correctly_en">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:encrypts_decrypts_correctly_ukr">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:encrypts_decrypts_raw_bytes_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:sets_key_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:shift_cipher_test">Checked</value>
    </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>

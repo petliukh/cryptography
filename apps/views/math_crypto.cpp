@@ -35,30 +35,42 @@ void math_crypto::on_open_action_triggered() {
 }
 
 void math_crypto::on_save_action_triggered() {
-    QPlainTextEdit* tedit = get_text_edit_to_save();
-    std::string content = tedit->toPlainText().toStdString();
+    std::string content;
+
+    if (ui->bytes_cbox->isChecked()) {
+        content = get_bytes_to_save();
+    } else {
+        QPlainTextEdit* tedit = get_text_edit_to_save();
+        content = tedit->toPlainText().toStdString();
+    }
 
     if (m_controller.get_filename().empty()) {
         QMessageBox::warning(this, "Warning", "No filename to save.");
         return;
     }
     if (content.empty()) {
-        QMessageBox::warning(this, "Warning", "No text to save.");
+        QMessageBox::warning(this, "Warning", "No content to save.");
         return;
     }
 
-    m_controller.set_filecontent(content);
+    m_controller.set_filecontent_save(content);
     m_controller.save_file();
+    QMessageBox::information(this, "Information", "File saved.");
 }
 
 void math_crypto::on_saveas_action_triggered() {
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::AnyFile);
     QString filename = dialog.getSaveFileName(this, "Save File As");
-    QPlainTextEdit* tedit = get_text_edit_to_save();
-
     std::string filename_str = filename.toStdString();
-    std::string content = tedit->toPlainText().toStdString();
+    std::string content;
+
+    if (ui->bytes_cbox->isChecked()) {
+        content = get_bytes_to_save();
+    } else {
+        QPlainTextEdit* tedit = get_text_edit_to_save();
+        content = tedit->toPlainText().toStdString();
+    }
 
     if (filename_str.empty()) {
         QMessageBox::warning(this, "Warning", "No filename to save.");
@@ -71,7 +83,7 @@ void math_crypto::on_saveas_action_triggered() {
 
     m_controller.set_filename(filename_str);
     this->setWindowTitle("Math Crypto - " + filename);
-    m_controller.set_filecontent(content);
+    m_controller.set_filecontent_save(content);
     m_controller.save_file();
 }
 
@@ -112,7 +124,7 @@ void math_crypto::on_exit_action_triggered() {
 //                             Getters
 // ===========================================================================
 
-QPlainTextEdit* math_crypto::get_text_edit_to_save() {
+QPlainTextEdit* math_crypto::get_text_edit_to_save() const {
     int idx = ui->savefile_btn_group->checkedId();
     switch (idx) {
     case 0:
@@ -123,6 +135,20 @@ QPlainTextEdit* math_crypto::get_text_edit_to_save() {
         return ui->decrypted_txt_edit;
     default:
         return nullptr;
+    }
+}
+
+std::string math_crypto::get_bytes_to_save() const {
+    int idx = ui->savefile_btn_group->checkedId();
+    switch (idx) {
+    case 0:
+        return m_controller.get_filecontent();
+    case 1:
+        return m_controller.get_filecontent_enc();
+    case 2:
+        return m_controller.get_filecontent_dec();
+    default:
+        return "";
     }
 }
 

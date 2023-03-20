@@ -37,6 +37,10 @@ public:
 
     std::string get_filecontent_dec() const;
 
+    std::string get_filecontent_save() const;
+
+    void set_filecontent_save(const std::string& content);
+
     void set_filecontent(const std::string& content);
 
     void set_filecontent_enc(const std::string& content);
@@ -63,6 +67,7 @@ private:
     std::string m_filecontent;
     std::string m_filecontent_enc;
     std::string m_filecontent_dec;
+    std::string m_save_filecontent;
     std::string m_lang;
 };
 

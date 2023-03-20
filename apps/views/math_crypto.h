@@ -39,7 +39,9 @@ private slots:
 
     // Getters
 
-    QPlainTextEdit* get_text_edit_to_save();
+    QPlainTextEdit* get_text_edit_to_save() const;
+
+    std::string get_bytes_to_save() const;
 
     // Cipher operations
     void on_encrypt_btn_clicked();
@@ -54,7 +56,7 @@ private slots:
 
     void on_bytes_cbox_stateChanged(int arg1);
 
-    void on_lang_cbox_currentIndexChanged(const QString &arg1);
+    void on_lang_cbox_currentIndexChanged(const QString& arg1);
 
 private:
     Ui::math_crypto* ui;
