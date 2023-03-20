@@ -205,6 +205,9 @@ void math_crypto::on_cipher_cbox_currentIndexChanged(int index) {
 
 void math_crypto::on_bytes_cbox_stateChanged(int arg1) {
     ui->lang_cbox->setEnabled(arg1 == Qt::Unchecked);
+    ui->initial_txt_edit->setEnabled(arg1 == Qt::Unchecked);
+    ui->encrypted_txt_edit->setEnabled(arg1 == Qt::Unchecked);
+    ui->decrypted_txt_edit->setEnabled(arg1 == Qt::Unchecked);
 }
 
 void math_crypto::on_lang_cbox_currentIndexChanged(const QString& arg1) {
