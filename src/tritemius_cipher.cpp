@@ -32,11 +32,29 @@ std::u16string tritemius_cipher::decrypt(const std::u16string& message) {
 }
 
 std::string tritemius_cipher::encrypt_raw_bytes(const std::string& bytes) {
-    return std::string();
+    switch (m_key.type) {
+    case key_type::v2:
+        return encrypt_raw_bytes_v2(bytes);
+    case key_type::v3:
+        return encrypt_raw_bytes_v3(bytes);
+    case key_type::word:
+        return encrypt_raw_bytes_kw(bytes);
+    default:
+        throw std::invalid_argument("Invalid key");
+    }
 }
 
 std::string tritemius_cipher::decrypt_raw_bytes(const std::string& bytes) {
-    return std::string();
+    switch (m_key.type) {
+    case key_type::v2:
+        return decrypt_raw_bytes_v2(bytes);
+    case key_type::v3:
+        return decrypt_raw_bytes_v3(bytes);
+    case key_type::word:
+        return decrypt_raw_bytes_kw(bytes);
+    default:
+        throw std::invalid_argument("Invalid key");
+    }
 }
 
 void tritemius_cipher::set_key(const std::u16string& key) {
@@ -181,6 +199,77 @@ std::u16string tritemius_cipher::decrypt_kw(const std::u16string& message) {
         int n = m_lang.alphabet.size();
         int x = (y + n - (k % n)) % n;
         output += m_lang.alphabet[x];
+    }
+    return output;
+}
+
+std::string tritemius_cipher::encrypt_raw_bytes_v2(const std::string& message) {
+    std::string output;
+    for (int i = 0; i < message.size(); ++i) {
+        int x = message[i];
+        int k = m_key.key_v2.x() * i + m_key.key_v2.y();
+        int y = (x + k) % 256;
+        output += static_cast<char>(y);
+    }
+    return output;
+}
+
+std::string tritemius_cipher::decrypt_raw_bytes_v2(const std::string& message) {
+    std::string output;
+    for (int i = 0; i < message.size(); i++) {
+        int y = message[i];
+        int k = m_key.key_v2.x() * i + m_key.key_v2.y();
+        int n = 256;
+        int x = (y + n - (k % n)) % n;
+        output += static_cast<char>(x);
+    }
+    return output;
+}
+
+std::string tritemius_cipher::encrypt_raw_bytes_v3(const std::string& message) {
+    std::string output;
+    for (int i = 0; i < message.size(); ++i) {
+        int x = message[i];
+        int k = m_key.key_v3.x() * i * i + m_key.key_v3.y() * i
+                + m_key.key_v3.z();
+        int y = (x + k) % 256;
+        output += static_cast<char>(y);
+    }
+    return output;
+}
+
+std::string tritemius_cipher::decrypt_raw_bytes_v3(const std::string& message) {
+    std::string output;
+    for (int i = 0; i < message.size(); i++) {
+        int y = message[i];
+        int k = m_key.key_v3.x() * i * i + m_key.key_v3.y() * i
+                + m_key.key_v3.z();
+        int n = 256;
+        int x = (y + n - (k % n)) % n;
+        output += static_cast<char>(x);
+    }
+    return output;
+}
+
+std::string tritemius_cipher::encrypt_raw_bytes_kw(const std::string& message) {
+    std::string output;
+    for (int i = 0; i < message.size(); ++i) {
+        int x = message[i];
+        int k = m_lang.alphabet.find(m_key.keyword[i % m_key.keyword.size()]);
+        int y = (x + k) % 256;
+        output += static_cast<char>(y);
+    }
+    return output;
+}
+
+std::string tritemius_cipher::decrypt_raw_bytes_kw(const std::string& message) {
+    std::string output;
+    for (int i = 0; i < message.size(); i++) {
+        int y = message[i];
+        int k = m_lang.alphabet.find(m_key.keyword[i % m_key.keyword.size()]);
+        int n = 256;
+        int x = (y + n - (k % n)) % n;
+        output += static_cast<char>(x);
     }
     return output;
 }

@@ -45,6 +45,15 @@ private:
     std::u16string encrypt_kw(const std::u16string& message);
     std::u16string decrypt_kw(const std::u16string& message);
 
+    std::string encrypt_raw_bytes_v2(const std::string& bytes);
+    std::string decrypt_raw_bytes_v2(const std::string& bytes);
+
+    std::string encrypt_raw_bytes_v3(const std::string& bytes);
+    std::string decrypt_raw_bytes_v3(const std::string& bytes);
+
+    std::string encrypt_raw_bytes_kw(const std::string& bytes);
+    std::string decrypt_raw_bytes_kw(const std::string& bytes);
+
     key m_key;
     language m_lang;
 };

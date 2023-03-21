@@ -94,3 +94,93 @@ TEST(tritemius_test, encrypts_decrypts_kw_correctly) {
     checksum2 = cr::sha256(decrypted);
     ASSERT_EQ(checksum1, checksum2);
 }
+
+TEST(tritemius_test, encrypts_decrypts_raw_bytes_v2_correctly) {
+    auto opts
+            = std::ios::in | std::ios::out | std::ios::binary | std::ios::trunc;
+
+    std::string tmp_fname = "temp.tmp";
+    std::fstream file(tmp_fname, opts);
+
+    file << "Hello, world! Привіт, світ! Орео, орео +_)(*&^%$#@!~!@#$%^&*()_+"
+            "Ми живемо в час змін, коли технології розвиваються зі швидкістю "
+            "світла."
+            "Інтернет, комп'ютери, смартфони, телевізори, ігрові консолі - все "
+            "це стало"
+            "частиною нашого повсякденного життя. Але чи завжди ми знаємо, як"
+            "використовувати ці засоби правильно і безпечно?";
+
+    file.seekg(0);
+
+    std::string file_bytes(
+            (std::istreambuf_iterator<char>(file)),
+            std::istreambuf_iterator<char>());
+
+    cr::tritemius_cipher cipher;
+    cipher.set_key(u"1,2");
+    std::string encrypted_bytes = cipher.encrypt_raw_bytes(file_bytes);
+    std::string decrypted_bytes = cipher.decrypt_raw_bytes(encrypted_bytes);
+    std::string checksum1 = cr::sha256(file_bytes);
+    std::string checksum2 = cr::sha256(decrypted_bytes);
+    ASSERT_EQ(checksum1, checksum2);
+}
+
+TEST(tritemius_test, encrypts_decrypts_raw_bytes_v3_correctly) {
+    auto opts
+            = std::ios::in | std::ios::out | std::ios::binary | std::ios::trunc;
+
+    std::string tmp_fname = "temp.tmp";
+    std::fstream file(tmp_fname, opts);
+
+    file << "Hello, world! Привіт, світ! Орео, орео +_)(*&^%$#@!~!@#$%^&*()_+"
+            "Ми живемо в час змін, коли технології розвиваються зі швидкістю "
+            "світла."
+            "Інтернет, комп'ютери, смартфони, телевізори, ігрові консолі - все "
+            "це стало"
+            "частиною нашого повсякденного життя. Але чи завжди ми знаємо, як"
+            "використовувати ці засоби правильно і безпечно?";
+
+    file.seekg(0);
+
+    std::string file_bytes(
+            (std::istreambuf_iterator<char>(file)),
+            std::istreambuf_iterator<char>());
+
+    cr::tritemius_cipher cipher;
+    cipher.set_key(u"1,2,3");
+    std::string encrypted_bytes = cipher.encrypt_raw_bytes(file_bytes);
+    std::string decrypted_bytes = cipher.decrypt_raw_bytes(encrypted_bytes);
+    std::string checksum1 = cr::sha256(file_bytes);
+    std::string checksum2 = cr::sha256(decrypted_bytes);
+    ASSERT_EQ(checksum1, checksum2);
+}
+
+TEST(tritemius_test, encrypts_decrypts_raw_bytes_kw_correctly) {
+    auto opts
+            = std::ios::in | std::ios::out | std::ios::binary | std::ios::trunc;
+
+    std::string tmp_fname = "temp.tmp";
+    std::fstream file(tmp_fname, opts);
+
+    file << "Hello, world! Привіт, світ! Орео, орео +_)(*&^%$#@!~!@#$%^&*()_+"
+            "Ми живемо в час змін, коли технології розвиваються зі швидкістю "
+            "світла."
+            "Інтернет, комп'ютери, смартфони, телевізори, ігрові консолі - все "
+            "це стало"
+            "частиною нашого повсякденного життя. Але чи завжди ми знаємо, як"
+            "використовувати ці засоби правильно і безпечно?";
+
+    file.seekg(0);
+
+    std::string file_bytes(
+            (std::istreambuf_iterator<char>(file)),
+            std::istreambuf_iterator<char>());
+
+    cr::tritemius_cipher cipher;
+    cipher.set_key(u"keyword");
+    std::string encrypted_bytes = cipher.encrypt_raw_bytes(file_bytes);
+    std::string decrypted_bytes = cipher.decrypt_raw_bytes(encrypted_bytes);
+    std::string checksum1 = cr::sha256(file_bytes);
+    std::string checksum2 = cr::sha256(decrypted_bytes);
+    ASSERT_EQ(checksum1, checksum2);
+}
