@@ -42,7 +42,7 @@ private:
     std::u16string encrypt_v3(const std::u16string& message);
     std::u16string decrypt_v3(const std::u16string& message);
 
-    std::u16string encrypt_word(const std::u16string& message);
+    std::u16string encrypt_kw(const std::u16string& message);
     std::u16string decrypt_kw(const std::u16string& message);
 
     key m_key;

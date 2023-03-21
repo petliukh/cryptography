@@ -6,11 +6,29 @@ tritemius_cipher::tritemius_cipher() : m_lang(languages.at(u"EN")) {
 }
 
 std::u16string tritemius_cipher::encrypt(const std::u16string& message) {
-    return std::u16string();
+    switch (m_key.type) {
+    case key_type::v2:
+        return encrypt_v2(message);
+    case key_type::v3:
+        return encrypt_v3(message);
+    case key_type::word:
+        return encrypt_kw(message);
+    default:
+        throw std::invalid_argument("Invalid key");
+    }
 }
 
 std::u16string tritemius_cipher::decrypt(const std::u16string& message) {
-    return std::u16string();
+    switch (m_key.type) {
+    case key_type::v2:
+        return decrypt_v2(message);
+    case key_type::v3:
+        return decrypt_v3(message);
+    case key_type::word:
+        return decrypt_kw(message);
+    default:
+        throw std::invalid_argument("Invalid key");
+    }
 }
 
 std::string tritemius_cipher::encrypt_raw_bytes(const std::string& bytes) {
@@ -100,7 +118,7 @@ std::u16string tritemius_cipher::decrypt_v2(const std::u16string& message) {
         int x = (y + n - (k % n)) % n;
         output += m_lang.alphabet[x];
     }
-    return std::u16string();
+    return output;
 }
 
 std::u16string tritemius_cipher::encrypt_v3(const std::u16string& message) {
@@ -133,10 +151,10 @@ std::u16string tritemius_cipher::decrypt_v3(const std::u16string& message) {
         int x = (y + n - (k % n)) % n;
         output += m_lang.alphabet[x];
     }
-    return std::u16string();
+    return output;
 }
 
-std::u16string tritemius_cipher::encrypt_word(const std::u16string& message) {
+std::u16string tritemius_cipher::encrypt_kw(const std::u16string& message) {
     std::u16string output;
     for (int i = 0; i < message.size(); ++i) {
         int x = m_lang.alphabet.find(message[i]);
