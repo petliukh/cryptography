@@ -104,19 +104,67 @@ std::u16string tritemius_cipher::decrypt_v2(const std::u16string& message) {
 }
 
 std::u16string tritemius_cipher::encrypt_v3(const std::u16string& message) {
-    return std::u16string();
+    std::u16string output;
+    for (int i = 0; i < message.size(); ++i) {
+        int x = m_lang.alphabet.find(message[i]);
+        if (x == std::string::npos) {
+            output += message[i];
+            continue;
+        }
+        int k = m_key.key_v3.x() * i * i + m_key.key_v3.y() * i
+                + m_key.key_v3.z();
+        int y = (x + k) % m_lang.alphabet.size();
+        output += m_lang.alphabet[y];
+    }
+    return output;
 }
 
 std::u16string tritemius_cipher::decrypt_v3(const std::u16string& message) {
+    std::u16string output;
+    for (int i = 0; i < message.size(); i++) {
+        int y = m_lang.alphabet.find(message[i]);
+        if (y == std::string::npos) {
+            output += message[i];
+            continue;
+        }
+        int k = m_key.key_v3.x() * i * i + m_key.key_v3.y() * i
+                + m_key.key_v3.z();
+        int n = m_lang.alphabet.size();
+        int x = (y + n - (k % n)) % n;
+        output += m_lang.alphabet[x];
+    }
     return std::u16string();
 }
 
 std::u16string tritemius_cipher::encrypt_word(const std::u16string& message) {
-    return std::u16string();
+    std::u16string output;
+    for (int i = 0; i < message.size(); ++i) {
+        int x = m_lang.alphabet.find(message[i]);
+        if (x == std::string::npos) {
+            output += message[i];
+            continue;
+        }
+        int k = m_lang.alphabet.find(m_key.keyword[i % m_key.keyword.size()]);
+        int y = (x + k) % m_lang.alphabet.size();
+        output += m_lang.alphabet[y];
+    }
+    return output;
 }
 
-std::u16string tritemius_cipher::decrypt_word(const std::u16string& message) {
-    return std::u16string();
+std::u16string tritemius_cipher::decrypt_kw(const std::u16string& message) {
+    std::u16string output;
+    for (int i = 0; i < message.size(); i++) {
+        int y = m_lang.alphabet.find(message[i]);
+        if (y == std::string::npos) {
+            output += message[i];
+            continue;
+        }
+        int k = m_lang.alphabet.find(m_key.keyword[i % m_key.keyword.size()]);
+        int n = m_lang.alphabet.size();
+        int x = (y + n - (k % n)) % n;
+        output += m_lang.alphabet[x];
+    }
+    return output;
 }
 
 }  // namespace petliukh::cryptography
