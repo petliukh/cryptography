@@ -51,6 +51,8 @@ std::string sha256(const std::string& str);
 
 std::string sha256(const std::u16string& str);
 
+std::vector<std::string> ssplit(const std::string& str, char delimiter);
+
 const std::u16string special_chars = u" ,.?!:;()[]{}-_=+*/\\\"\'\n";
 
 const std::unordered_map<std::u16string, language> languages = {

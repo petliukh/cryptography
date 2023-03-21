@@ -80,6 +80,7 @@ void math_crypto::on_create_new_action_triggered() {
     ui->cipher_cbox->setCurrentIndex(0);
     ui->bytes_cbox->setChecked(false);
     ui->cipher_specific_ops_stacked_widget->setCurrentIndex(0);
+    ui->freq_table_widget->clear();
     this->setWindowTitle("Math Crypto");
     m_controller.reset();
 }
@@ -165,7 +166,26 @@ void math_crypto::on_decrypt_btn_clicked() {
     ui->decrypted_txt_edit->setPlainText(QString::fromStdString(dec_cont));
 }
 
-void math_crypto::on_bruteforce_btn_clicked() {
+void math_crypto::on_brute_force_btn_clicked() {
+    if (ui->bytes_cbox->isChecked()) {
+        QMessageBox::warning(this, "Warning", "Cannot brute force bytes.");
+        return;
+    }
+
+    QString text = ui->encrypted_txt_edit->toPlainText();
+    auto brute_res = m_controller.brute_force(text.toStdString());
+    ui->brute_force_table->clear();
+    ui->brute_force_table->setRowCount(brute_res.size());
+    ui->brute_force_table->setColumnCount(2);
+    int row = 0;
+
+    for (auto& [k, v] : brute_res) {
+        ui->brute_force_table->setItem(
+                row, 0, new QTableWidgetItem(QString::number(k)));
+        ui->brute_force_table->setItem(
+                row, 1, new QTableWidgetItem(QString::fromStdString(v)));
+        row++;
+    }
 }
 
 void math_crypto::on_print_freq_clicked() {
@@ -180,10 +200,15 @@ void math_crypto::on_print_freq_clicked() {
     auto freqs = m_controller.calc_freqs(text.toStdString());
 
     ui->freq_table_widget->clear();
+    ui->freq_table_widget->setRowCount(freqs.size());
+    ui->freq_table_widget->setColumnCount(2);
     int row = 0;
     for (const auto& [k, v] : freqs) {
-        ui->freq_table_widget->setItem(row, 0, new QTableWidgetItem(k));
-        ui->freq_table_widget->setItem(row, 1, new QTableWidgetItem(v));
+        ui->freq_table_widget->setItem(
+                row, 0, new QTableWidgetItem(QString(k)));
+        ui->freq_table_widget->setItem(
+                row, 1, new QTableWidgetItem(QString::number(v)));
+        row++;
     }
 }
 

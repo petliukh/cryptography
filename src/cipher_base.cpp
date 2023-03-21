@@ -61,4 +61,14 @@ std::string sha256(const std::u16string& str) {
     return sha256(utf16_to_utf8(str));
 }
 
+std::vector<std::string> ssplit(const std::string& str, char delimiter) {
+    std::vector<std::string> result;
+    std::stringstream ss(str);
+    std::string item;
+    while (std::getline(ss, item, delimiter)) {
+        result.push_back(item);
+    }
+    return result;
+}
+
 }  // namespace petliukh::cryptography

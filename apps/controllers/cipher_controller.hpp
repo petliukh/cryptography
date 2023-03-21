@@ -56,6 +56,10 @@ public:
 
     std::unordered_map<char16_t, int> calc_freqs(std::string content);
 
+    // Shift cipher
+    std::unordered_map<int, std::string>
+    brute_force(const std::string& message);
+
 private:
     std::array<std::unique_ptr<cr::cipher>, 2> m_ciphers;
     std::array<std::string, 3> m_content_arr;

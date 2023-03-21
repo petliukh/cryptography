@@ -187,7 +187,7 @@
         <string>Frequency Table</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
+        <item row="1" column="0">
          <widget class="QTableWidget" name="freq_table_widget">
           <column>
            <property name="text">
@@ -199,6 +199,13 @@
             <string>Frequency</string>
            </property>
           </column>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="print_freq">
+          <property name="text">
+           <string>Count Frequencies</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -223,7 +230,7 @@
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QTextEdit" name="brute_force_txt_edit"/>
+             <widget class="QTableWidget" name="brute_force_table"/>
             </item>
            </layout>
           </widget>

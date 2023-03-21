@@ -128,4 +128,15 @@ cipher_controller::calc_freqs(std::string content) {
     return freqs;
 }
 
+std::unordered_map<int, std::string>
+cipher_controller::brute_force(const std::string& message) {
+    cr::shift_cipher* sc = static_cast<cr::shift_cipher*>(m_ciphers[0].get());
+    auto res = sc->brute_force(cr::utf8_to_utf16(message));
+    std::unordered_map<int, std::string> res_utf8;
+    for (auto& [key, value] : res) {
+        res_utf8[key] = cr::utf16_to_utf8(value);
+    }
+    return res_utf8;
+}
+
 }  // namespace petliukh::controllers

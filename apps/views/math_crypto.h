@@ -46,8 +46,6 @@ private slots:
 
     void on_decrypt_btn_clicked();
 
-    void on_bruteforce_btn_clicked();
-
     void on_print_freq_clicked();
 
     void on_cipher_cbox_currentIndexChanged(int index);
@@ -55,6 +53,8 @@ private slots:
     void on_bytes_cbox_stateChanged(int arg1);
 
     void on_lang_cbox_currentIndexChanged(const QString& arg1);
+
+    void on_brute_force_btn_clicked();
 
 private:
     Ui::math_crypto* ui;
