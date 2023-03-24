@@ -19,9 +19,9 @@ struct language {
     std::u16string alphabet;
 };
 
-class cipher {
+class Cipher {
 public:
-    virtual ~cipher() = default;
+    virtual ~Cipher() = default;
 
     virtual std::u16string encrypt(const std::u16string& message) = 0;
 

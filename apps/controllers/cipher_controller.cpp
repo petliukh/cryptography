@@ -4,8 +4,8 @@ namespace petliukh::controllers {
 
 cipher_controller::cipher_controller() : m_lang("EN") {
     m_ciphers = {
-        std::make_unique<cr::shift_cipher>(),
-        std::make_unique<cr::tritemius_cipher>(),
+        std::make_unique<cr::Shift_cipher>(),
+        std::make_unique<cr::Trithemius_cipher>(),
     };
 }
 
@@ -130,7 +130,7 @@ cipher_controller::calc_freqs(std::string content) {
 
 std::unordered_map<int, std::string>
 cipher_controller::brute_force(const std::string& message) {
-    cr::shift_cipher* sc = static_cast<cr::shift_cipher*>(m_ciphers[0].get());
+    cr::Shift_cipher* sc = static_cast<cr::Shift_cipher*>(m_ciphers[0].get());
     auto res = sc->brute_force(cr::utf8_to_utf16(message));
     std::unordered_map<int, std::string> res_utf8;
     for (auto& [key, value] : res) {

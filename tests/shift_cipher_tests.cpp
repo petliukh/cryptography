@@ -6,14 +6,14 @@ namespace cr = petliukh::cryptography;
 namespace fs = std::filesystem;
 
 TEST(shift_cipher_test, sets_key_correctly) {
-    cr::shift_cipher cipher;
+    cr::Shift_cipher cipher;
     cipher.set_key(u"6");
 
     EXPECT_EQ(cipher.get_key(), 6);
 }
 
 TEST(shift_cipher_test, encrypts_decrypts_correctly_en) {
-    cr::shift_cipher cipher;
+    cr::Shift_cipher cipher;
     cipher.set_key(6);
     cipher.set_lang(u"EN");
 
@@ -31,7 +31,7 @@ TEST(shift_cipher_test, encrypts_decrypts_correctly_en) {
 }
 
 TEST(shift_cipher_test, encrypts_decrypts_correctly_ukr) {
-    cr::shift_cipher cipher;
+    cr::Shift_cipher cipher;
     cipher.set_key(6);
     cipher.set_lang(u"UKR");
 
@@ -69,7 +69,7 @@ TEST(shift_cipher_test, encrypts_decrypts_raw_bytes_correctly) {
             (std::istreambuf_iterator<char>(file)),
             std::istreambuf_iterator<char>());
 
-    cr::shift_cipher cipher;
+    cr::Shift_cipher cipher;
     cipher.set_key(6);
 
     std::string encrypted_bytes = cipher.encrypt_raw_bytes(file_bytes);
@@ -90,7 +90,7 @@ TEST(shift_cipher_test, bruteforce_breaks_cipher_en) {
     int key = 6;
     std::u16string message = u"Hello, world!";
 
-    cr::shift_cipher cipher;
+    cr::Shift_cipher cipher;
     cipher.set_lang(u"EN");
     cipher.set_key(key);
 

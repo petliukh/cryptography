@@ -61,7 +61,7 @@ public:
     brute_force(const std::string& message);
 
 private:
-    std::array<std::unique_ptr<cr::cipher>, 2> m_ciphers;
+    std::array<std::unique_ptr<cr::Cipher>, 2> m_ciphers;
     std::array<std::string, 3> m_content_arr;
 
     int m_curr_cipher{};

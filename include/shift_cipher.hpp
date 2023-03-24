@@ -3,9 +3,9 @@
 
 namespace petliukh::cryptography {
 
-class shift_cipher : public cipher {
+class Shift_cipher : public Cipher {
 public:
-    shift_cipher();
+    Shift_cipher();
 
     virtual std::u16string encrypt(const std::u16string& message) override;
     virtual std::u16string decrypt(const std::u16string& message) override;
