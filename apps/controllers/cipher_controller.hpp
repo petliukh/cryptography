@@ -7,9 +7,9 @@ namespace petliukh::controllers {
 
 namespace cr = petliukh::cryptography;
 
-class cipher_controller {
+class Cipher_controller {
 public:
-    cipher_controller();
+    Cipher_controller();
 
     // Getters
     std::string get_filename() const;

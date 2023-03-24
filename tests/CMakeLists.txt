@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.0)
 # Set the name of the test executable
 set(TEST_NAME math-crypto-tests)
 set(SOURCES cipher_base_tests.cpp shift_cipher_tests.cpp
-            tritemius_cipher_tests.cpp)
+            trithemius_cipher_tests.cpp)
 
 # Add all source files to the test executable target
 add_executable(${TEST_NAME} ${SOURCES})

@@ -1,14 +1,16 @@
 #include "math_crypto.h"
 
-math_crypto::math_crypto(QWidget* parent)
-    : QMainWindow(parent), ui(new Ui::math_crypto) {
+Math_crypto::Math_crypto(QWidget* parent)
+    : QMainWindow(parent), ui(new Ui::Math_crypto)
+{
     ui->setupUi(this);
     ui->savefile_btn_group->setId(ui->initial_rbtn, 0);
     ui->savefile_btn_group->setId(ui->encrypted_rbtn, 1);
     ui->savefile_btn_group->setId(ui->decrypted_rbtn, 2);
 }
 
-math_crypto::~math_crypto() {
+Math_crypto::~Math_crypto()
+{
     delete ui;
 }
 
@@ -16,7 +18,8 @@ math_crypto::~math_crypto() {
 //                             Meny Bar Slots
 // ===========================================================================
 
-void math_crypto::on_open_action_triggered() {
+void Math_crypto::on_open_action_triggered()
+{
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::ExistingFile);
     QString filename = dialog.getOpenFileName(this, "Open File");
@@ -33,7 +36,8 @@ void math_crypto::on_open_action_triggered() {
     this->setWindowTitle("Math Crypto - " + filename);
 }
 
-void math_crypto::on_save_action_triggered() {
+void Math_crypto::on_save_action_triggered()
+{
     if (m_controller.get_filename().empty()) {
         QMessageBox::warning(this, "Warning", "No filename to save.");
         return;
@@ -49,7 +53,8 @@ void math_crypto::on_save_action_triggered() {
     QMessageBox::information(this, "Information", "File saved.");
 }
 
-void math_crypto::on_saveas_action_triggered() {
+void Math_crypto::on_saveas_action_triggered()
+{
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::AnyFile);
     QString filename = dialog.getSaveFileName(this, "Save File");
@@ -70,7 +75,8 @@ void math_crypto::on_saveas_action_triggered() {
     QMessageBox::information(this, "Information", "File saved.");
 }
 
-void math_crypto::on_create_new_action_triggered() {
+void Math_crypto::on_create_new_action_triggered()
+{
     ui->initial_txt_edit->clear();
     ui->encrypted_txt_edit->clear();
     ui->decrypted_txt_edit->clear();
@@ -85,18 +91,21 @@ void math_crypto::on_create_new_action_triggered() {
     m_controller.reset();
 }
 
-void math_crypto::on_print_action_triggered() {
+void Math_crypto::on_print_action_triggered()
+{
     QMessageBox::warning(this, "Warning", "Not implemented yet.");
 }
 
-void math_crypto::on_about_action_triggered() {
+void Math_crypto::on_about_action_triggered()
+{
     QMessageBox::about(
             this, "About Math Cryptography",
             "This program is designed to encrypt and "
             "decrypt messages using different ciphers. ");
 }
 
-void math_crypto::on_exit_action_triggered() {
+void Math_crypto::on_exit_action_triggered()
+{
     QApplication::quit();
 }
 
@@ -104,7 +113,8 @@ void math_crypto::on_exit_action_triggered() {
 //                             Getters
 // ===========================================================================
 
-QPlainTextEdit* math_crypto::get_curr_text_edit() const {
+QPlainTextEdit* Math_crypto::get_curr_text_edit() const
+{
     int idx = ui->savefile_btn_group->checkedId();
     switch (idx) {
     case 0:
@@ -122,7 +132,8 @@ QPlainTextEdit* math_crypto::get_curr_text_edit() const {
 //                             Cipher Buttons Slots
 // ===========================================================================
 
-void math_crypto::on_encrypt_btn_clicked() {
+void Math_crypto::on_encrypt_btn_clicked()
+{
     std::string key = ui->key_ln_edit->text().toStdString();
     try {
         m_controller.set_key(key);
@@ -144,7 +155,8 @@ void math_crypto::on_encrypt_btn_clicked() {
     ui->encrypted_txt_edit->setPlainText(QString::fromStdString(enc_cont));
 }
 
-void math_crypto::on_decrypt_btn_clicked() {
+void Math_crypto::on_decrypt_btn_clicked()
+{
     std::string key = ui->key_ln_edit->text().toStdString();
     try {
         m_controller.set_key(key);
@@ -166,7 +178,8 @@ void math_crypto::on_decrypt_btn_clicked() {
     ui->decrypted_txt_edit->setPlainText(QString::fromStdString(dec_cont));
 }
 
-void math_crypto::on_brute_force_btn_clicked() {
+void Math_crypto::on_brute_force_btn_clicked()
+{
     if (ui->bytes_cbox->isChecked()) {
         QMessageBox::warning(this, "Warning", "Cannot brute force bytes.");
         return;
@@ -188,7 +201,8 @@ void math_crypto::on_brute_force_btn_clicked() {
     }
 }
 
-void math_crypto::on_print_freq_clicked() {
+void Math_crypto::on_print_freq_clicked()
+{
     if (ui->bytes_cbox->isChecked()) {
         QMessageBox::warning(
                 this, "Warning", "Cannot print frequencies of bytes.");
@@ -212,18 +226,21 @@ void math_crypto::on_print_freq_clicked() {
     }
 }
 
-void math_crypto::on_cipher_cbox_currentIndexChanged(int index) {
+void Math_crypto::on_cipher_cbox_currentIndexChanged(int index)
+{
     ui->cipher_specific_ops_stacked_widget->setCurrentIndex(index);
     m_controller.set_cipher_index(index);
 }
 
-void math_crypto::on_bytes_cbox_stateChanged(int arg1) {
+void Math_crypto::on_bytes_cbox_stateChanged(int arg1)
+{
     ui->lang_cbox->setEnabled(arg1 == Qt::Unchecked);
     ui->initial_txt_edit->setEnabled(arg1 == Qt::Unchecked);
     ui->encrypted_txt_edit->setEnabled(arg1 == Qt::Unchecked);
     ui->decrypted_txt_edit->setEnabled(arg1 == Qt::Unchecked);
 }
 
-void math_crypto::on_lang_cbox_currentIndexChanged(const QString& arg1) {
+void Math_crypto::on_lang_cbox_currentIndexChanged(const QString& arg1)
+{
     m_controller.set_lang(arg1.toStdString());
 }

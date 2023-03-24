@@ -8,18 +8,18 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class math_crypto;
+class Math_crypto;
 }
 QT_END_NAMESPACE
 
 namespace ctrl = petliukh::controllers;
 
-class math_crypto : public QMainWindow {
+class Math_crypto : public QMainWindow {
     Q_OBJECT
 
 public:
-    math_crypto(QWidget* parent = nullptr);
-    ~math_crypto();
+    Math_crypto(QWidget* parent = nullptr);
+    ~Math_crypto();
 
 private slots:
     // File operations
@@ -57,6 +57,6 @@ private slots:
     void on_brute_force_btn_clicked();
 
 private:
-    Ui::math_crypto* ui;
-    ctrl::cipher_controller m_controller;
+    Ui::Math_crypto* ui;
+    ctrl::Cipher_controller m_controller;
 };

@@ -4,7 +4,8 @@
 
 namespace cr = petliukh::cryptography;
 
-TEST(cipher_base_test, validates_message_correctly) {
+TEST(cipher_base_test, validates_message_correctly)
+{
     std::u16string message = u"Hello, world! Привіт, світ! !@#!@#";
 
     cr::language en = cr::languages.at(u"EN");
@@ -16,7 +17,8 @@ TEST(cipher_base_test, validates_message_correctly) {
     EXPECT_FALSE(res2);
 }
 
-TEST(cipher_base_test, calculates_frequency_table_correctly) {
+TEST(cipher_base_test, calculates_frequency_table_correctly)
+{
     std::u16string message = u"Hello, world!";
     cr::language en = cr::languages.at(u"EN");
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>math_crypto</class>
- <widget class="QMainWindow" name="math_crypto">
+ <class>Math_crypto</class>
+ <widget class="QMainWindow" name="Math_crypto">
   <property name="geometry">
    <rect>
     <x>0</x>

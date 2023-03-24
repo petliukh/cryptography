@@ -5,14 +5,16 @@
 namespace cr = petliukh::cryptography;
 namespace fs = std::filesystem;
 
-TEST(shift_cipher_test, sets_key_correctly) {
+TEST(shift_cipher_test, sets_key_correctly)
+{
     cr::Shift_cipher cipher;
     cipher.set_key(u"6");
 
     EXPECT_EQ(cipher.get_key(), 6);
 }
 
-TEST(shift_cipher_test, encrypts_decrypts_correctly_en) {
+TEST(shift_cipher_test, encrypts_decrypts_correctly_en)
+{
     cr::Shift_cipher cipher;
     cipher.set_key(6);
     cipher.set_lang(u"EN");
@@ -30,7 +32,8 @@ TEST(shift_cipher_test, encrypts_decrypts_correctly_en) {
     EXPECT_EQ(checksum1, checksum2);
 }
 
-TEST(shift_cipher_test, encrypts_decrypts_correctly_ukr) {
+TEST(shift_cipher_test, encrypts_decrypts_correctly_ukr)
+{
     cr::Shift_cipher cipher;
     cipher.set_key(6);
     cipher.set_lang(u"UKR");
@@ -48,7 +51,8 @@ TEST(shift_cipher_test, encrypts_decrypts_correctly_ukr) {
     EXPECT_EQ(checksum1, checksum2);
 }
 
-TEST(shift_cipher_test, encrypts_decrypts_raw_bytes_correctly) {
+TEST(shift_cipher_test, encrypts_decrypts_raw_bytes_correctly)
+{
     auto opts
             = std::ios::in | std::ios::out | std::ios::binary | std::ios::trunc;
 
@@ -86,7 +90,8 @@ TEST(shift_cipher_test, encrypts_decrypts_raw_bytes_correctly) {
     fs::remove(tmp_fname);
 }
 
-TEST(shift_cipher_test, bruteforce_breaks_cipher_en) {
+TEST(shift_cipher_test, bruteforce_breaks_cipher_en)
+{
     int key = 6;
     std::u16string message = u"Hello, world!";
 
