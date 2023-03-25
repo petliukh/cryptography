@@ -69,7 +69,7 @@
     <item row="2" column="0">
      <widget class="QTabWidget" name="encryption_tabs">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="encrypt_tab">
        <attribute name="title">
@@ -218,7 +218,7 @@
         <item row="0" column="0">
          <widget class="QStackedWidget" name="cipher_specific_ops_stacked_widget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="ceasar_page">
            <layout class="QGridLayout" name="gridLayout_4">

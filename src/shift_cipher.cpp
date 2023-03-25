@@ -52,7 +52,7 @@ void Shift_cipher::set_lang(const std::u16string& lang)
     m_lang = languages.at(lang);
 }
 
-void Shift_cipher::set_lang(const language& lang)
+void Shift_cipher::set_lang(const Language& lang)
 {
     m_lang = lang;
 }

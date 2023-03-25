@@ -15,7 +15,7 @@ std::u16string utf8_to_utf16(const std::string& utf8) {
 }
 
 std::unordered_map<char16_t, int>
-get_message_freqs(const std::u16string& message, const language& lang) {
+get_message_freqs(const std::u16string& message, const Language& lang) {
     std::unordered_map<char16_t, int> freqs;
     freqs.reserve(lang.alphabet.size());
     for (char16_t c : message) {
@@ -28,7 +28,7 @@ get_message_freqs(const std::u16string& message, const language& lang) {
 
 bool validate_message(
         const std::u16string& message, const std::u16string& lang) {
-    language lang_ = languages.at(lang);
+    Language lang_ = languages.at(lang);
     for (char16_t c : message) {
         if (lang_.alphabet.find(c) == std::u16string::npos) {
             return false;
@@ -37,7 +37,7 @@ bool validate_message(
     return true;
 }
 
-bool validate_message(const std::u16string& message, const language& lang) {
+bool validate_message(const std::u16string& message, const Language& lang) {
     for (char16_t c : message) {
         if (lang.alphabet.find(c) == std::u16string::npos) {
             return false;

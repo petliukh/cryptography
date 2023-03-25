@@ -60,6 +60,10 @@ public:
     std::unordered_map<int, std::string>
     brute_force(const std::string& message);
 
+    // Trithemius cipher
+    std::string
+    break_trithemius_cipher_key(std::u16string enc, std::u16string dec);
+
 private:
     std::array<std::unique_ptr<cr::Cipher>, 2> m_ciphers;
     std::array<std::string, 3> m_content_arr;

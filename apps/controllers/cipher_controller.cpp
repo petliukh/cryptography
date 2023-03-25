@@ -144,7 +144,7 @@ std::string Cipher_controller::decrypt_raw_bytes(const std::string& bytes)
 std::unordered_map<char16_t, int>
 Cipher_controller::calc_freqs(std::string content)
 {
-    cr::language lang = cr::languages.at(cr::utf8_to_utf16(m_lang));
+    cr::Language lang = cr::languages.at(cr::utf8_to_utf16(m_lang));
     auto freqs = cr::get_message_freqs(cr::utf8_to_utf16(content), lang);
     return freqs;
 }
@@ -159,6 +159,35 @@ Cipher_controller::brute_force(const std::string& message)
         res_utf8[key] = cr::utf16_to_utf8(value);
     }
     return res_utf8;
+}
+
+// ============================================================================
+//                            Trithemius cipher
+// ============================================================================
+
+std::string Cipher_controller::break_trithemius_cipher_key(
+        std::u16string enc, std::u16string dec)
+{
+    using T_key = cr::Trithemius_cipher::Key;
+    using Key_type = cr::Trithemius_cipher::Key_type;
+
+    cr::Trithemius_cipher* tc
+            = (cr::Trithemius_cipher*) m_ciphers[m_curr_cipher].get();
+    T_key key = tc->break_cipher(enc, dec);
+    std::stringstream ss;
+
+    switch(key.type) {
+    case Key_type::v2:
+        ss << key.key_v2;
+        break;
+    case Key_type::v3:
+        ss << key.key_v3;
+        break;
+    default:
+        throw std::invalid_argument("Not implemented");
+    }
+
+    return ss.str();
 }
 
 }  // namespace petliukh::controllers

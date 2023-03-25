@@ -3,10 +3,10 @@
 #include <gtest/gtest.h>
 
 namespace cr = petliukh::cryptography;
-using tkey = cr::Trithemius_cipher::key;
-using tkey_type = cr::Trithemius_cipher::key_type;
+using tkey = cr::Trithemius_cipher::Key;
+using tkey_type = cr::Trithemius_cipher::Key_type;
 
-TEST(tritemius_test, sets_key_correctly)
+TEST(trithemius_test, sets_key_correctly)
 {
     cr::Trithemius_cipher cipher;
     cipher.set_lang(u"EN");
@@ -33,7 +33,7 @@ TEST(tritemius_test, sets_key_correctly)
     ASSERT_THROW(cipher.set_key(u"гасло"), std::invalid_argument);
 }
 
-TEST(tritemius_test, encrypts_decrypts_v2_correctly)
+TEST(trithemius_test, encrypts_decrypts_v2_correctly)
 {
     cr::Trithemius_cipher cipher;
     cipher.set_lang(u"EN");
@@ -55,7 +55,7 @@ TEST(tritemius_test, encrypts_decrypts_v2_correctly)
     ASSERT_EQ(checksum1, checksum2);
 }
 
-TEST(tritemius_test, encrypts_decrypts_v3_correctly)
+TEST(trithemius_test, encrypts_decrypts_v3_correctly)
 {
     cr::Trithemius_cipher cipher;
     cipher.set_lang(u"EN");
@@ -77,7 +77,7 @@ TEST(tritemius_test, encrypts_decrypts_v3_correctly)
     ASSERT_EQ(checksum1, checksum2);
 }
 
-TEST(tritemius_test, encrypts_decrypts_kw_correctly)
+TEST(trithemius_test, encrypts_decrypts_kw_correctly)
 {
     cr::Trithemius_cipher cipher;
     cipher.set_lang(u"EN");
@@ -99,7 +99,7 @@ TEST(tritemius_test, encrypts_decrypts_kw_correctly)
     ASSERT_EQ(checksum1, checksum2);
 }
 
-TEST(tritemius_test, encrypts_decrypts_raw_bytes_v2_correctly)
+TEST(trithemius_test, encrypts_decrypts_raw_bytes_v2_correctly)
 {
     auto opts
             = std::ios::in | std::ios::out | std::ios::binary | std::ios::trunc;
@@ -130,7 +130,7 @@ TEST(tritemius_test, encrypts_decrypts_raw_bytes_v2_correctly)
     ASSERT_EQ(checksum1, checksum2);
 }
 
-TEST(tritemius_test, encrypts_decrypts_raw_bytes_v3_correctly)
+TEST(trithemius_test, encrypts_decrypts_raw_bytes_v3_correctly)
 {
     auto opts
             = std::ios::in | std::ios::out | std::ios::binary | std::ios::trunc;
@@ -161,7 +161,7 @@ TEST(tritemius_test, encrypts_decrypts_raw_bytes_v3_correctly)
     ASSERT_EQ(checksum1, checksum2);
 }
 
-TEST(tritemius_test, encrypts_decrypts_raw_bytes_kw_correctly)
+TEST(trithemius_test, encrypts_decrypts_raw_bytes_kw_correctly)
 {
     auto opts
             = std::ios::in | std::ios::out | std::ios::binary | std::ios::trunc;
@@ -190,4 +190,82 @@ TEST(tritemius_test, encrypts_decrypts_raw_bytes_kw_correctly)
     std::string checksum1 = cr::sha256(file_bytes);
     std::string checksum2 = cr::sha256(decrypted_bytes);
     ASSERT_EQ(checksum1, checksum2);
+}
+
+TEST(trithemius_test, breaks_key_by_msg_pair_correctly_v2) {
+    cr::Trithemius_cipher cipher;
+    cipher.set_lang(u"EN");
+    cipher.set_key(u"2,3");
+    tkey my_key = cipher.get_key();
+    std::u16string message = u"Hello, World!";
+    std::u16string encrypted = cipher.encrypt(message);
+
+    tkey key = cipher.break_cipher(encrypted, message);
+    EXPECT_EQ(key.key_v2.x(), my_key.key_v2.x());
+    EXPECT_EQ(key.key_v2.y(), my_key.key_v2.y());
+
+    cipher.set_key(u"8,6");
+    my_key = cipher.get_key();
+    encrypted = cipher.encrypt(message);
+
+    key = cipher.break_cipher(encrypted, message);
+    EXPECT_EQ(key.key_v2.x(), my_key.key_v2.x());
+    EXPECT_EQ(key.key_v2.y(), my_key.key_v2.y());
+
+    cipher.set_key(u"19,24");
+    my_key = cipher.get_key();
+    encrypted = cipher.encrypt(message);
+
+    key = cipher.break_cipher(encrypted, message);
+    EXPECT_EQ(key.key_v2.x(), my_key.key_v2.x());
+    EXPECT_EQ(key.key_v2.y(), my_key.key_v2.y());
+
+    cipher.set_key(u"16,9");
+    my_key = cipher.get_key();
+    encrypted = cipher.encrypt(message);
+
+    key = cipher.break_cipher(encrypted, message);
+    EXPECT_EQ(key.key_v2.x(), my_key.key_v2.x());
+    EXPECT_EQ(key.key_v2.y(), my_key.key_v2.y());
+}
+
+TEST(trithemius_test, breaks_key_by_msg_pair_correctly_v3) {
+    cr::Trithemius_cipher cipher;
+    cipher.set_lang(u"EN");
+    cipher.set_key(u"2,3,5");
+    tkey my_key = cipher.get_key();
+    std::u16string message = u"Hello, World!";
+    std::u16string encrypted = cipher.encrypt(message);
+
+    tkey key = cipher.break_cipher(encrypted, message);
+    EXPECT_EQ(key.key_v3.x(), my_key.key_v3.x());
+    EXPECT_EQ(key.key_v3.y(), my_key.key_v3.y());
+    EXPECT_EQ(key.key_v3.z(), my_key.key_v3.z());
+
+    cipher.set_key(u"8,6,7");
+    my_key = cipher.get_key();
+    encrypted = cipher.encrypt(message);
+
+    key = cipher.break_cipher(encrypted, message);
+    EXPECT_EQ(key.key_v3.x(), my_key.key_v3.x());
+    EXPECT_EQ(key.key_v3.y(), my_key.key_v3.y());
+    EXPECT_EQ(key.key_v3.z(), my_key.key_v3.z());
+
+    cipher.set_key(u"19,24,15");
+    my_key = cipher.get_key();
+    encrypted = cipher.encrypt(message);
+
+    key = cipher.break_cipher(encrypted, message);
+    EXPECT_EQ(key.key_v3.x(), my_key.key_v3.x());
+    EXPECT_EQ(key.key_v3.y(), my_key.key_v3.y());
+    EXPECT_EQ(key.key_v3.z(), my_key.key_v3.z());
+
+    cipher.set_key(u"16,9,11");
+    my_key = cipher.get_key();
+    encrypted = cipher.encrypt(message);
+
+    key = cipher.break_cipher(encrypted, message);
+    EXPECT_EQ(key.key_v3.x(), my_key.key_v3.x());
+    EXPECT_EQ(key.key_v3.y(), my_key.key_v3.y());
+    EXPECT_EQ(key.key_v3.z(), my_key.key_v3.z());
 }

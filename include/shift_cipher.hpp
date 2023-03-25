@@ -17,7 +17,7 @@ public:
     void set_key(int key);
 
     virtual void set_lang(const std::u16string& lang) override;
-    virtual void set_lang(const language& lang) override;
+    virtual void set_lang(const Language& lang) override;
 
     int get_key() const;
 
@@ -32,7 +32,7 @@ private:
     std::string decrypt_raw_bytes_(const std::string& bytes, int key);
 
     int m_key;
-    language m_lang;
+    Language m_lang;
 };
 
 }  // namespace petliukh::cryptography
