@@ -18,11 +18,10 @@ std::u16string Trithemius_cipher::encrypt(const std::u16string& message)
         int k;
         switch (m_key.type) {
         case Key_type::v2:
-            k = m_key.key_v2.x() * i + m_key.key_v2.y();
+            k = m_key.v2.x() * i + m_key.v2.y();
             break;
         case Key_type::v3:
-            k = m_key.key_v3.x() * i * i + m_key.key_v3.y() * i
-                    + m_key.key_v3.z();
+            k = m_key.v3.x() * i * i + m_key.v3.y() * i + m_key.v3.z();
             break;
         case Key_type::word:
             k = m_lang.alphabet.find(m_key.keyword[i % m_key.keyword.size()]);
@@ -46,11 +45,10 @@ std::u16string Trithemius_cipher::decrypt(const std::u16string& message)
         int k;
         switch (m_key.type) {
         case Key_type::v2:
-            k = m_key.key_v2.x() * i + m_key.key_v2.y();
+            k = m_key.v2.x() * i + m_key.v2.y();
             break;
         case Key_type::v3:
-            k = m_key.key_v3.x() * i * i + m_key.key_v3.y() * i
-                    + m_key.key_v3.z();
+            k = m_key.v3.x() * i * i + m_key.v3.y() * i + m_key.v3.z();
             break;
         case Key_type::word:
             k = m_lang.alphabet.find(m_key.keyword[i % m_key.keyword.size()]);
@@ -71,11 +69,10 @@ std::string Trithemius_cipher::encrypt_raw_bytes(const std::string& bytes)
         int k;
         switch (m_key.type) {
         case Key_type::v2:
-            k = m_key.key_v2.x() * i + m_key.key_v2.y();
+            k = m_key.v2.x() * i + m_key.v2.y();
             break;
         case Key_type::v3:
-            k = m_key.key_v3.x() * i * i + m_key.key_v3.y() * i
-                    + m_key.key_v3.z();
+            k = m_key.v3.x() * i * i + m_key.v3.y() * i + m_key.v3.z();
             break;
         case Key_type::word:
             k = m_lang.alphabet.find(m_key.keyword[i % m_key.keyword.size()]);
@@ -95,11 +92,10 @@ std::string Trithemius_cipher::decrypt_raw_bytes(const std::string& bytes)
         int k;
         switch (m_key.type) {
         case Key_type::v2:
-            k = m_key.key_v2.x() * i + m_key.key_v2.y();
+            k = m_key.v2.x() * i + m_key.v2.y();
             break;
         case Key_type::v3:
-            k = m_key.key_v3.x() * i * i + m_key.key_v3.y() * i
-                    + m_key.key_v3.z();
+            k = m_key.v3.x() * i * i + m_key.v3.y() * i + m_key.v3.z();
             break;
         case Key_type::word:
             k = m_lang.alphabet.find(m_key.keyword[i % m_key.keyword.size()]);
@@ -133,14 +129,18 @@ void Trithemius_cipher::set_key(const std::u16string& key)
 
     if (key_parts_num.size() == 2) {
         m_key.type = Key_type::v2;
-        m_key.key_v2 = egn::Vector2i(key_parts_num[0], key_parts_num[1]);
+        m_key.v2 = egn::Vector2i(key_parts_num[0], key_parts_num[1]);
     } else if (key_parts_num.size() == 3) {
         m_key.type = Key_type::v3;
-        m_key.key_v3 = egn::Vector3i(
+        m_key.v3 = egn::Vector3i(
                 key_parts_num[0], key_parts_num[1], key_parts_num[2]);
     } else {
         throw std::invalid_argument("Invalid key");
     }
+}
+
+void Trithemius_cipher::set_key(const Trithemius_cipher::Key& key) {
+    m_key = key;
 }
 
 Trithemius_cipher::Key Trithemius_cipher::get_key() const
@@ -194,12 +194,12 @@ Trithemius_cipher::Key Trithemius_cipher::break_cipher_v2(
                 "Encrypted and decrypted messages must be "
                 "of the same length");
     }
-    egn::MatrixXd mtx(enc.size(), 2);
-    egn::VectorXd bv(enc.size());
-    egn::Vector2d xv;
+    egn::MatrixXd mtx(2, 2);
+    egn::VectorXd bv(2);
+    egn::Array2d xv;
     int n = m_lang.alphabet.size();
 
-    for (int i = 0; i < enc.size(); i++) {
+    for (int i = 0; i < 2; i++) {
         int x = m_lang.alphabet.find(enc[i]);
         int y = m_lang.alphabet.find(dec[i]);
         int k = (x - y + n) % n;
@@ -207,10 +207,10 @@ Trithemius_cipher::Key Trithemius_cipher::break_cipher_v2(
         mtx(i, 1) = 1;
         bv[i] = k;
     }
-    xv = mtx.colPivHouseholderQr().solve(bv);
+    xv = mtx.fullPivLu().solve(bv).array().round();
     Key key;
     key.type = Key_type::v2;
-    key.key_v2 = xv.cast<int>();
+    key.v2 = xv.matrix().cast<int>();
 
     return key;
 }
@@ -223,12 +223,12 @@ Trithemius_cipher::Key Trithemius_cipher::break_cipher_v3(
                 "Encrypted and decrypted messages must be "
                 "of the same length");
     }
-    egn::MatrixXd mtx(enc.size(), 3);
-    egn::VectorXd bv(enc.size());
-    egn::Vector3d xv;
+    egn::MatrixXd mtx(3, 3);
+    egn::VectorXd bv(3);
+    egn::Array3d xv;
     int n = m_lang.alphabet.size();
 
-    for (int i = 0; i < enc.size(); i++) {
+    for (int i = 0; i < 3; i++) {
         int x = m_lang.alphabet.find(enc[i]);
         int y = m_lang.alphabet.find(dec[i]);
         int k = (x - y + n) % n;
@@ -237,10 +237,10 @@ Trithemius_cipher::Key Trithemius_cipher::break_cipher_v3(
         mtx(i, 2) = 1;
         bv[i] = k;
     }
-    xv = mtx.colPivHouseholderQr().solve(bv);
+    xv = mtx.fullPivLu().solve(bv).array().round();
     Key key;
     key.type = Key_type::v3;
-    key.key_v3 = xv.cast<int>();
+    key.v3 = xv.matrix().cast<int>();
 
     return key;
 }

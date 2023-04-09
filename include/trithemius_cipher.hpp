@@ -13,8 +13,8 @@ public:
     enum class Key_type { v2, v3, word };
 
     struct Key {
-        egn::Vector2i key_v2;
-        egn::Vector3i key_v3;
+        egn::Vector2i v2;
+        egn::Vector3i v3;
         std::u16string keyword;
         Key_type type;
     };
@@ -28,6 +28,7 @@ public:
     virtual std::string decrypt_raw_bytes(const std::string& bytes) override;
 
     virtual void set_key(const std::u16string& key) override;
+    void set_key(const Key& key);
     Key get_key() const;
 
     virtual void set_lang(const std::u16string& lang) override;

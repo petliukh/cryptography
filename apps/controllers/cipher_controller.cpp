@@ -166,22 +166,25 @@ Cipher_controller::brute_force(const std::string& message)
 // ============================================================================
 
 std::string Cipher_controller::break_trithemius_cipher_key(
-        std::u16string enc, std::u16string dec)
+        std::string enc, std::string dec)
 {
     using T_key = cr::Trithemius_cipher::Key;
     using Key_type = cr::Trithemius_cipher::Key_type;
 
     cr::Trithemius_cipher* tc
             = (cr::Trithemius_cipher*) m_ciphers[m_curr_cipher].get();
-    T_key key = tc->break_cipher(enc, dec);
+
+    std::u16string u16enc = cr::utf8_to_utf16(enc);
+    std::u16string u16dec = cr::utf8_to_utf16(dec);
+    T_key key = tc->break_cipher(u16enc, u16dec);
     std::stringstream ss;
 
     switch(key.type) {
     case Key_type::v2:
-        ss << key.key_v2;
+        ss << key.v2;
         break;
     case Key_type::v3:
-        ss << key.key_v3;
+        ss << key.v3;
         break;
     default:
         throw std::invalid_argument("Not implemented");

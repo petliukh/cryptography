@@ -62,7 +62,7 @@ public:
 
     // Trithemius cipher
     std::string
-    break_trithemius_cipher_key(std::u16string enc, std::u16string dec);
+    break_trithemius_cipher_key(std::string enc, std::string dec);
 
 private:
     std::array<std::unique_ptr<cr::Cipher>, 2> m_ciphers;

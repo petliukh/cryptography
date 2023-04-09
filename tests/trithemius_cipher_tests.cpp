@@ -13,15 +13,15 @@ TEST(trithemius_test, sets_key_correctly)
     cipher.set_key(u"1,2");
     tkey key = cipher.get_key();
     ASSERT_EQ(key.type, tkey_type::v2);
-    ASSERT_EQ(key.key_v2.x(), 1);
-    ASSERT_EQ(key.key_v2.y(), 2);
+    ASSERT_EQ(key.v2.x(), 1);
+    ASSERT_EQ(key.v2.y(), 2);
 
     cipher.set_key(u"1,2,3");
     key = cipher.get_key();
     ASSERT_EQ(key.type, tkey_type::v3);
-    ASSERT_EQ(key.key_v3.x(), 1);
-    ASSERT_EQ(key.key_v3.y(), 2);
-    ASSERT_EQ(key.key_v3.z(), 3);
+    ASSERT_EQ(key.v3.x(), 1);
+    ASSERT_EQ(key.v3.y(), 2);
+    ASSERT_EQ(key.v3.z(), 3);
 
     cipher.set_key(u"keyword");
     key = cipher.get_key();
@@ -201,32 +201,32 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_v2) {
     std::u16string encrypted = cipher.encrypt(message);
 
     tkey key = cipher.break_cipher(encrypted, message);
-    EXPECT_EQ(key.key_v2.x(), my_key.key_v2.x());
-    EXPECT_EQ(key.key_v2.y(), my_key.key_v2.y());
+    ASSERT_EQ(key.v2.x(), my_key.v2.x());
+    ASSERT_EQ(key.v2.y(), my_key.v2.y());
 
     cipher.set_key(u"8,6");
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
     key = cipher.break_cipher(encrypted, message);
-    EXPECT_EQ(key.key_v2.x(), my_key.key_v2.x());
-    EXPECT_EQ(key.key_v2.y(), my_key.key_v2.y());
+    ASSERT_EQ(key.v2.x(), my_key.v2.x());
+    ASSERT_EQ(key.v2.y(), my_key.v2.y());
 
     cipher.set_key(u"19,24");
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
     key = cipher.break_cipher(encrypted, message);
-    EXPECT_EQ(key.key_v2.x(), my_key.key_v2.x());
-    EXPECT_EQ(key.key_v2.y(), my_key.key_v2.y());
+    ASSERT_EQ(key.v2.x(), my_key.v2.x());
+    ASSERT_EQ(key.v2.y(), my_key.v2.y());
 
     cipher.set_key(u"16,9");
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
     key = cipher.break_cipher(encrypted, message);
-    EXPECT_EQ(key.key_v2.x(), my_key.key_v2.x());
-    EXPECT_EQ(key.key_v2.y(), my_key.key_v2.y());
+    ASSERT_EQ(key.v2.x(), my_key.v2.x());
+    ASSERT_EQ(key.v2.y(), my_key.v2.y());
 }
 
 TEST(trithemius_test, breaks_key_by_msg_pair_correctly_v3) {
@@ -238,34 +238,34 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_v3) {
     std::u16string encrypted = cipher.encrypt(message);
 
     tkey key = cipher.break_cipher(encrypted, message);
-    EXPECT_EQ(key.key_v3.x(), my_key.key_v3.x());
-    EXPECT_EQ(key.key_v3.y(), my_key.key_v3.y());
-    EXPECT_EQ(key.key_v3.z(), my_key.key_v3.z());
+    ASSERT_EQ(key.v3.x(), my_key.v3.x());
+    ASSERT_EQ(key.v3.y(), my_key.v3.y());
+    ASSERT_EQ(key.v3.z(), my_key.v3.z());
 
     cipher.set_key(u"8,6,7");
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
     key = cipher.break_cipher(encrypted, message);
-    EXPECT_EQ(key.key_v3.x(), my_key.key_v3.x());
-    EXPECT_EQ(key.key_v3.y(), my_key.key_v3.y());
-    EXPECT_EQ(key.key_v3.z(), my_key.key_v3.z());
+    ASSERT_EQ(key.v3.x(), my_key.v3.x());
+    ASSERT_EQ(key.v3.y(), my_key.v3.y());
+    ASSERT_EQ(key.v3.z(), my_key.v3.z());
 
     cipher.set_key(u"19,24,15");
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
     key = cipher.break_cipher(encrypted, message);
-    EXPECT_EQ(key.key_v3.x(), my_key.key_v3.x());
-    EXPECT_EQ(key.key_v3.y(), my_key.key_v3.y());
-    EXPECT_EQ(key.key_v3.z(), my_key.key_v3.z());
+    ASSERT_EQ(key.v3.x(), my_key.v3.x());
+    ASSERT_EQ(key.v3.y(), my_key.v3.y());
+    ASSERT_EQ(key.v3.z(), my_key.v3.z());
 
     cipher.set_key(u"16,9,11");
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
     key = cipher.break_cipher(encrypted, message);
-    EXPECT_EQ(key.key_v3.x(), my_key.key_v3.x());
-    EXPECT_EQ(key.key_v3.y(), my_key.key_v3.y());
-    EXPECT_EQ(key.key_v3.z(), my_key.key_v3.z());
+    ASSERT_EQ(key.v3.x(), my_key.v3.x());
+    ASSERT_EQ(key.v3.y(), my_key.v3.y());
+    ASSERT_EQ(key.v3.z(), my_key.v3.z());
 }

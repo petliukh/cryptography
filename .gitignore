@@ -74,3 +74,4 @@ Thumbs.db
 # build dirs & cache
 build/
 .cache/
+Testing/

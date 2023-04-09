@@ -244,3 +244,12 @@ void Math_crypto::on_lang_cbox_currentIndexChanged(const QString& arg1)
 {
     m_controller.set_lang(arg1.toStdString());
 }
+
+void Math_crypto::on_msg_pair_attack_btn_clicked()
+{
+    QString input = ui->loaded_msg_pair_txt_edit->toPlainText();
+    QStringList messages = input.split("\n\n");
+    std::string key = m_controller.break_trithemius_cipher_key(
+            messages[0].toStdString(), messages[1].toStdString());
+    ui->broken_msg_txt_edit->setPlainText(QString::fromStdString(key));
+}
