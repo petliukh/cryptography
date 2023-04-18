@@ -2,7 +2,6 @@
 #include "cipher_base.hpp"
 
 #include <Eigen/Dense>
-#include <sstream>
 
 namespace petliukh::cryptography {
 
