@@ -1,8 +1,13 @@
 #include "trithemius_cipher.hpp"
 
-namespace petliukh::cryptography {
+#include "string_utils.hpp"
 
-Trithemius_cipher::Trithemius_cipher() : m_lang(languages.at(u"EN"))
+#include <sstream>
+
+namespace petliukh::cryptography {
+namespace su = petliukh::string_utils;
+
+Trithemius_cipher::Trithemius_cipher() : m_lang(Cipher::langs.at(u"EN"))
 {
 }
 
@@ -110,14 +115,14 @@ std::string Trithemius_cipher::decrypt_raw_bytes(const std::string& bytes)
 
 void Trithemius_cipher::set_key(const std::u16string& key)
 {
-    auto key_parts = ssplit(utf16_to_utf8(key), ',');
+    auto key_parts = su::str_split(su::utf16_to_utf8(key), ',');
     std::vector<int32_t> key_parts_num;
 
     for (const auto& part : key_parts) {
         try {
             key_parts_num.push_back(std::stoi(part));
         } catch (const std::invalid_argument& e) {
-            std::u16string keyword = utf8_to_utf16(part);
+            std::u16string keyword = su::utf8_to_utf16(part);
             if (!validate_keyword(keyword)) {
                 throw std::invalid_argument("Invalid key");
             }
@@ -139,7 +144,8 @@ void Trithemius_cipher::set_key(const std::u16string& key)
     }
 }
 
-void Trithemius_cipher::set_key(const Trithemius_cipher::Key& key) {
+void Trithemius_cipher::set_key(const Trithemius_cipher::Key& key)
+{
     m_key = key;
 }
 
@@ -150,7 +156,7 @@ Trithemius_cipher::Key Trithemius_cipher::get_key() const
 
 void Trithemius_cipher::set_lang(const std::u16string& lang)
 {
-    m_lang = languages.at(lang);
+    m_lang = Cipher::langs.at(lang);
 }
 
 void Trithemius_cipher::set_lang(const Language& lang)

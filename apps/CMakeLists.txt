@@ -5,7 +5,6 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/apps/forms)
-
 set(APP_NAME math-crypto-app)
 set(APP_SOURCES
     math_crypto_app.cpp views/math_crypto.cpp views/math_crypto.h

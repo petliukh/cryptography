@@ -1,6 +1,9 @@
 #include "shift_cipher.hpp"
+#include "crypto_utils.hpp"
 
 #include <gtest/gtest.h>
+#include <filesystem>
+#include <fstream>
 
 namespace cr = petliukh::cryptography;
 namespace fs = std::filesystem;

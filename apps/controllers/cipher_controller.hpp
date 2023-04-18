@@ -1,68 +1,44 @@
-#include "crypto_ciphers.hpp"
+#include "cipher_base.hpp"
 
-#include <array>
+#include <string>
 #include <memory>
+#include <array>
 
 namespace petliukh::controllers {
-
 namespace cr = petliukh::cryptography;
 
 class Cipher_controller {
 public:
     Cipher_controller();
 
-    // Getters
     std::string get_filename() const;
-
     std::string get_key() const;
-
     std::string get_lang() const;
-
     std::string get_content(int index) const;
-
     int get_curr_state() const;
 
-    // Setters
     void set_cipher_index(int idx);
-
     void set_key(const std::string& key);
-
     void set_lang(const std::string& lang);
-
     void set_filename(const std::string& filename);
-
     void set_content(int index, const std::string& content);
-
     void set_curr_state(int index);
 
-    // Misc
     std::string read_file();
-
     void save_file(int content_index);
-
     void save_file(const std::string& content);
-
     void reset();
 
-    // Cipher methods
-
     std::string encrypt(const std::string& message);
-
     std::string decrypt(const std::string& message);
-
     std::string encrypt_raw_bytes(const std::string& bytes);
-
     std::string decrypt_raw_bytes(const std::string& bytes);
-
     std::unordered_map<char16_t, int> calc_freqs(std::string content);
 
-    // Shift cipher
     std::unordered_map<int, std::string>
     brute_force(const std::string& message);
 
-    // Trithemius cipher
-    std::string
-    break_trithemius_cipher_key(std::string enc, std::string dec);
+    std::string break_trithemius_cipher_key(std::string enc, std::string dec);
 
 private:
     std::array<std::unique_ptr<cr::Cipher>, 2> m_ciphers;

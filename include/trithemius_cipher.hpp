@@ -20,25 +20,19 @@ public:
     };
 
     Trithemius_cipher();
-
     virtual std::u16string encrypt(const std::u16string& message) override;
     virtual std::u16string decrypt(const std::u16string& message) override;
-
     virtual std::string encrypt_raw_bytes(const std::string& bytes) override;
     virtual std::string decrypt_raw_bytes(const std::string& bytes) override;
-
     virtual void set_key(const std::u16string& key) override;
     void set_key(const Key& key);
     Key get_key() const;
-
     virtual void set_lang(const std::u16string& lang) override;
     virtual void set_lang(const Language& lang) override;
-
     Key break_cipher(const std::u16string& enc, const std::u16string& dec);
 
 private:
     bool validate_keyword(const std::u16string& keyword);
-
     Key break_cipher_v2(const std::u16string& enc, const std::u16string& dec);
     Key break_cipher_v3(const std::u16string& enc, const std::u16string& dec);
 
