@@ -245,11 +245,36 @@ void Math_crypto::on_lang_cbox_currentIndexChanged(const QString& arg1)
     m_controller.set_lang(arg1.toStdString());
 }
 
-void Math_crypto::on_msg_pair_attack_btn_clicked()
+void Math_crypto::on_trit_attack_combobox_currentIndexChanged(int index)
 {
-    QString input = ui->loaded_msg_pair_txt_edit->toPlainText();
-    QStringList messages = input.split("\n\n");
-    std::string key = m_controller.break_trithemius_cipher_key(
-            messages[0].toStdString(), messages[1].toStdString());
-    ui->broken_msg_txt_edit->setPlainText(QString::fromStdString(key));
+    ui->trithemius_attacks_stacked_widget->setCurrentIndex(index);
+}
+
+void Math_crypto::on_attack_trit_cipher_btn_clicked()
+{
+    int idx = ui->trit_attack_combobox->currentIndex();
+    try {
+        switch (idx) {
+        case 0: {
+            std::string msg
+                    = ui->dec_msg_trit_attack_tedit->toPlainText().toStdString();
+            std::string enc
+                    = ui->enc_msg_tit_attack_tedit->toPlainText().toStdString();
+            std::string broken_key
+                    = m_controller.break_trithemius_cipher_key(msg, enc);
+            ui->trit_broken_key_ledit->setText(QString::fromStdString(broken_key));
+            break;
+        }
+        case 1: {
+            QMessageBox::information(
+                    this, "Not implemented",
+                    "Frequency table attack has not been implemented yet.");
+            break;
+        }
+        }
+    } catch (std::invalid_argument& ex) {
+        QMessageBox::warning(
+                this, "Error",
+                ex.what());
+    }
 }

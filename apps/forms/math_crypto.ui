@@ -69,7 +69,7 @@
     <item row="2" column="0">
      <widget class="QTabWidget" name="encryption_tabs">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="encrypt_tab">
        <attribute name="title">
@@ -218,7 +218,7 @@
         <item row="0" column="0">
          <widget class="QStackedWidget" name="cipher_specific_ops_stacked_widget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="ceasar_page">
            <layout class="QGridLayout" name="gridLayout_4">
@@ -237,65 +237,103 @@
           <widget class="QWidget" name="tritemius_page">
            <layout class="QGridLayout" name="gridLayout_5">
             <item row="0" column="0">
-             <layout class="QVBoxLayout" name="verticalLayout_4">
+             <widget class="QComboBox" name="trit_attack_combobox">
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_6">
-                <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_2">
-                  <item>
-                   <widget class="QPushButton" name="load_freq_tables_btn">
-                    <property name="text">
-                     <string>Load Freq Tables</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QTableWidget" name="loaded_freq_table"/>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QVBoxLayout" name="verticalLayout">
-                  <item>
-                   <widget class="QPushButton" name="load_msg_pair">
-                    <property name="text">
-                     <string>Load Message Pair</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QTextEdit" name="loaded_msg_pair_txt_edit"/>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
+               <property name="text">
+                <string>Message Pair</string>
+               </property>
               </item>
               <item>
-               <layout class="QVBoxLayout" name="verticalLayout_3">
-                <item>
+               <property name="text">
+                <string>Frequency Tables</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QStackedWidget" name="trithemius_attacks_stacked_widget">
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="page">
+               <layout class="QGridLayout" name="gridLayout_7">
+                <item row="2" column="0">
                  <layout class="QHBoxLayout" name="horizontalLayout_5">
                   <item>
-                   <widget class="QPushButton" name="freq_table_attack_btn">
+                   <widget class="QLabel" name="trir_broken_key_lbl">
                     <property name="text">
-                     <string>Attack Using Freq Table</string>
+                     <string>Broken Key:</string>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="msg_pair_attack_btn">
-                    <property name="text">
-                     <string>Attack Using Message Pair(Decrypted - Encrypted)</string>
-                    </property>
-                   </widget>
+                   <widget class="QLineEdit" name="trit_broken_key_ledit"/>
                   </item>
                  </layout>
                 </item>
-                <item>
-                 <widget class="QTextEdit" name="broken_msg_txt_edit"/>
+                <item row="1" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_6">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_2">
+                    <item>
+                     <widget class="QLabel" name="init_msg_trit_attack_lbl">
+                      <property name="text">
+                       <string>Decrypted Message</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPlainTextEdit" name="dec_msg_trit_attack_tedit"/>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout">
+                    <item>
+                     <widget class="QLabel" name="enc_msg_trit_attack_lbl">
+                      <property name="text">
+                       <string>Encrypted Message</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPlainTextEdit" name="enc_msg_tit_attack_tedit"/>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
                 </item>
                </layout>
-              </item>
-             </layout>
+              </widget>
+              <widget class="QWidget" name="page_2">
+               <layout class="QGridLayout" name="gridLayout_8">
+                <item row="0" column="0">
+                 <widget class="QPushButton" name="load_lang_freq_table">
+                  <property name="text">
+                   <string>Load Language Freq Table</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_7">
+                  <item>
+                   <widget class="QTableWidget" name="lang_freq_table"/>
+                  </item>
+                  <item>
+                   <widget class="QTableWidget" name="freq_attack_attempts_table"/>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QPushButton" name="attack_trit_cipher_btn">
+              <property name="text">
+               <string>Attck Trithemius Cipher</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>

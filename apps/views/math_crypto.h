@@ -56,7 +56,9 @@ private slots:
 
     void on_brute_force_btn_clicked();
 
-    void on_msg_pair_attack_btn_clicked();
+    void on_trit_attack_combobox_currentIndexChanged(int index);
+
+    void on_attack_trit_cipher_btn_clicked();
 
 private:
     Ui::Math_crypto* ui;
