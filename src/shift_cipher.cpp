@@ -67,11 +67,10 @@ int Shift_cipher::get_key() const
     return m_key;
 }
 
-std::unordered_map<int, std::u16string>
+std::map<int, std::u16string>
 Shift_cipher::brute_force(const std::u16string& message)
 {
-    std::unordered_map<int, std::u16string> messages;
-    messages.reserve(m_lang.alphabet.size());
+    std::map<int, std::u16string> messages;
 
     for (int key = 0; key < m_lang.alphabet.size(); key++) {
         std::u16string decrypted_msg = decrypt_(message, key);

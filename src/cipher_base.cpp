@@ -3,7 +3,7 @@
 namespace petliukh::cryptography {
 
 const std::u16string Cipher::special_chars = u" ,.?!:;()[]{}-_=+*/\\\"\'\n";
-const std::unordered_map<std::u16string, Language> Cipher::langs = {
+const std::map<std::u16string, Language> Cipher::langs = {
     { u"EN",
       Language{ u"EN", u"English",
                 u"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -15,15 +15,31 @@ const std::unordered_map<std::u16string, Language> Cipher::langs = {
                         + Cipher::special_chars } },
 };
 
-std::unordered_map<char16_t, int>
+std::map<char16_t, int>
 count_chars(const std::u16string& message, const Language& lang)
 {
-    std::unordered_map<char16_t, int> freqs;
-    freqs.reserve(lang.alphabet.size());
+    std::map<char16_t, int> freqs;
     for (char16_t c : message) {
         if (lang.alphabet.find(c) != std::u16string::npos) {
             freqs[c]++;
         }
+    }
+    return freqs;
+}
+
+std::map<char16_t, double>
+count_freqs(const std::u16string& message, const Language& lang)
+{
+    std::map<char16_t, double> freqs;
+    int msg_size = message.size();
+
+    for (char16_t c : message) {
+        if (lang.alphabet.find(c) != std::u16string::npos) {
+            freqs[c]++;
+        }
+    }
+    for (auto& [cnt, chr] : freqs) {
+        freqs[cnt] /= msg_size;
     }
     return freqs;
 }

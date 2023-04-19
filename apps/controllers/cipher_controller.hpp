@@ -33,9 +33,9 @@ public:
     std::string decrypt(const std::string& message);
     std::string encrypt_raw_bytes(const std::string& bytes);
     std::string decrypt_raw_bytes(const std::string& bytes);
-    std::unordered_map<char16_t, int> calc_freqs(std::string content);
+    std::map<char16_t, int> calc_freqs(std::string content);
 
-    std::unordered_map<int, std::string>
+    std::map<int, std::string>
     brute_force(const std::string& message);
 
     std::string break_trithemius_cipher_key(std::string enc, std::string dec);

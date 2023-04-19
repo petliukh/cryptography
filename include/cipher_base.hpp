@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <unordered_map>
+#include <map>
 
 namespace petliukh::cryptography {
 
@@ -13,7 +13,7 @@ struct Language {
 class Cipher {
 public:
     static const std::u16string special_chars;
-    static const std::unordered_map<std::u16string, Language> langs;
+    static const std::map<std::u16string, Language> langs;
 
     virtual ~Cipher() = default;
     virtual std::u16string encrypt(const std::u16string& message) = 0;
@@ -27,7 +27,9 @@ public:
 
 bool validate_msg(const std::u16string& msg, const Language& lang);
 bool validate_msg(const std::u16string& msg, std::u16string& lang);
-std::unordered_map<char16_t, int> count_chars(
-        const std::u16string& msg, const Language& lang);
+std::map<char16_t, int>
+count_chars(const std::u16string& msg, const Language& lang);
+std::map<char16_t, double>
+count_freqs(const std::u16string& msg, const Language& lang);
 
 }  // namespace petliukh::cryptography

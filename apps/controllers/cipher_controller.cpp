@@ -148,7 +148,7 @@ std::string Cipher_controller::decrypt_raw_bytes(const std::string& bytes)
     return m_ciphers[m_curr_cipher]->decrypt_raw_bytes(bytes);
 }
 
-std::unordered_map<char16_t, int>
+std::map<char16_t, int>
 Cipher_controller::calc_freqs(std::string content)
 {
     cr::Language lang = cr::Cipher::langs.at(su::utf8_to_utf16(m_lang));
@@ -156,12 +156,12 @@ Cipher_controller::calc_freqs(std::string content)
     return freqs;
 }
 
-std::unordered_map<int, std::string>
+std::map<int, std::string>
 Cipher_controller::brute_force(const std::string& message)
 {
     cr::Shift_cipher* sc = static_cast<cr::Shift_cipher*>(m_ciphers[0].get());
     auto res = sc->brute_force(su::utf8_to_utf16(message));
-    std::unordered_map<int, std::string> res_utf8;
+    std::map<int, std::string> res_utf8;
     for (auto& [key, value] : res) {
         res_utf8[key] = su::utf16_to_utf8(value);
     }
@@ -183,7 +183,7 @@ Cipher_controller::break_trithemius_cipher_key(std::string enc, std::string dec)
 
     std::u16string u16enc = su::utf8_to_utf16(enc);
     std::u16string u16dec = su::utf8_to_utf16(dec);
-    T_key key = tc->break_cipher(u16enc, u16dec);
+    T_key key = tc->break_cipher_with_msg_pair(u16enc, u16dec);
     std::stringstream ss;
 
     switch (key.type) {

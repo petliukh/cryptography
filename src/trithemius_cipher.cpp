@@ -11,6 +11,20 @@ Trithemius_cipher::Trithemius_cipher() : m_lang(Cipher::langs.at(u"EN"))
 {
 }
 
+std::string Trithemius_cipher::Key::to_string() const
+{
+    switch (type) {
+    case Key_type::vec: {
+        std::stringstream ss;
+        ss << vec;
+        return ss.str();
+    }
+    case Key_type::word: {
+        return su::utf16_to_utf8(keyword);
+    }
+    }
+}
+
 std::u16string Trithemius_cipher::encrypt(const std::u16string& message)
 {
     std::u16string output;
@@ -166,20 +180,8 @@ bool Trithemius_cipher::validate_keyword(const std::u16string& keyword)
 //                                Breaking cipher
 // =============================================================================
 
-Trithemius_cipher::Key Trithemius_cipher::break_cipher(
-        const std::u16string& enc, const std::u16string& dec)
-{
-    switch (m_key.type) {
-    case Key_type::vec:
-        return break_cipher_vec(enc, dec);
-    default:
-        throw std::invalid_argument(
-                "Breaking for this type of key is not implemented.");
-    }
-}
-
-Trithemius_cipher::Key Trithemius_cipher::break_cipher_vec(
-        const std::u16string& enc, const std::u16string& dec)
+Trithemius_cipher::Key Trithemius_cipher::break_cipher_with_msg_pair(
+        const std::u16string& enc, const std::u16string& dec) const
 {
     if (enc.size() != dec.size()) {
         throw std::invalid_argument(
@@ -210,6 +212,15 @@ Trithemius_cipher::Key Trithemius_cipher::break_cipher_vec(
     key.vec = xv.matrix().cast<int>();
 
     return key;
+}
+
+std::map<std::u16string, std::u16string>
+Trithemius_cipher::break_cipher_with_freqs(
+        std::map<char16_t, double> lang_freqs,
+        const std::u16string& enc) const
+{
+    std::map<char16_t, double> freqs = count_freqs(enc, m_lang);
+    return {};
 }
 
 }  // namespace petliukh::cryptography

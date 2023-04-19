@@ -2,6 +2,8 @@
 #include "cipher_base.hpp"
 
 #include <Eigen/Dense>
+#include <string>
+#include <map>
 
 namespace petliukh::cryptography {
 
@@ -15,6 +17,8 @@ public:
         egn::VectorXi vec;
         std::u16string keyword;
         Key_type type;
+
+        std::string to_string() const;
     };
 
     Trithemius_cipher();
@@ -27,11 +31,14 @@ public:
     Key get_key() const;
     virtual void set_lang(const std::u16string& lang) override;
     virtual void set_lang(const Language& lang) override;
-    Key break_cipher(const std::u16string& enc, const std::u16string& dec);
+    Key
+    break_cipher_with_msg_pair(const std::u16string& enc, const std::u16string& dec) const;
+    std::map<std::u16string, std::u16string> break_cipher_with_freqs(
+            std::map<char16_t, double> lang_freqs,
+            const std::u16string& enc) const;
 
 private:
     bool validate_keyword(const std::u16string& keyword);
-    Key break_cipher_vec(const std::u16string& enc, const std::u16string& dec);
 
     Key m_key;
     Language m_lang;
