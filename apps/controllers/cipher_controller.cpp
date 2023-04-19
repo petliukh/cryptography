@@ -7,7 +7,6 @@
 #include <fstream>
 
 namespace petliukh::controllers {
-namespace su = petliukh::string_utils;
 
 Cipher_controller::Cipher_controller() : m_lang("EN")
 {
@@ -58,14 +57,14 @@ void Cipher_controller::set_cipher_index(int idx)
 void Cipher_controller::set_key(const std::string& key)
 {
     m_key = key;
-    std::u16string u16key = su::utf8_to_utf16(key);
+    std::u16string u16key = cr::utf8_to_utf16(key);
     m_ciphers[m_curr_cipher]->set_key(u16key);
 }
 
 void Cipher_controller::set_lang(const std::string& lang)
 {
     m_lang = lang;
-    std::u16string u16lang = su::utf8_to_utf16(lang);
+    std::u16string u16lang = cr::utf8_to_utf16(lang);
     m_ciphers[m_curr_cipher]->set_lang(u16lang);
 }
 
@@ -126,16 +125,16 @@ void Cipher_controller::reset()
 
 std::string Cipher_controller::encrypt(const std::string& message)
 {
-    std::u16string u16message = su::utf8_to_utf16(message);
+    std::u16string u16message = cr::utf8_to_utf16(message);
     std::u16string res = m_ciphers[m_curr_cipher]->encrypt(u16message);
-    return su::utf16_to_utf8(res);
+    return cr::utf16_to_utf8(res);
 }
 
 std::string Cipher_controller::decrypt(const std::string& message)
 {
-    std::u16string u16message = su::utf8_to_utf16(message);
+    std::u16string u16message = cr::utf8_to_utf16(message);
     std::u16string res = m_ciphers[m_curr_cipher]->decrypt(u16message);
-    return su::utf16_to_utf8(res);
+    return cr::utf16_to_utf8(res);
 }
 
 std::string Cipher_controller::encrypt_raw_bytes(const std::string& bytes)
@@ -151,8 +150,8 @@ std::string Cipher_controller::decrypt_raw_bytes(const std::string& bytes)
 std::map<char16_t, int>
 Cipher_controller::calc_freqs(std::string content)
 {
-    cr::Language lang = cr::Cipher::langs.at(su::utf8_to_utf16(m_lang));
-    auto freqs = cr::count_chars(su::utf8_to_utf16(content), lang);
+    cr::Language lang = cr::Cipher::langs.at(cr::utf8_to_utf16(m_lang));
+    auto freqs = cr::count_chars(cr::utf8_to_utf16(content), lang);
     return freqs;
 }
 
@@ -160,10 +159,10 @@ std::map<int, std::string>
 Cipher_controller::brute_force(const std::string& message)
 {
     cr::Shift_cipher* sc = static_cast<cr::Shift_cipher*>(m_ciphers[0].get());
-    auto res = sc->brute_force(su::utf8_to_utf16(message));
+    auto res = sc->brute_force(cr::utf8_to_utf16(message));
     std::map<int, std::string> res_utf8;
     for (auto& [key, value] : res) {
-        res_utf8[key] = su::utf16_to_utf8(value);
+        res_utf8[key] = cr::utf16_to_utf8(value);
     }
     return res_utf8;
 }
@@ -181,20 +180,10 @@ Cipher_controller::break_trithemius_cipher_key(std::string enc, std::string dec)
     cr::Trithemius_cipher* tc
             = (cr::Trithemius_cipher*) m_ciphers[m_curr_cipher].get();
 
-    std::u16string u16enc = su::utf8_to_utf16(enc);
-    std::u16string u16dec = su::utf8_to_utf16(dec);
+    std::u16string u16enc = cr::utf8_to_utf16(enc);
+    std::u16string u16dec = cr::utf8_to_utf16(dec);
     T_key key = tc->break_cipher_with_msg_pair(u16enc, u16dec);
-    std::stringstream ss;
-
-    switch (key.type) {
-    case Key_type::vec:
-        ss << key.vec;
-        break;
-    default:
-        throw std::invalid_argument("Not implemented");
-    }
-
-    return ss.str();
+    return key.to_string();
 }
 
 }  // namespace petliukh::controllers

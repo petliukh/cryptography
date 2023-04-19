@@ -5,7 +5,6 @@
 #include <stdexcept>
 
 namespace petliukh::cryptography {
-namespace su = petliukh::string_utils;
 
 Shift_cipher::Shift_cipher() : m_key(0), m_lang(Cipher::langs.at(u"EN"))
 {
@@ -33,7 +32,7 @@ std::string Shift_cipher::decrypt_raw_bytes(const std::string& bytes)
 
 void Shift_cipher::set_key(const std::u16string& key)
 {
-    std::string key_str = su::utf16_to_utf8(key);
+    std::string key_str = utf16_to_utf8(key);
     int ikey = std::stoi(key_str);
 
     if (ikey < 0 || ikey >= m_lang.alphabet.size()) {

@@ -5,7 +5,6 @@
 #include <sstream>
 
 namespace petliukh::cryptography {
-namespace su = petliukh::string_utils;
 
 Trithemius_cipher::Trithemius_cipher() : m_lang(Cipher::langs.at(u"EN"))
 {
@@ -20,7 +19,7 @@ std::string Trithemius_cipher::Key::to_string() const
         return ss.str();
     }
     case Key_type::word: {
-        return su::utf16_to_utf8(keyword);
+        return utf16_to_utf8(keyword);
     }
     }
 }
@@ -125,14 +124,14 @@ std::string Trithemius_cipher::decrypt_raw_bytes(const std::string& bytes)
 
 void Trithemius_cipher::set_key(const std::u16string& key)
 {
-    auto key_parts = su::str_split(su::utf16_to_utf8(key), ',');
+    auto key_parts = str_split(utf16_to_utf8(key), ',');
     std::vector<int32_t> key_parts_num;
 
     for (const auto& part : key_parts) {
         try {
             key_parts_num.push_back(std::stoi(part));
         } catch (const std::invalid_argument& e) {
-            std::u16string keyword = su::utf8_to_utf16(part);
+            std::u16string keyword = utf8_to_utf16(part);
             if (!validate_keyword(keyword)) {
                 throw std::invalid_argument("Invalid key");
             }
@@ -216,10 +215,15 @@ Trithemius_cipher::Key Trithemius_cipher::break_cipher_with_msg_pair(
 
 std::map<std::u16string, std::u16string>
 Trithemius_cipher::break_cipher_with_freqs(
-        std::map<char16_t, double> lang_freqs,
-        const std::u16string& enc) const
+        std::map<char16_t, double> lang_freqs, const std::u16string& enc) const
 {
     std::map<char16_t, double> freqs = count_freqs(enc, m_lang);
+    if (freqs.size() != lang_freqs.size()) {
+        throw std::invalid_argument(
+                "The message is not large enough to use freq analysis.");
+    }
+    std::u16string init_msg_guess;
+
     return {};
 }
 

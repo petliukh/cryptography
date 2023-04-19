@@ -3,7 +3,6 @@
 #include "string_utils.hpp"
 
 namespace petliukh::cryptography {
-namespace su = petliukh::string_utils;
 
 std::string sha256(const std::string& str)
 {
@@ -19,7 +18,7 @@ std::string sha256(const std::string& str)
 
 std::string sha256(const std::u16string& str)
 {
-    return sha256(su::utf16_to_utf8(str));
+    return sha256(utf16_to_utf8(str));
 }
 
 }  // namespace petliukh::crypto_utils
