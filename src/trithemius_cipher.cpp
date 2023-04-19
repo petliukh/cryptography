@@ -1,12 +1,16 @@
 #include "trithemius_cipher.hpp"
 
+#include "map_utils.hpp"
 #include "string_utils.hpp"
 
+#include <algorithm>
 #include <sstream>
 
 namespace petliukh::cryptography {
 
-Trithemius_cipher::Trithemius_cipher() : m_lang(Cipher::langs.at(u"EN"))
+Trithemius_cipher::Trithemius_cipher()
+    : m_key(Key{ egn::VectorXi::Zero(2), u"", Key_type::vec }),
+      m_lang(Cipher::langs.at(u"EN"))
 {
 }
 
@@ -22,6 +26,7 @@ std::string Trithemius_cipher::Key::to_string() const
         return utf16_to_utf8(keyword);
     }
     }
+    return "";
 }
 
 std::u16string Trithemius_cipher::encrypt(const std::u16string& message)
@@ -213,18 +218,57 @@ Trithemius_cipher::Key Trithemius_cipher::break_cipher_with_msg_pair(
     return key;
 }
 
+std::u16string Trithemius_cipher::break_try(
+        const std::u16string& enc,
+        const std::vector<std::pair<char16_t, double>>& lang_freqs_vec,
+        const std::vector<std::pair<char16_t, double>>& msg_freqs_vec) const
+{
+    std::u16string msg_guess;
+    msg_guess.reserve(enc.size());
+    for (char16_t chr : enc) {
+        auto it = std::find_if(
+                msg_freqs_vec.begin(), msg_freqs_vec.end(),
+                [&](auto& e) { return e.first == chr; });
+        int idx = std::distance(it, msg_freqs_vec.begin());
+        msg_guess += lang_freqs_vec[idx % lang_freqs_vec.size()].first;
+    }
+    return msg_guess;
+}
+
 std::map<std::u16string, std::u16string>
 Trithemius_cipher::break_cipher_with_freqs(
-        std::map<char16_t, double> lang_freqs, const std::u16string& enc) const
+        std::map<char16_t, double> lang_freqs, const std::u16string& enc,
+        int max_tries) const
 {
-    std::map<char16_t, double> freqs = count_freqs(enc, m_lang);
-    if (freqs.size() != lang_freqs.size()) {
-        throw std::invalid_argument(
-                "The message is not large enough to use freq analysis.");
-    }
-    std::u16string init_msg_guess;
+    std::map<std::u16string, std::u16string> tries;
+    std::map<char16_t, double> msg_freqs = count_freqs(enc, m_lang);
 
-    return {};
+    std::vector<std::pair<char16_t, double>> lang_freqs_vec
+            = vec_from_map(lang_freqs);
+    std::vector<std::pair<char16_t, double>> msg_freqs_vec
+            = vec_from_map(msg_freqs);
+
+    auto sort_by = [](auto& left, auto& right) {
+        return left.second < right.second;
+    };
+
+    std::sort(lang_freqs_vec.begin(), lang_freqs_vec.end(), sort_by);
+    std::sort(msg_freqs_vec.begin(), msg_freqs_vec.end(), sort_by);
+
+    for (int i = 0; i < max_tries; i++) {
+        std::u16string msg_guess
+                = break_try(enc, lang_freqs_vec, msg_freqs_vec);
+        Key key_try = break_cipher_with_msg_pair(enc, msg_guess);
+        std::u16string key_u16str = utf8_to_utf16(key_try.to_string());
+        tries[key_u16str] = msg_guess;
+
+        if (!std::next_permutation(
+                    msg_freqs_vec.begin(), msg_freqs_vec.end())) {
+            return tries;
+        }
+    }
+
+    return tries;
 }
 
 }  // namespace petliukh::cryptography

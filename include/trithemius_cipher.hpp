@@ -2,8 +2,8 @@
 #include "cipher_base.hpp"
 
 #include <Eigen/Dense>
-#include <string>
 #include <map>
+#include <string>
 
 namespace petliukh::cryptography {
 
@@ -31,14 +31,19 @@ public:
     Key get_key() const;
     virtual void set_lang(const std::u16string& lang) override;
     virtual void set_lang(const Language& lang) override;
-    Key
-    break_cipher_with_msg_pair(const std::u16string& enc, const std::u16string& dec) const;
+    Key break_cipher_with_msg_pair(
+            const std::u16string& enc, const std::u16string& dec) const;
     std::map<std::u16string, std::u16string> break_cipher_with_freqs(
-            std::map<char16_t, double> lang_freqs,
-            const std::u16string& enc) const;
+            std::map<char16_t, double> lang_freqs, const std::u16string& enc,
+            int max_tries = 100) const;
 
 private:
     bool validate_keyword(const std::u16string& keyword);
+    std::u16string break_try(
+            const std::u16string& enc,
+            const std::vector<std::pair<char16_t, double>>& lang_freqs_vec,
+            const std::vector<std::pair<char16_t, double>>& msg_freqs_vec)
+            const;
 
     Key m_key;
     Language m_lang;

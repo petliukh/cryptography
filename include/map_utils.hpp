@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
 #include <map>
+#include <vector>
 
 namespace petliukh::cryptography {
 template<typename A, typename B>
@@ -18,4 +19,14 @@ std::multimap<B, A> flip_map(const std::map<A, B>& src)
             flip_pair<A, B>);
     return dst;
 }
+
+template<typename A, typename B>
+std::vector<std::pair<A, B>> vec_from_map(const std::map<A, B>& src)
+{
+    std::vector<std::pair<A, B>> res;
+    res.reserve(src.size());
+    std::copy(src.begin(), src.end(), std::back_inserter(res));
+    return res;
+}
+
 }  // namespace petliukh::cryptography
