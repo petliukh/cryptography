@@ -14,16 +14,16 @@ TEST(trithemius_test, sets_key_correctly)
     cipher.set_lang(u"EN");
     cipher.set_key(u"1,2");
     T_key key = cipher.get_key();
-    ASSERT_EQ(key.type, T_key_type::v2);
-    ASSERT_EQ(key.v2.x(), 1);
-    ASSERT_EQ(key.v2.y(), 2);
+    ASSERT_EQ(key.type, T_key_type::vec);
+    ASSERT_EQ(key.vec.x(), 1);
+    ASSERT_EQ(key.vec.y(), 2);
 
     cipher.set_key(u"1,2,3");
     key = cipher.get_key();
-    ASSERT_EQ(key.type, T_key_type::v3);
-    ASSERT_EQ(key.v3.x(), 1);
-    ASSERT_EQ(key.v3.y(), 2);
-    ASSERT_EQ(key.v3.z(), 3);
+    ASSERT_EQ(key.type, T_key_type::vec);
+    ASSERT_EQ(key.vec.x(), 1);
+    ASSERT_EQ(key.vec.y(), 2);
+    ASSERT_EQ(key.vec.z(), 3);
 
     cipher.set_key(u"keyword");
     key = cipher.get_key();
@@ -35,7 +35,7 @@ TEST(trithemius_test, sets_key_correctly)
     ASSERT_THROW(cipher.set_key(u"гасло"), std::invalid_argument);
 }
 
-TEST(trithemius_test, encrypts_decrypts_v2_correctly)
+TEST(trithemius_test, encrypts_decrypts_vec2_correctly)
 {
     cr::Trithemius_cipher cipher;
     cipher.set_lang(u"EN");
@@ -57,7 +57,7 @@ TEST(trithemius_test, encrypts_decrypts_v2_correctly)
     ASSERT_EQ(checksum1, checksum2);
 }
 
-TEST(trithemius_test, encrypts_decrypts_v3_correctly)
+TEST(trithemius_test, encrypts_decrypts_vec3_correctly)
 {
     cr::Trithemius_cipher cipher;
     cipher.set_lang(u"EN");
@@ -101,7 +101,7 @@ TEST(trithemius_test, encrypts_decrypts_kw_correctly)
     ASSERT_EQ(checksum1, checksum2);
 }
 
-TEST(trithemius_test, encrypts_decrypts_raw_bytes_v2_correctly)
+TEST(trithemius_test, encrypts_decrypts_raw_bytes_vec2_correctly)
 {
     auto opts
             = std::ios::in | std::ios::out | std::ios::binary | std::ios::trunc;
@@ -132,7 +132,7 @@ TEST(trithemius_test, encrypts_decrypts_raw_bytes_v2_correctly)
     ASSERT_EQ(checksum1, checksum2);
 }
 
-TEST(trithemius_test, encrypts_decrypts_raw_bytes_v3_correctly)
+TEST(trithemius_test, encrypts_decrypts_raw_bytes_vec3_correctly)
 {
     auto opts
             = std::ios::in | std::ios::out | std::ios::binary | std::ios::trunc;
@@ -194,7 +194,7 @@ TEST(trithemius_test, encrypts_decrypts_raw_bytes_kw_correctly)
     ASSERT_EQ(checksum1, checksum2);
 }
 
-TEST(trithemius_test, breaks_key_by_msg_pair_correctly_v2) {
+TEST(trithemius_test, breaks_key_by_msg_pair_correctly_vec2) {
     cr::Trithemius_cipher cipher;
     cipher.set_lang(u"EN");
     cipher.set_key(u"2,3");
@@ -203,35 +203,35 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_v2) {
     std::u16string encrypted = cipher.encrypt(message);
 
     T_key key = cipher.break_cipher(encrypted, message);
-    ASSERT_EQ(key.v2.x(), my_key.v2.x());
-    ASSERT_EQ(key.v2.y(), my_key.v2.y());
+    ASSERT_EQ(key.vec.x(), my_key.vec.x());
+    ASSERT_EQ(key.vec.y(), my_key.vec.y());
 
     cipher.set_key(u"8,6");
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
     key = cipher.break_cipher(encrypted, message);
-    ASSERT_EQ(key.v2.x(), my_key.v2.x());
-    ASSERT_EQ(key.v2.y(), my_key.v2.y());
+    ASSERT_EQ(key.vec.x(), my_key.vec.x());
+    ASSERT_EQ(key.vec.y(), my_key.vec.y());
 
     cipher.set_key(u"19,24");
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
     key = cipher.break_cipher(encrypted, message);
-    ASSERT_EQ(key.v2.x(), my_key.v2.x());
-    ASSERT_EQ(key.v2.y(), my_key.v2.y());
+    ASSERT_EQ(key.vec.x(), my_key.vec.x());
+    ASSERT_EQ(key.vec.y(), my_key.vec.y());
 
     cipher.set_key(u"16,9");
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
     key = cipher.break_cipher(encrypted, message);
-    ASSERT_EQ(key.v2.x(), my_key.v2.x());
-    ASSERT_EQ(key.v2.y(), my_key.v2.y());
+    ASSERT_EQ(key.vec.x(), my_key.vec.x());
+    ASSERT_EQ(key.vec.y(), my_key.vec.y());
 }
 
-TEST(trithemius_test, breaks_key_by_msg_pair_correctly_v3) {
+TEST(trithemius_test, breaks_key_by_msg_pair_correctly_vec3) {
     cr::Trithemius_cipher cipher;
     cipher.set_lang(u"EN");
     cipher.set_key(u"2,3,5");
@@ -240,34 +240,34 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_v3) {
     std::u16string encrypted = cipher.encrypt(message);
 
     T_key key = cipher.break_cipher(encrypted, message);
-    ASSERT_EQ(key.v3.x(), my_key.v3.x());
-    ASSERT_EQ(key.v3.y(), my_key.v3.y());
-    ASSERT_EQ(key.v3.z(), my_key.v3.z());
+    ASSERT_EQ(key.vec.x(), my_key.vec.x());
+    ASSERT_EQ(key.vec.y(), my_key.vec.y());
+    ASSERT_EQ(key.vec.z(), my_key.vec.z());
 
     cipher.set_key(u"8,6,7");
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
     key = cipher.break_cipher(encrypted, message);
-    ASSERT_EQ(key.v3.x(), my_key.v3.x());
-    ASSERT_EQ(key.v3.y(), my_key.v3.y());
-    ASSERT_EQ(key.v3.z(), my_key.v3.z());
+    ASSERT_EQ(key.vec.x(), my_key.vec.x());
+    ASSERT_EQ(key.vec.y(), my_key.vec.y());
+    ASSERT_EQ(key.vec.z(), my_key.vec.z());
 
     cipher.set_key(u"19,24,15");
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
     key = cipher.break_cipher(encrypted, message);
-    ASSERT_EQ(key.v3.x(), my_key.v3.x());
-    ASSERT_EQ(key.v3.y(), my_key.v3.y());
-    ASSERT_EQ(key.v3.z(), my_key.v3.z());
+    ASSERT_EQ(key.vec.x(), my_key.vec.x());
+    ASSERT_EQ(key.vec.y(), my_key.vec.y());
+    ASSERT_EQ(key.vec.z(), my_key.vec.z());
 
     cipher.set_key(u"16,9,11");
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
     key = cipher.break_cipher(encrypted, message);
-    ASSERT_EQ(key.v3.x(), my_key.v3.x());
-    ASSERT_EQ(key.v3.y(), my_key.v3.y());
-    ASSERT_EQ(key.v3.z(), my_key.v3.z());
+    ASSERT_EQ(key.vec.x(), my_key.vec.x());
+    ASSERT_EQ(key.vec.y(), my_key.vec.y());
+    ASSERT_EQ(key.vec.z(), my_key.vec.z());
 }

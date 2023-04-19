@@ -187,11 +187,8 @@ Cipher_controller::break_trithemius_cipher_key(std::string enc, std::string dec)
     std::stringstream ss;
 
     switch (key.type) {
-    case Key_type::v2:
-        ss << key.v2;
-        break;
-    case Key_type::v3:
-        ss << key.v3;
+    case Key_type::vec:
+        ss << key.vec;
         break;
     default:
         throw std::invalid_argument("Not implemented");

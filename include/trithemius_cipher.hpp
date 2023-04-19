@@ -9,11 +9,10 @@ namespace egn = Eigen;
 
 class Trithemius_cipher : public Cipher {
 public:
-    enum class Key_type { v2, v3, word };
+    enum class Key_type { vec, word };
 
     struct Key {
-        egn::Vector2i v2;
-        egn::Vector3i v3;
+        egn::VectorXi vec;
         std::u16string keyword;
         Key_type type;
     };
@@ -32,8 +31,7 @@ public:
 
 private:
     bool validate_keyword(const std::u16string& keyword);
-    Key break_cipher_v2(const std::u16string& enc, const std::u16string& dec);
-    Key break_cipher_v3(const std::u16string& enc, const std::u16string& dec);
+    Key break_cipher_vec(const std::u16string& enc, const std::u16string& dec);
 
     Key m_key;
     Language m_lang;
