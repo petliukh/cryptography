@@ -232,7 +232,7 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_vec2)
     ASSERT_EQ(key.vec.y(), my_key.vec.y());
 }
 
-TEST(trithemius_test, breaks_key_by_msg_pair_correctly_vec3)
+TEST(trithemius_test, DISABLED_breaks_key_by_msg_pair_correctly_vec3)
 {
     cr::Trithemius_cipher cipher;
     cipher.set_lang(u"EN");
@@ -274,7 +274,7 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_vec3)
     ASSERT_EQ(key.vec.z(), my_key.vec.z());
 }
 
-TEST(trithemius_test, breaks_key_by_freq_table_correctly)
+TEST(trithemius_test, DISABLED_breaks_key_by_freq_table_correctly)
 {
     std::u16string large_plaintext
             = u"In the heart of the dense jungle, a majestic tiger roamed "

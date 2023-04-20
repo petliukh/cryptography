@@ -3,6 +3,7 @@
 #include "shift_cipher.hpp"
 #include "string_utils.hpp"
 #include "trithemius_cipher.hpp"
+#include "knapsack_cipher.hpp"
 
 #include <fstream>
 
@@ -13,6 +14,7 @@ Cipher_controller::Cipher_controller() : m_lang("EN")
     m_ciphers = {
         std::make_unique<cr::Shift_cipher>(),
         std::make_unique<cr::Trithemius_cipher>(),
+        std::make_unique<cr::Knapsack_cipher>(),
     };
 }
 
