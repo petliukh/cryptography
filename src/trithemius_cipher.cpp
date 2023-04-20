@@ -2,6 +2,7 @@
 
 #include "map_utils.hpp"
 #include "string_utils.hpp"
+#include "crypto_utils.hpp"
 
 #include <algorithm>
 #include <sstream>
@@ -269,6 +270,17 @@ Trithemius_cipher::break_cipher_with_freqs(
     }
 
     return tries;
+}
+
+std::u16string Trithemius_cipher::generate_random_keyword(int size)
+{
+    std::u16string keyword;
+    keyword.reserve(size);
+    for (int i = 0; i < size; i++) {
+        int rnd = rand(0, m_lang.alphabet.size());
+        keyword += m_lang.alphabet[rnd];
+    }
+    return keyword;
 }
 
 }  // namespace petliukh::cryptography

@@ -93,6 +93,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="load_key_btn">
+            <property name="text">
+             <string>Load Key From File</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="bytes_cbox">
             <property name="text">
              <string>Raw Bytes</string>
@@ -215,7 +222,7 @@
         <string>Cipher Specific Operations</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_6">
-        <item row="0" column="0">
+        <item row="1" column="0">
          <widget class="QStackedWidget" name="cipher_specific_ops_stacked_widget">
           <property name="currentIndex">
            <number>0</number>
@@ -249,6 +256,24 @@
                </property>
               </item>
              </widget>
+            </item>
+            <item row="1" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <item>
+               <widget class="QPushButton" name="generate_rnd_key_btn">
+                <property name="text">
+                 <string>Generate Random Key</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="attack_trit_cipher_btn">
+                <property name="text">
+                 <string>Attack Trithemius Cipher</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item row="2" column="0">
              <widget class="QStackedWidget" name="trithemius_attacks_stacked_widget">
@@ -326,13 +351,6 @@
                 </item>
                </layout>
               </widget>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QPushButton" name="attack_trit_cipher_btn">
-              <property name="text">
-               <string>Attck Trithemius Cipher</string>
-              </property>
              </widget>
             </item>
            </layout>

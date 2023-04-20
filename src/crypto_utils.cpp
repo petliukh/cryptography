@@ -2,6 +2,10 @@
 
 #include "string_utils.hpp"
 
+#include <openssl/sha.h>
+#include <cstdlib>
+#include <chrono>
+
 namespace petliukh::cryptography {
 
 std::string sha256(const std::string& str)
@@ -21,4 +25,12 @@ std::string sha256(const std::u16string& str)
     return sha256(utf16_to_utf8(str));
 }
 
-}  // namespace petliukh::crypto_utils
+int rand(int a, int b)
+{
+    auto now = std::chrono::high_resolution_clock::now();
+    unsigned seed = static_cast<unsigned>(now.time_since_epoch().count());
+    std::srand(seed);
+    return (std::rand() + a) % b;
+}
+
+}  // namespace petliukh::cryptography

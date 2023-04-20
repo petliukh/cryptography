@@ -14,6 +14,7 @@ public:
     std::string get_filename() const;
     std::string get_key() const;
     std::string get_lang() const;
+    cr::Language get_lang_obj() const;
     std::string get_content(int index) const;
     int get_curr_state() const;
 
@@ -24,7 +25,8 @@ public:
     void set_content(int index, const std::string& content);
     void set_curr_state(int index);
 
-    std::string read_file();
+    std::string read_content_from_file();
+    std::string read_key_from_file(const std::string& filename);
     void save_file(int content_index);
     void save_file(const std::string& content);
     void reset();
@@ -39,6 +41,7 @@ public:
     brute_force(const std::string& message);
 
     std::string break_trithemius_cipher_key(std::string enc, std::string dec);
+    void generate_rand_keyword(const std::string& filename);
 
 private:
     std::array<std::unique_ptr<cr::Cipher>, 2> m_ciphers;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 8.0.1, 2023-03-26T13:05:58. -->
+<!-- Written by QtCreator 8.0.1, 2023-04-20T10:05:54. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -77,14 +77,15 @@
     <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:encrypts_decrypts_raw_bytes_correctly">Checked</value>
     <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:sets_key_correctly">Checked</value>
     <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:shift_cipher_test">Checked</value>
-    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:breaks_key_by_msg_pair_correctly_v2">Checked</value>
-    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:breaks_key_by_msg_pair_correctly_v3">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:breaks_key_by_freq_table_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:breaks_key_by_msg_pair_correctly_vec2">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:breaks_key_by_msg_pair_correctly_vec3">Checked</value>
     <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_kw_correctly">Checked</value>
     <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_raw_bytes_kw_correctly">Checked</value>
-    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_raw_bytes_v2_correctly">Checked</value>
-    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_raw_bytes_v3_correctly">Checked</value>
-    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_v2_correctly">Checked</value>
-    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_v3_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_raw_bytes_vec2_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_raw_bytes_vec3_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_vec2_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_vec3_correctly">Checked</value>
     <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:sets_key_correctly">Checked</value>
     <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:trithemius_test">Checked</value>
    </valuemap>

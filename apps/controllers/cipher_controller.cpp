@@ -30,6 +30,11 @@ std::string Cipher_controller::get_lang() const
     return m_lang;
 }
 
+cr::Language Cipher_controller::get_lang_obj() const
+{
+    return cr::Cipher::langs.at(cr::utf8_to_utf16(m_lang));
+}
+
 std::string Cipher_controller::get_filename() const
 {
     return m_filename;
@@ -87,13 +92,23 @@ void Cipher_controller::set_curr_state(int index)
 //                             File
 // ===========================================================================
 
-std::string Cipher_controller::read_file()
+std::string Cipher_controller::read_content_from_file()
 {
     std::ifstream file(m_filename, std::ios::binary);
     std::string content(
             (std::istreambuf_iterator<char>(file)),
             (std::istreambuf_iterator<char>()));
     m_content_arr[m_curr_state] = content;
+    return content;
+}
+
+std::string Cipher_controller::read_key_from_file(const std::string& filename)
+{
+    std::ifstream file(filename, std::ios::binary);
+    std::string content(
+            (std::istreambuf_iterator<char>(file)),
+            (std::istreambuf_iterator<char>()));
+    m_key = content;
     return content;
 }
 
@@ -107,6 +122,16 @@ void Cipher_controller::save_file(const std::string& content)
 {
     std::ofstream file(m_filename, std::ios::trunc | std::ios::binary);
     file << content;
+}
+
+void Cipher_controller::generate_rand_keyword(const std::string& filename)
+{
+    cr::Trithemius_cipher* trir = static_cast<cr::Trithemius_cipher*>(
+            m_ciphers[m_curr_cipher].get());
+    int size = m_content_arr[0].size();
+    std::string rnd_keyword = cr::utf16_to_utf8(trir->generate_random_keyword(size));
+    std::ofstream ofs(filename, std::ios::trunc | std::ios::binary);
+    ofs << rnd_keyword;
 }
 
 void Cipher_controller::reset()
@@ -147,8 +172,7 @@ std::string Cipher_controller::decrypt_raw_bytes(const std::string& bytes)
     return m_ciphers[m_curr_cipher]->decrypt_raw_bytes(bytes);
 }
 
-std::map<char16_t, int>
-Cipher_controller::calc_freqs(std::string content)
+std::map<char16_t, int> Cipher_controller::calc_freqs(std::string content)
 {
     cr::Language lang = cr::Cipher::langs.at(cr::utf8_to_utf16(m_lang));
     auto freqs = cr::count_chars(cr::utf8_to_utf16(content), lang);

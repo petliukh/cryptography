@@ -36,6 +36,7 @@ public:
     std::map<std::u16string, std::u16string> break_cipher_with_freqs(
             std::map<char16_t, double> lang_freqs, const std::u16string& enc,
             int max_tries = 100) const;
+    std::u16string generate_random_keyword(int size);
 
 private:
     bool validate_keyword(const std::u16string& keyword);

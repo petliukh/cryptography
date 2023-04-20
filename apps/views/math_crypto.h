@@ -60,6 +60,10 @@ private slots:
 
     void on_attack_trit_cipher_btn_clicked();
 
+    void on_generate_rnd_key_btn_clicked();
+
+    void on_load_key_btn_clicked();
+
 private:
     Ui::Math_crypto* ui;
     ctrl::Cipher_controller m_controller;

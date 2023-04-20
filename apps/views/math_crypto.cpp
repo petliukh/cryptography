@@ -32,7 +32,8 @@ void Math_crypto::on_open_action_triggered()
     m_controller.set_filename(filename.toStdString());
     m_controller.set_curr_state(ui->savefile_btn_group->checkedId());
     QPlainTextEdit* tedit = get_curr_text_edit();
-    tedit->setPlainText(QString::fromStdString(m_controller.read_file()));
+    tedit->setPlainText(
+            QString::fromStdString(m_controller.read_content_from_file()));
     this->setWindowTitle("Math Crypto - " + filename);
 }
 
@@ -256,13 +257,14 @@ void Math_crypto::on_attack_trit_cipher_btn_clicked()
     try {
         switch (idx) {
         case 0: {
-            std::string msg
-                    = ui->dec_msg_trit_attack_tedit->toPlainText().toStdString();
+            std::string msg = ui->dec_msg_trit_attack_tedit->toPlainText()
+                                      .toStdString();
             std::string enc
                     = ui->enc_msg_tit_attack_tedit->toPlainText().toStdString();
             std::string broken_key
                     = m_controller.break_trithemius_cipher_key(msg, enc);
-            ui->trit_broken_key_ledit->setText(QString::fromStdString(broken_key));
+            ui->trit_broken_key_ledit->setText(
+                    QString::fromStdString(broken_key));
             break;
         }
         case 1: {
@@ -272,9 +274,34 @@ void Math_crypto::on_attack_trit_cipher_btn_clicked()
             break;
         }
         }
-    } catch (std::invalid_argument& ex) {
-        QMessageBox::warning(
-                this, "Error",
-                ex.what());
+    } catch (std::exception& ex) {
+        QMessageBox::warning(this, "Error", ex.what());
     }
+}
+
+void Math_crypto::on_generate_rnd_key_btn_clicked()
+{
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::AnyFile);
+    QString filename = dialog.getSaveFileName(this, "Save File");
+
+    if (filename.isEmpty()) {
+        QMessageBox::warning(this, "Warning", "No filename to save.");
+        return;
+    }
+    m_controller.generate_rand_keyword(filename.toStdString());
+}
+
+void Math_crypto::on_load_key_btn_clicked()
+{
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::ExistingFile);
+    QString filename = dialog.getOpenFileName(this, "Open File");
+
+    if (filename.isEmpty()) {
+        QMessageBox::warning(this, "Warning", "No filename to open.");
+        return;
+    }
+    m_controller.read_key_from_file(filename.toStdString());
+    ui->key_ln_edit->setText(QString::fromStdString(m_controller.get_key()));
 }
