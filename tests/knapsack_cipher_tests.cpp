@@ -6,7 +6,7 @@ namespace cr = petliukh::cryptography;
 
 TEST(knapsack_test, test_supergrowing_seq_generated_correctly)
 {
-    auto supergrow_seq = cr::generate_supergrowing_sequence(10);
+    std::vector<size_t> supergrow_seq = cr::generate_supergrowing_sequence(10);
     int prev_sum = 0;
 
     for (auto& e : supergrow_seq) {

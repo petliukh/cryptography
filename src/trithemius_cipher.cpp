@@ -137,12 +137,11 @@ void Trithemius_cipher::set_key(const std::u16string& key)
         try {
             key_parts_num.push_back(std::stoi(part));
         } catch (const std::invalid_argument& e) {
-            std::u16string keyword = utf8_to_utf16(part);
-            if (!validate_keyword(keyword)) {
+            if (!validate_keyword(key)) {
                 throw std::invalid_argument("Invalid key");
             }
             m_key.type = Key_type::word;
-            m_key.keyword = keyword;
+            m_key.keyword = key;
             return;
         }
     }
@@ -276,7 +275,7 @@ std::u16string Trithemius_cipher::generate_random_keyword(int size)
     std::u16string keyword;
     keyword.reserve(size);
     for (int i = 0; i < size; i++) {
-        int rnd = rand(0, m_lang.alphabet.size());
+        int rnd = rand_in_rng(0, m_lang.alphabet.size());
         keyword += m_lang.alphabet[rnd];
     }
     return keyword;

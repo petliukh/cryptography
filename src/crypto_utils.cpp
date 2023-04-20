@@ -25,7 +25,7 @@ std::string sha256(const std::u16string& str)
     return sha256(utf16_to_utf8(str));
 }
 
-int rand(int a, int b)
+int rand_in_rng(int a, int b)
 {
     auto now = std::chrono::high_resolution_clock::now();
     unsigned seed = static_cast<unsigned>(now.time_since_epoch().count());

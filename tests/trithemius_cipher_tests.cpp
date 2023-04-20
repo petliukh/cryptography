@@ -30,8 +30,8 @@ TEST(trithemius_test, sets_key_correctly)
     ASSERT_EQ(key.type, T_key_type::word);
     ASSERT_EQ(key.keyword, u"keyword");
 
-    ASSERT_THROW(cipher.set_key(u"1,2,3,4"), std::invalid_argument);
-    ASSERT_THROW(cipher.set_key(u"1,2,3,4,5"), std::invalid_argument);
+    ASSERT_THROW(cipher.set_key(u"1,2,3,фівфів"), std::invalid_argument);
+    ASSERT_THROW(cipher.set_key(u"1,2,3,,5іфівфівфв"), std::invalid_argument);
     ASSERT_THROW(cipher.set_key(u"гасло"), std::invalid_argument);
 }
 

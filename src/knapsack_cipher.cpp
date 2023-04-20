@@ -38,14 +38,14 @@ void Knapsack_cipher::set_lang(const Language& lang)
 {
 }
 
-std::vector<int> generate_supergrowing_sequence(int n)
+std::vector<size_t> generate_supergrowing_sequence(int n)
 {
-    std::vector<int> supergrow_seq;
+    std::vector<size_t> supergrow_seq;
     supergrow_seq.reserve(n);
-    int prev_sum = 0;
+    int prev_sum = 1;
 
-    for (int i = 0; i < n; i++) {
-        supergrow_seq.emplace_back(prev_sum + rand());
+    for (int i = 1; i <= n; i++) {
+        supergrow_seq.push_back(prev_sum + rand_in_rng(1, 10000));
         prev_sum += supergrow_seq.back();
     }
     return supergrow_seq;

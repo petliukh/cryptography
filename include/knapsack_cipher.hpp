@@ -16,6 +16,6 @@ public:
     virtual void set_lang(const Language& lang) override;
 };
 
-std::vector<int> generate_supergrowing_sequence(int n);
+std::vector<size_t> generate_supergrowing_sequence(int n);
 
 }
