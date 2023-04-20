@@ -186,14 +186,13 @@ bool Trithemius_cipher::validate_keyword(const std::u16string& keyword)
 // =============================================================================
 
 Trithemius_cipher::Key Trithemius_cipher::break_cipher_with_msg_pair(
-        const std::u16string& enc, const std::u16string& dec) const
+        const std::u16string& enc, const std::u16string& dec, int vec_size) const
 {
     if (enc.size() != dec.size()) {
         throw std::invalid_argument(
                 "Encrypted and decrypted messages must be "
                 "of the same length");
     }
-    int vec_size = m_key.vec.size();
     egn::MatrixXd mtx(vec_size, vec_size);
     egn::VectorXd bv(vec_size);
     egn::ArrayXd xv;
@@ -239,7 +238,7 @@ std::u16string Trithemius_cipher::break_try(
 std::map<std::u16string, std::u16string>
 Trithemius_cipher::break_cipher_with_freqs(
         std::map<char16_t, double> lang_freqs, const std::u16string& enc,
-        int max_tries) const
+        int max_tries, int vec_size) const
 {
     std::map<std::u16string, std::u16string> tries;
     std::map<char16_t, double> msg_freqs = count_freqs(enc, m_lang);
@@ -259,7 +258,7 @@ Trithemius_cipher::break_cipher_with_freqs(
     for (int i = 0; i < max_tries; i++) {
         std::u16string msg_guess
                 = break_try(enc, lang_freqs_vec, msg_freqs_vec);
-        Key key_try = break_cipher_with_msg_pair(enc, msg_guess);
+        Key key_try = break_cipher_with_msg_pair(enc, msg_guess, vec_size);
         std::u16string key_u16str = utf8_to_utf16(key_try.to_string());
         tries[key_u16str] = msg_guess;
 

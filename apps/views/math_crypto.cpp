@@ -257,12 +257,13 @@ void Math_crypto::on_attack_trit_cipher_btn_clicked()
     try {
         switch (idx) {
         case 0: {
+            int vec_size = ui->key_vec_size_spinbox->value();
             std::string msg = ui->dec_msg_trit_attack_tedit->toPlainText()
                                       .toStdString();
             std::string enc
                     = ui->enc_msg_tit_attack_tedit->toPlainText().toStdString();
             std::string broken_key
-                    = m_controller.break_trithemius_cipher_key(msg, enc);
+                    = m_controller.break_trithemius_cipher_key(msg, enc, vec_size);
             ui->trit_broken_key_ledit->setText(
                     QString::fromStdString(broken_key));
             break;

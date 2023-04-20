@@ -32,10 +32,11 @@ public:
     virtual void set_lang(const std::u16string& lang) override;
     virtual void set_lang(const Language& lang) override;
     Key break_cipher_with_msg_pair(
-            const std::u16string& enc, const std::u16string& dec) const;
+            const std::u16string& enc, const std::u16string& dec,
+            int vec_size) const;
     std::map<std::u16string, std::u16string> break_cipher_with_freqs(
             std::map<char16_t, double> lang_freqs, const std::u16string& enc,
-            int max_tries = 100) const;
+            int max_tries, int vec_size) const;
     std::u16string generate_random_keyword(int size);
 
 private:

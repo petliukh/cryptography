@@ -40,7 +40,7 @@ public:
     std::map<int, std::string>
     brute_force(const std::string& message);
 
-    std::string break_trithemius_cipher_key(std::string enc, std::string dec);
+    std::string break_trithemius_cipher_key(std::string enc, std::string dec, int vec_size);
     void generate_rand_keyword(const std::string& filename);
 
 private:

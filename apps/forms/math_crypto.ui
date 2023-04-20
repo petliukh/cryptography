@@ -273,6 +273,16 @@
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QLabel" name="key_vec_size_lbl">
+                <property name="text">
+                 <string>Key Vec Size:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="key_vec_size_spinbox"/>
+              </item>
              </layout>
             </item>
             <item row="2" column="0">

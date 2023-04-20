@@ -196,7 +196,7 @@ Cipher_controller::brute_force(const std::string& message)
 // ============================================================================
 
 std::string
-Cipher_controller::break_trithemius_cipher_key(std::string enc, std::string dec)
+Cipher_controller::break_trithemius_cipher_key(std::string enc, std::string dec, int vec_size)
 {
     using T_key = cr::Trithemius_cipher::Key;
     using Key_type = cr::Trithemius_cipher::Key_type;
@@ -206,7 +206,7 @@ Cipher_controller::break_trithemius_cipher_key(std::string enc, std::string dec)
 
     std::u16string u16enc = cr::utf8_to_utf16(enc);
     std::u16string u16dec = cr::utf8_to_utf16(dec);
-    T_key key = tc->break_cipher_with_msg_pair(u16enc, u16dec);
+    T_key key = tc->break_cipher_with_msg_pair(u16enc, u16dec, vec_size);
     return key.to_string();
 }
 

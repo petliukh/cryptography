@@ -203,7 +203,7 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_vec2)
     std::u16string message = u"Hello, World!";
     std::u16string encrypted = cipher.encrypt(message);
 
-    T_key key = cipher.break_cipher_with_msg_pair(encrypted, message);
+    T_key key = cipher.break_cipher_with_msg_pair(encrypted, message, 3);
     ASSERT_EQ(key.vec.x(), my_key.vec.x());
     ASSERT_EQ(key.vec.y(), my_key.vec.y());
 
@@ -211,7 +211,7 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_vec2)
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
-    key = cipher.break_cipher_with_msg_pair(encrypted, message);
+    key = cipher.break_cipher_with_msg_pair(encrypted, message, 3);
     ASSERT_EQ(key.vec.x(), my_key.vec.x());
     ASSERT_EQ(key.vec.y(), my_key.vec.y());
 
@@ -219,7 +219,7 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_vec2)
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
-    key = cipher.break_cipher_with_msg_pair(encrypted, message);
+    key = cipher.break_cipher_with_msg_pair(encrypted, message, 3);
     ASSERT_EQ(key.vec.x(), my_key.vec.x());
     ASSERT_EQ(key.vec.y(), my_key.vec.y());
 
@@ -227,7 +227,7 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_vec2)
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
-    key = cipher.break_cipher_with_msg_pair(encrypted, message);
+    key = cipher.break_cipher_with_msg_pair(encrypted, message, 3);
     ASSERT_EQ(key.vec.x(), my_key.vec.x());
     ASSERT_EQ(key.vec.y(), my_key.vec.y());
 }
@@ -241,7 +241,7 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_vec3)
     std::u16string message = u"Hello, World!";
     std::u16string encrypted = cipher.encrypt(message);
 
-    T_key key = cipher.break_cipher_with_msg_pair(encrypted, message);
+    T_key key = cipher.break_cipher_with_msg_pair(encrypted, message, 3);
     ASSERT_EQ(key.vec.x(), my_key.vec.x());
     ASSERT_EQ(key.vec.y(), my_key.vec.y());
     ASSERT_EQ(key.vec.z(), my_key.vec.z());
@@ -250,7 +250,7 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_vec3)
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
-    key = cipher.break_cipher_with_msg_pair(encrypted, message);
+    key = cipher.break_cipher_with_msg_pair(encrypted, message, 3);
     ASSERT_EQ(key.vec.x(), my_key.vec.x());
     ASSERT_EQ(key.vec.y(), my_key.vec.y());
     ASSERT_EQ(key.vec.z(), my_key.vec.z());
@@ -259,7 +259,7 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_vec3)
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
-    key = cipher.break_cipher_with_msg_pair(encrypted, message);
+    key = cipher.break_cipher_with_msg_pair(encrypted, message, 3);
     ASSERT_EQ(key.vec.x(), my_key.vec.x());
     ASSERT_EQ(key.vec.y(), my_key.vec.y());
     ASSERT_EQ(key.vec.z(), my_key.vec.z());
@@ -268,7 +268,7 @@ TEST(trithemius_test, breaks_key_by_msg_pair_correctly_vec3)
     my_key = cipher.get_key();
     encrypted = cipher.encrypt(message);
 
-    key = cipher.break_cipher_with_msg_pair(encrypted, message);
+    key = cipher.break_cipher_with_msg_pair(encrypted, message, 3);
     ASSERT_EQ(key.vec.x(), my_key.vec.x());
     ASSERT_EQ(key.vec.y(), my_key.vec.y());
     ASSERT_EQ(key.vec.z(), my_key.vec.z());
@@ -330,7 +330,7 @@ TEST(trithemius_test, breaks_key_by_freq_table_correctly)
     trit.set_key(u"9,12,7");
     std::u16string enc = trit.encrypt(large_plaintext);
     std::map<std::u16string, std::u16string> tries
-            = trit.break_cipher_with_freqs(en_freqs, enc, 200);
+            = trit.break_cipher_with_freqs(en_freqs, enc, 200, 3);
     std::string checksum1 = cr::sha256(large_plaintext);
 
     bool any = false;
