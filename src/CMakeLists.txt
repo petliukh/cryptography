@@ -1,8 +1,13 @@
 cmake_minimum_required(VERSION 3.0)
 
 set(LIB_NAME math-crypto-lib)
-set(SOURCES cipher_base.cpp shift_cipher.cpp trithemius_cipher.cpp
-            string_utils.cpp crypto_utils.cpp knapsack_cipher.cpp)
+set(SOURCES
+    cipher_base.cpp
+    shift_cipher.cpp
+    trithemius_cipher.cpp
+    string_utils.cpp
+    crypto_utils.cpp
+    knapsack_cipher.cpp)
 
 add_library(${LIB_NAME} ${SOURCES})
 add_subdirectory(${CMAKE_SOURCE_DIR}/external/eigen

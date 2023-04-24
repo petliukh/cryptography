@@ -33,4 +33,12 @@ int rand_in_rng(int a, int b)
     return (std::rand() + a) % b;
 }
 
+int rand_in_rng(int b)
+{
+    auto now = std::chrono::high_resolution_clock::now();
+    unsigned seed = static_cast<unsigned>(now.time_since_epoch().count());
+    std::srand(seed);
+    return std::rand() % b;
+}
+
 }  // namespace petliukh::cryptography
