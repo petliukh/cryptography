@@ -1,11 +1,9 @@
 #include "crypto_utils.hpp"
 #include "knapsack_cipher.hpp"
 #include "numeric_utils.hpp"
-#include "string_utils.hpp"
 
 #include <bitset>
 #include <gtest/gtest.h>
-#include <iostream>
 
 namespace cr = petliukh::cryptography;
 
@@ -44,12 +42,6 @@ TEST(knapsack_cipher, encryption_algorithm_logic)
     std::vector<BigInt> knapsack_seq
             = cr::generate_knapsack_sequence(superinc_seq, m, t);
 
-    std::cout << "Superincreasing sequence:\n"
-              << cr::vec_to_string(superinc_seq) << "\n";
-
-    std::cout << "Knapsack sequence:\n"
-              << cr::vec_to_string(knapsack_seq) << "\n";
-
     std::u16string msg = u"abcdefg";
 
     for (auto chr : msg) {
@@ -60,14 +52,10 @@ TEST(knapsack_cipher, encryption_algorithm_logic)
             }
         }
 
-        std::cout << ciphertext << "\n";
-        std::cout << std::bitset<16>(chr) << "\n";
-
         BigInt t_inv = cr::mod_inverse(t, m);
         BigInt c_prime = (ciphertext * t_inv) % m;
 
         char16_t sol = cr::solve_knapsack(superinc_seq, c_prime);
-        std::cout << std::bitset<16>(sol) << "\n";
 
         EXPECT_EQ(chr, sol);
     }
