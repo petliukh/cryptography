@@ -7,7 +7,8 @@ set(SOURCES
     trithemius_cipher.cpp
     string_utils.cpp
     crypto_utils.cpp
-    knapsack_cipher.cpp)
+    knapsack_cipher.cpp
+    BigInt.cpp)
 
 add_library(${LIB_NAME} ${SOURCES})
 add_subdirectory(${CMAKE_SOURCE_DIR}/external/eigen

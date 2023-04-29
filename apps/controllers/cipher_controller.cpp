@@ -1,9 +1,9 @@
 #include "cipher_controller.hpp"
 
+#include "knapsack_cipher.hpp"
 #include "shift_cipher.hpp"
 #include "string_utils.hpp"
 #include "trithemius_cipher.hpp"
-#include "knapsack_cipher.hpp"
 
 #include <fstream>
 
@@ -131,7 +131,8 @@ void Cipher_controller::generate_rand_keyword(const std::string& filename)
     cr::Trithemius_cipher* trir = static_cast<cr::Trithemius_cipher*>(
             m_ciphers[m_curr_cipher].get());
     int size = m_content_arr[0].size();
-    std::string rnd_keyword = cr::utf16_to_utf8(trir->generate_random_keyword(size));
+    std::string rnd_keyword
+            = cr::utf16_to_utf8(trir->generate_random_keyword(size));
     std::ofstream ofs(filename, std::ios::trunc | std::ios::binary);
     ofs << rnd_keyword;
 }
@@ -197,8 +198,8 @@ Cipher_controller::brute_force(const std::string& message)
 //                            Trithemius cipher
 // ============================================================================
 
-std::string
-Cipher_controller::break_trithemius_cipher_key(std::string enc, std::string dec, int vec_size)
+std::string Cipher_controller::break_trithemius_cipher_key(
+        std::string enc, std::string dec, int vec_size)
 {
     using T_key = cr::Trithemius_cipher::Key;
     using Key_type = cr::Trithemius_cipher::Key_type;
@@ -210,6 +211,31 @@ Cipher_controller::break_trithemius_cipher_key(std::string enc, std::string dec,
     std::u16string u16dec = cr::utf8_to_utf16(dec);
     T_key key = tc->break_cipher_with_msg_pair(u16enc, u16dec, vec_size);
     return key.to_string();
+}
+
+// ============================================================================
+//                            Knapsack cipher
+// ============================================================================
+
+void Cipher_controller::generate_rand_knapsack_key(
+        const std::string& filename, size_t inc_digits)
+{
+    using K_key = cr::Knapsack_cipher::Key;
+    cr::Knapsack_cipher* ks
+            = static_cast<cr::Knapsack_cipher*>(m_ciphers[m_curr_cipher].get());
+
+    ks->generate_rand_key(inc_digits);
+    std::string key_str = ks->get_key().to_string();
+    std::ofstream ofs(filename, std::ios::trunc | std::ios::binary);
+    ofs << key_str;
+}
+
+std::string Cipher_controller::get_knapsack_key() const
+{
+    using K_key = cr::Knapsack_cipher::Key;
+    cr::Knapsack_cipher* ks
+            = static_cast<cr::Knapsack_cipher*>(m_ciphers[m_curr_cipher].get());
+    return ks->get_key().to_string();
 }
 
 }  // namespace petliukh::controllers

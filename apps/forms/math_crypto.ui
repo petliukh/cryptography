@@ -42,6 +42,11 @@
           <string>Tritemius Cipher</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>Knapsack Cipher</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>
@@ -362,6 +367,20 @@
                </layout>
               </widget>
              </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_3">
+           <layout class="QGridLayout" name="gridLayout_9">
+            <item row="0" column="0">
+             <widget class="QPushButton" name="knapsack_genkey_btn">
+              <property name="text">
+               <string>Generate Random Key</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QPlainTextEdit" name="knapsack_keyview_tedit"/>
             </item>
            </layout>
           </widget>

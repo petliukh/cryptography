@@ -2,9 +2,9 @@
 
 #include "string_utils.hpp"
 
-#include <openssl/sha.h>
-#include <cstdlib>
 #include <chrono>
+#include <cstdlib>
+#include <openssl/sha.h>
 
 namespace petliukh::cryptography {
 
@@ -25,20 +25,23 @@ std::string sha256(const std::u16string& str)
     return sha256(utf16_to_utf8(str));
 }
 
-int rand_in_rng(int a, int b)
+int randint(int a, int b)
 {
     auto now = std::chrono::high_resolution_clock::now();
-    unsigned seed = static_cast<unsigned>(now.time_since_epoch().count());
+    size_t seed = static_cast<size_t>(now.time_since_epoch().count());
     std::srand(seed);
     return (std::rand() + a) % b;
 }
 
-int rand_in_rng(int b)
+InfInt infint_rand(size_t num_digits)
 {
-    auto now = std::chrono::high_resolution_clock::now();
-    unsigned seed = static_cast<unsigned>(now.time_since_epoch().count());
-    std::srand(seed);
-    return std::rand() % b;
+    std::string big_rand;
+    big_rand.reserve(num_digits);
+    big_rand += '1' + (std::rand() % 9);
+    for (size_t i = 1; i < num_digits; i++) {
+        big_rand += '0' + (std::rand() % 10);
+    }
+    return InfInt(big_rand);
 }
 
 }  // namespace petliukh::cryptography

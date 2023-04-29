@@ -19,7 +19,7 @@ std::string vec_to_string(const std::vector<T>& vec)
     for (int i = 0; i < vec.size(); i++) {
         ss << vec[i];
         if (i != vec.size() - 1)
-            ss << " ";
+            ss << ", ";
     }
     return ss.str();
 }

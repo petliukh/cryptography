@@ -1,65 +1,107 @@
+#include "crypto_utils.hpp"
 #include "knapsack_cipher.hpp"
 #include "numeric_utils.hpp"
-#include "crypto_utils.hpp"
+#include "string_utils.hpp"
 
+#include <bitset>
 #include <gtest/gtest.h>
+#include <iostream>
 
 namespace cr = petliukh::cryptography;
 
-TEST(knapsack_test, test_supergrowing_seq_generated_correctly)
+TEST(knapsack_cipher, superincreasing_sequence)
 {
-    std::vector<int64_t> supergrow_seq = cr::generate_superincreasing_sequence(16, 10000);
-    int64_t prev_sum = 0;
+    std::vector<BigInt> superinc_seq
+            = cr::generate_superincreasing_sequence(16, 64, 64);
 
-    for (auto& e : supergrow_seq) {
-        ASSERT_TRUE(e > prev_sum);
-        prev_sum += e;
+    BigInt sum = superinc_seq[0];
+    for (size_t i = 1; i < superinc_seq.size(); i++) {
+        ASSERT_TRUE(superinc_seq[i] > sum);
+        sum += superinc_seq[i];
     }
 }
 
-TEST(knapsack_test, test_normal_knapsack_seq_generated_correctly)
+TEST(knapsack_cipher, knapsack_sequence)
 {
-    std::vector<int64_t> supergrow_seq = cr::generate_superincreasing_sequence(16, 10000);
-    int64_t m = cr::generate_rand_m(supergrow_seq, 10000);
-    int64_t t = cr::generate_rand_t(m);
-    std::vector<int64_t> normal_knapsack_seq = cr::generate_normal_knapsack_sequence(
-            supergrow_seq, m, t);
+    std::vector<BigInt> superinc_seq
+            = cr::generate_superincreasing_sequence(16, 64, 64);
+    BigInt m = cr::generate_rand_modulus(superinc_seq, 64);
+    BigInt t = cr::generate_rand_multiplier(m);
+    std::vector<BigInt> knapsack_seq
+            = cr::generate_knapsack_sequence(superinc_seq, m, t);
 
-    for (int i = 0; i < supergrow_seq.size(); i++) {
-        ASSERT_EQ((supergrow_seq[i] * t) % m, normal_knapsack_seq[i]);
+    for (size_t i = 0; i < superinc_seq.size(); i++) {
+        ASSERT_EQ(knapsack_seq[i], (superinc_seq[i] * t) % m);
     }
 }
 
-TEST(knapsack_test, encrypts_decrypts_correctly)
+TEST(knapsack_cipher, encryption_algorithm_logic)
 {
-    cr::Knapsack_cipher kn;
-    kn.set_max_growth(10000);
-    kn.set_knapsack_size(16);
-    kn.generate_random_key();
+    std::vector<BigInt> superinc_seq
+            = cr::generate_superincreasing_sequence(16, 64, 64);
+    BigInt m = cr::generate_rand_modulus(superinc_seq, 64);
+    BigInt t = cr::generate_rand_multiplier(m);
+    std::vector<BigInt> knapsack_seq
+            = cr::generate_knapsack_sequence(superinc_seq, m, t);
 
-    std::u16string plaintext = u"Hello, world!";
-    std::u16string ciphertext = kn.encrypt(plaintext);
-    std::u16string decrypted_text = kn.decrypt(ciphertext);
+    std::cout << "Superincreasing sequence:\n"
+              << cr::vec_to_string(superinc_seq) << "\n";
 
-    std::string cs1 = cr::sha256(plaintext);
-    std::string cs2 = cr::sha256(decrypted_text);
+    std::cout << "Knapsack sequence:\n"
+              << cr::vec_to_string(knapsack_seq) << "\n";
 
-    ASSERT_EQ(plaintext, decrypted_text);
-    ASSERT_EQ(cs1, cs2);
+    std::u16string msg = u"abcdefg";
+
+    for (auto chr : msg) {
+        BigInt ciphertext = 0;
+        for (size_t i = 0; i < 16; i++) {
+            if (chr & (1 << i)) {
+                ciphertext += knapsack_seq[i];
+            }
+        }
+
+        std::cout << ciphertext << "\n";
+        std::cout << std::bitset<16>(chr) << "\n";
+
+        BigInt t_inv = cr::mod_inverse(t, m);
+        BigInt c_prime = (ciphertext * t_inv) % m;
+
+        char16_t sol = cr::solve_knapsack(superinc_seq, c_prime);
+        std::cout << std::bitset<16>(sol) << "\n";
+
+        EXPECT_EQ(chr, sol);
+    }
 }
 
-TEST(knapsack_test, gcd_correctly)
+TEST(knapsack_sequence, encrypts_decrypts_correctly)
 {
-    int32_t a = 1071;
-    int32_t b = 462;
-    int32_t d = cr::gcd(b, a);
-    ASSERT_EQ(21, d);
+    cr::Knapsack_cipher ks;
+    ks.generate_rand_key(20);
+
+    std::u16string message = u"Hello, World!";
+    std::u16string encrypted = ks.encrypt(message);
+    std::u16string decrypted = ks.decrypt(encrypted);
+
+    std::string checksum1 = cr::sha256(message);
+    std::string checksum2 = cr::sha256(decrypted);
+
+    ASSERT_EQ(message, decrypted);
 }
 
-TEST(knapsack_test, mod_inv_correctly)
+TEST(knapsack_sequence, encrypts_decrypts_correctly_bytes)
 {
-    int32_t a = 240;
-    int32_t m = 46;
-    cr::Ext_euclidean_res<int32_t> res = cr::ext_euclidean(a, m);
-    EXPECT_EQ(23, res.s);
+    cr::Knapsack_cipher ks;
+    ks.generate_rand_key(20);
+
+    std::string bytes
+            = "asdasasndklkbakbvklabіфлаиівалифілварифілв"
+              "akjsfdblgdbalib vfa sdkn asvkasivhdba sih"
+              "уоифівиалфів доівмлфівм ілвфлів мфлівимф";
+    std::string encrypted = ks.encrypt_raw_bytes(bytes);
+    std::string decrypted = ks.decrypt_raw_bytes(encrypted);
+
+    std::string checksum1 = cr::sha256(bytes);
+    std::string checksum2 = cr::sha256(decrypted);
+
+    ASSERT_EQ(bytes, decrypted);
 }

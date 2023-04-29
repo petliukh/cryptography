@@ -262,8 +262,8 @@ void Math_crypto::on_attack_trit_cipher_btn_clicked()
                                       .toStdString();
             std::string enc
                     = ui->enc_msg_tit_attack_tedit->toPlainText().toStdString();
-            std::string broken_key
-                    = m_controller.break_trithemius_cipher_key(msg, enc, vec_size);
+            std::string broken_key = m_controller.break_trithemius_cipher_key(
+                    msg, enc, vec_size);
             ui->trit_broken_key_ledit->setText(
                     QString::fromStdString(broken_key));
             break;
@@ -305,4 +305,20 @@ void Math_crypto::on_load_key_btn_clicked()
     }
     m_controller.read_key_from_file(filename.toStdString());
     ui->key_ln_edit->setText(QString::fromStdString(m_controller.get_key()));
+}
+
+void Math_crypto::on_knapsack_genkey_btn_clicked()
+{
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::AnyFile);
+    QString filename = dialog.getSaveFileName(this, "Save File");
+
+    if (filename.isEmpty()) {
+        QMessageBox::warning(this, "Warning", "No filename to save.");
+        return;
+    }
+
+    m_controller.generate_rand_knapsack_key(filename.toStdString(), 30);
+    ui->knapsack_keyview_tedit->setPlainText(
+            QString::fromStdString(m_controller.get_knapsack_key()));
 }

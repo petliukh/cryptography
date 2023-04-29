@@ -64,6 +64,8 @@ private slots:
 
     void on_load_key_btn_clicked();
 
+    void on_knapsack_genkey_btn_clicked();
+
 private:
     Ui::Math_crypto* ui;
     ctrl::Cipher_controller m_controller;

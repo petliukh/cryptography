@@ -42,6 +42,8 @@ public:
 
     std::string break_trithemius_cipher_key(std::string enc, std::string dec, int vec_size);
     void generate_rand_keyword(const std::string& filename);
+    void generate_rand_knapsack_key(const std::string& filename, size_t inc_digits);
+    std::string get_knapsack_key() const;
 
 private:
     std::array<std::unique_ptr<cr::Cipher>, 3> m_ciphers;

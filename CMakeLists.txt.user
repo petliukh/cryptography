@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 8.0.1, 2023-04-20T10:25:28. -->
+<!-- Written by QtCreator 8.0.1, 2023-04-29T22:45:00. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -67,7 +67,34 @@
     <value type="bool" key="AutoTest.Framework.QtQuickTest">true</value>
     <value type="bool" key="AutoTest.Framework.QtTest">true</value>
    </valuemap>
-   <valuemap type="QVariantMap" key="AutoTest.CheckStates"/>
+   <valuemap type="QVariantMap" key="AutoTest.CheckStates">
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/cipher_base_tests.cpp:calculates_frequency_table_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/cipher_base_tests.cpp:cipher_base_test">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/cipher_base_tests.cpp:validates_message_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/knapsack_cipher_tests.cpp:encryption_algorithm_logic">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/knapsack_cipher_tests.cpp:encrypts_decrypts_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/knapsack_cipher_tests.cpp:encrypts_decrypts_correctly_bytes">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/knapsack_cipher_tests.cpp:knapsack_cipher">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/knapsack_cipher_tests.cpp:knapsack_sequence">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/knapsack_cipher_tests.cpp:superincreasing_sequence">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:bruteforce_breaks_cipher_en">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:encrypts_decrypts_correctly_en">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:encrypts_decrypts_correctly_ukr">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:encrypts_decrypts_raw_bytes_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:sets_key_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:shift_cipher_test">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:DISABLED_breaks_key_by_freq_table_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:DISABLED_breaks_key_by_msg_pair_correctly_vec3">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:breaks_key_by_msg_pair_correctly_vec2">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_kw_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_raw_bytes_kw_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_raw_bytes_vec2_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_raw_bytes_vec3_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_vec2_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:encrypts_decrypts_vec3_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:sets_key_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/trithemius_cipher_tests.cpp:trithemius_test">Checked</value>
+   </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>
    <valuemap type="QVariantMap" key="ClangTools">

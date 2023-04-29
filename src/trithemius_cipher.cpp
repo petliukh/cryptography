@@ -1,8 +1,8 @@
 #include "trithemius_cipher.hpp"
 
+#include "crypto_utils.hpp"
 #include "map_utils.hpp"
 #include "string_utils.hpp"
-#include "crypto_utils.hpp"
 
 #include <algorithm>
 #include <sstream>
@@ -185,7 +185,8 @@ bool Trithemius_cipher::validate_keyword(const std::u16string& keyword)
 // =============================================================================
 
 Trithemius_cipher::Key Trithemius_cipher::break_cipher_with_msg_pair(
-        const std::u16string& enc, const std::u16string& dec, int vec_size) const
+        const std::u16string& enc, const std::u16string& dec,
+        int vec_size) const
 {
     if (enc.size() != dec.size()) {
         throw std::invalid_argument(
@@ -275,7 +276,7 @@ std::u16string Trithemius_cipher::generate_random_keyword(int size)
     std::u16string keyword;
     keyword.reserve(size);
     for (int i = 0; i < size; i++) {
-        int rnd = rand_in_rng(0, m_lang.alphabet.size());
+        int rnd = randint(0, m_lang.alphabet.size());
         keyword += m_lang.alphabet[rnd];
     }
     return keyword;

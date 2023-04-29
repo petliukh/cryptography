@@ -1,12 +1,13 @@
 #pragma once
 #include <string>
 #include <limits>
+#include <InfInt.h>
 
 namespace petliukh::cryptography {
 
 std::string sha256(const std::string& str);
 std::string sha256(const std::u16string& str);
-int rand_in_rng(int a, int b);
-int rand_in_rng(int b = std::numeric_limits<int>::max());
+int randint(int a, int b);
+InfInt infint_rand(size_t num_digits);
 
 }
