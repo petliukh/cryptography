@@ -7,7 +7,9 @@ set(SOURCES
     trithemius_cipher.cpp
     string_utils.cpp
     crypto_utils.cpp
+    numeric_utils.cpp
     knapsack_cipher.cpp
+    rsa_cipher.cpp
     BigInt.cpp)
 
 add_library(${LIB_NAME} ${SOURCES})

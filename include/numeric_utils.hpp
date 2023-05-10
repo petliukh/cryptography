@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stdexcept>
+#include "BigInt.hpp"
+
 namespace petliukh::cryptography {
 
 // Function for extended Euclidean Algorithm
@@ -39,5 +41,9 @@ Int_type mod_inverse(Int_type A, Int_type M)
         return (x % M + M) % M;
     }
 }
+
+bool is_prime(const BigInt& n);
+BigInt nearest_prime(BigInt n);
+BigInt mod_exp(const BigInt& a, BigInt e, const BigInt& m);
 
 }  // namespace petliukh::cryptography
