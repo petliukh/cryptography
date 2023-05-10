@@ -1,10 +1,23 @@
 #include "numeric_utils.hpp"
 #include "rsa_cipher.hpp"
+#include "string_utils.hpp"
 
 #include <gtest/gtest.h>
 #include <iostream>
 
 namespace cr = petliukh::cryptography;
+
+TEST(rsa_cipher, sets_key_correctly)
+{
+    cr::Rsa_cipher rsa;
+    rsa.generate_rand_key();
+
+    std::string key = rsa.get_key().to_string();
+    rsa.set_key(cr::utf8_to_utf16(key));
+
+    std::string key2 = rsa.get_key().to_string();
+    EXPECT_EQ(key, key2);
+}
 
 TEST(rsa_cipher, modulo_exponentiates_correctly)
 {

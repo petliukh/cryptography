@@ -5,8 +5,6 @@ namespace petliukh::cryptography {
 
 class Rsa_cipher: public Cipher {
 public:
-    static constexpr int32_t key_digits = 5;
-
     struct Key {
         BigInt p;
         BigInt q;
@@ -27,8 +25,8 @@ public:
     virtual void set_key(const std::u16string& key) override;
     virtual void set_lang(const std::u16string& lang) override;
     virtual void set_lang(const Language& lang) override;
-    std::string get_key() const;
-    void generate_rand_key();
+    Key get_key() const;
+    void generate_rand_key(size_t key_digits = 10);
 
 private:
 

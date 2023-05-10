@@ -4,6 +4,7 @@
 #include "shift_cipher.hpp"
 #include "string_utils.hpp"
 #include "trithemius_cipher.hpp"
+#include "rsa_cipher.hpp"
 
 #include <fstream>
 
@@ -15,6 +16,7 @@ Cipher_controller::Cipher_controller() : m_lang("EN")
         std::make_unique<cr::Shift_cipher>(),
         std::make_unique<cr::Trithemius_cipher>(),
         std::make_unique<cr::Knapsack_cipher>(),
+        std::make_unique<cr::Rsa_cipher>(),
     };
 }
 
@@ -236,6 +238,27 @@ std::string Cipher_controller::get_knapsack_key() const
     cr::Knapsack_cipher* ks
             = static_cast<cr::Knapsack_cipher*>(m_ciphers[m_curr_cipher].get());
     return ks->get_key().to_string();
+}
+
+void Cipher_controller::generate_rsa_key(
+        const std::string& filename, size_t key_digits)
+{
+    using R_key = cr::Rsa_cipher::Key;
+    cr::Rsa_cipher* rsa
+            = static_cast<cr::Rsa_cipher*>(m_ciphers[m_curr_cipher].get());
+
+    rsa->generate_rand_key(key_digits);
+    std::string key_str = rsa->get_key().to_string();
+    std::ofstream ofs(filename, std::ios::trunc | std::ios::binary);
+    ofs << key_str;
+}
+
+std::string Cipher_controller::get_rsa_key() const
+{
+    using K_key = cr::Rsa_cipher::Key;
+    cr::Rsa_cipher* rsa
+            = static_cast<cr::Rsa_cipher*>(m_ciphers[m_curr_cipher].get());
+    return rsa->get_key().to_string();
 }
 
 }  // namespace petliukh::controllers

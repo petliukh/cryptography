@@ -73,9 +73,9 @@ void Rsa_cipher::set_key(const std::u16string& key)
     m_key.d = mod_inverse(m_key.e, m_key.phi);
 }
 
-std::string Rsa_cipher::get_key() const
+Rsa_cipher::Key Rsa_cipher::get_key() const
 {
-    return m_key.to_string();
+    return m_key;
 }
 
 std::string Rsa_cipher::Key::to_string() const
@@ -93,7 +93,7 @@ void Rsa_cipher::set_lang(const Language& lang)
 {
 }
 
-void Rsa_cipher::generate_rand_key()
+void Rsa_cipher::generate_rand_key(size_t key_digits)
 {
     m_key.p = big_random(key_digits);
     m_key.q = big_random(key_digits);

@@ -45,8 +45,11 @@ public:
     void generate_rand_knapsack_key(const std::string& filename, size_t inc_digits);
     std::string get_knapsack_key() const;
 
+    void generate_rsa_key(const std::string& filename, size_t key_digits);
+    std::string get_rsa_key() const;
+
 private:
-    std::array<std::unique_ptr<cr::Cipher>, 3> m_ciphers;
+    std::array<std::unique_ptr<cr::Cipher>, 4> m_ciphers;
     std::array<std::string, 3> m_content_arr;
 
     int m_curr_cipher{};
