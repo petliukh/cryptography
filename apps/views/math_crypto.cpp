@@ -322,3 +322,19 @@ void Math_crypto::on_knapsack_genkey_btn_clicked()
     ui->knapsack_keyview_tedit->setPlainText(
             QString::fromStdString(m_controller.get_knapsack_key()));
 }
+
+void Math_crypto::on_rsa_keygen_btn_clicked()
+{
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::AnyFile);
+    QString filename = dialog.getSaveFileName(this, "Save File");
+
+    if (filename.isEmpty()) {
+        QMessageBox::warning(this, "Warning", "No filename to save.");
+        return;
+    }
+
+    m_controller.generate_rsa_key(filename.toStdString(), 10);
+    ui->rsa_key_tedit->setPlainText(
+            QString::fromStdString(m_controller.get_rsa_key()));
+}

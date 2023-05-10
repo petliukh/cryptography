@@ -47,6 +47,11 @@
           <string>Knapsack Cipher</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>Rsa Cipher</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>
@@ -237,7 +242,7 @@
             <item row="0" column="0">
              <widget class="QPushButton" name="brute_force_btn">
               <property name="text">
-               <string>Brute Force</string>
+               <string>Brute force Shift cipher</string>
               </property>
              </widget>
             </item>
@@ -370,17 +375,31 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="page_3">
+          <widget class="QWidget" name="knapsack_page">
            <layout class="QGridLayout" name="gridLayout_9">
             <item row="0" column="0">
              <widget class="QPushButton" name="knapsack_genkey_btn">
               <property name="text">
-               <string>Generate Random Key</string>
+               <string>Generate Knapsack Key</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
              <widget class="QPlainTextEdit" name="knapsack_keyview_tedit"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="rsa_page">
+           <layout class="QGridLayout" name="gridLayout_10">
+            <item row="0" column="0">
+             <widget class="QPushButton" name="rsa_keygen_btn">
+              <property name="text">
+               <string>Generate RSA key</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QPlainTextEdit" name="rsa_key_tedit"/>
             </item>
            </layout>
           </widget>

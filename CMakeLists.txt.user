@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 8.0.1, 2023-04-29T22:45:00. -->
+<!-- Written by QtCreator 8.0.1, 2023-05-10T22:32:28. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -77,6 +77,10 @@
     <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/knapsack_cipher_tests.cpp:knapsack_cipher">Checked</value>
     <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/knapsack_cipher_tests.cpp:knapsack_sequence">Checked</value>
     <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/knapsack_cipher_tests.cpp:superincreasing_sequence">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/rsa_cipher_tests.cpp:ecnrypts_correctl">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/rsa_cipher_tests.cpp:modulo_exponentiates_correctly">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/rsa_cipher_tests.cpp:rsa_cipher">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/rsa_cipher_tests.cpp:sets_key_correctly">Checked</value>
     <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:bruteforce_breaks_cipher_en">Checked</value>
     <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:encrypts_decrypts_correctly_en">Checked</value>
     <value type="Qt::CheckState" key="1@/home/petliukh/projects/math-crypto-basics/tests/shift_cipher_tests.cpp:encrypts_decrypts_correctly_ukr">Checked</value>
