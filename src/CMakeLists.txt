@@ -10,6 +10,7 @@ set(SOURCES
     numeric_utils.cpp
     knapsack_cipher.cpp
     rsa_cipher.cpp
+    diffie_hellman.cpp
     BigInt.cpp)
 
 add_library(${LIB_NAME} ${SOURCES})

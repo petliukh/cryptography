@@ -1,4 +1,7 @@
 #include "math_crypto.h"
+#include "string_utils.hpp"
+
+namespace cr = petliukh::cryptography;
 
 Math_crypto::Math_crypto(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::Math_crypto)
@@ -337,4 +340,60 @@ void Math_crypto::on_rsa_keygen_btn_clicked()
     m_controller.generate_rsa_key(filename.toStdString(), 10);
     ui->rsa_key_tedit->setPlainText(
             QString::fromStdString(m_controller.get_rsa_key()));
+}
+
+void Math_crypto::on_gen_dh_pair_btn_clicked()
+{
+    auto pair = m_controller.diffie_hellman_gen_common_pair();
+    ui->common_dh_pair_text->setPlainText(QString::fromStdString(pair));
+}
+
+void Math_crypto::on_generate_a_secret_btn_clicked()
+{
+    auto a = m_controller.diffie_hellman_gen_a_secret();
+    ui->sec_a_text->setPlainText(QString::fromStdString(a));
+}
+
+void Math_crypto::on_generate_b_secret_btn_clicked()
+{
+    auto b = m_controller.diffie_hellman_gen_b_secret();
+    ui->sec_b_tex->setPlainText(QString::fromStdString(b));
+}
+
+void Math_crypto::on_share_a_clicked()
+{
+    std::string a = ui->sec_a_text->toPlainText().toStdString();
+    std::string dhp = ui->common_dh_pair_text->toPlainText().toStdString();
+    auto dhp_vec = cr::str_split(dhp, '\n');
+    auto shared_a = m_controller.diffie_hellman_share_a_side(dhp_vec[0], dhp_vec[1], a);
+    ui->share_a_text->setPlainText(QString::fromStdString(shared_a));
+}
+
+void Math_crypto::on_share_b_clicked()
+{
+    std::string b = ui->sec_b_tex->toPlainText().toStdString();
+    std::string dhp = ui->common_dh_pair_text->toPlainText().toStdString();
+    auto dhp_vec = cr::str_split(dhp, '\n');
+    auto shared_b = m_controller.diffie_hellman_share_b_side(dhp_vec[0], dhp_vec[1], b);
+    ui->share_b_text->setPlainText(QString::fromStdString(shared_b));
+}
+
+void Math_crypto::on_get_common_key_a_btn_clicked()
+{
+    std::string b_shared = ui->share_b_text->toPlainText().toStdString();
+    std::string a = ui->sec_a_text->toPlainText().toStdString();
+    std::string dhp = ui->common_dh_pair_text->toPlainText().toStdString();
+    auto dhp_vec = cr::str_split(dhp, '\n');
+    auto K = m_controller.calc_common_key_from_b_shared(b_shared, a, dhp_vec[1]);
+    ui->common_key_a_text->setPlainText(QString::fromStdString(K));
+}
+
+void Math_crypto::on_get_common_key_b_btn_clicked()
+{
+    std::string a_shared = ui->share_a_text->toPlainText().toStdString();
+    std::string b = ui->sec_b_tex->toPlainText().toStdString();
+    std::string dhp = ui->common_dh_pair_text->toPlainText().toStdString();
+    auto dhp_vec = cr::str_split(dhp, '\n');
+    auto K = m_controller.calc_common_key_from_b_shared(a_shared, b, dhp_vec[1]);
+    ui->common_key_b_text->setPlainText(QString::fromStdString(K));
 }

@@ -1,10 +1,11 @@
 #include "cipher_controller.hpp"
 
+#include "diffie_hellman.hpp"
 #include "knapsack_cipher.hpp"
+#include "rsa_cipher.hpp"
 #include "shift_cipher.hpp"
 #include "string_utils.hpp"
 #include "trithemius_cipher.hpp"
-#include "rsa_cipher.hpp"
 
 #include <fstream>
 
@@ -259,6 +260,78 @@ std::string Cipher_controller::get_rsa_key() const
     cr::Rsa_cipher* rsa
             = static_cast<cr::Rsa_cipher*>(m_ciphers[m_curr_cipher].get());
     return rsa->get_key().to_string();
+}
+
+std::string Cipher_controller::diffie_hellman_gen_common_pair()
+{
+    cr::Diffie_hellman_public_pair dh
+            = cr::diffie_hellman_generate_public_pair();
+    std::stringstream ss;
+    ss << dh.g << "\n" << dh.p;
+    return ss.str();
+}
+
+std::string Cipher_controller::diffie_hellman_gen_a_secret()
+{
+    std::stringstream ss;
+    BigInt a = big_random(30);
+    ss << a;
+    return ss.str();
+}
+
+std::string Cipher_controller::diffie_hellman_gen_b_secret()
+{
+    std::stringstream ss;
+    BigInt b = big_random(30);
+    ss << b;
+    return ss.str();
+}
+
+std::string Cipher_controller::diffie_hellman_share_a_side(
+        const std::string& g, const std::string& p, const std::string& a)
+{
+    std::stringstream ss;
+    cr::Diffie_hellman_public_pair dhp{ g, p };
+    BigInt sh_a = cr::diffie_hellman_share(dhp, a);
+    ss << sh_a;
+    return ss.str();
+}
+
+std::string Cipher_controller::diffie_hellman_share_b_side(
+        const std::string& g, const std::string& p, const std::string& b)
+{
+    std::stringstream ss;
+    cr::Diffie_hellman_public_pair dhp{ g, p };
+    BigInt sh_b = cr::diffie_hellman_share(dhp, b);
+    ss << sh_b;
+    return ss.str();
+}
+
+std::string Cipher_controller::calc_common_key_from_b_shared(
+        const std::string& shared_b, const std::string& a, const std::string& p)
+{
+    std::stringstream ss;
+    BigInt sh_b = shared_b;
+    BigInt ai = a;
+    BigInt pi = p;
+
+    BigInt K = cr::diffie_hellman_get_common_key(sh_b, ai, p);
+    ss << K;
+    return ss.str();
+}
+
+std::string Cipher_controller::calc_common_key_from_a_shared(
+        const std::string& shared_a, const std::string& b,
+        const std::string& p)
+{
+    std::stringstream ss;
+    BigInt sh_a = shared_a;
+    BigInt bi = b;
+    BigInt pi = p;
+
+    BigInt K = cr::diffie_hellman_get_common_key(sh_a, bi, p);
+    ss << K;
+    return ss.str();
 }
 
 }  // namespace petliukh::controllers

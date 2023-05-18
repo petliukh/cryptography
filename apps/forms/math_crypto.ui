@@ -79,7 +79,7 @@
     <item row="2" column="0">
      <widget class="QTabWidget" name="encryption_tabs">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="encrypt_tab">
        <attribute name="title">
@@ -407,6 +407,115 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="diffie_hellman_tab">
+       <attribute name="title">
+        <string>Page</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_11">
+        <item row="0" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <item>
+             <widget class="QPushButton" name="gen_dh_pair_btn">
+              <property name="text">
+               <string>Generate Diffie Hellman Common Pair</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="common_dh_pair_text"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <widget class="QPushButton" name="generate_a_secret_btn">
+                <property name="text">
+                 <string>Generate secret 1</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPlainTextEdit" name="sec_a_text"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="share_a">
+                <property name="text">
+                 <string>Share A</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTextEdit" name="share_a_text"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <widget class="QPushButton" name="generate_b_secret_btn">
+                <property name="text">
+                 <string>Generate secret 2</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPlainTextEdit" name="sec_b_tex"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="share_b">
+                <property name="text">
+                 <string>Share B</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTextEdit" name="share_b_text"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <item>
+             <widget class="QPushButton" name="get_common_key_a_btn">
+              <property name="text">
+               <string>Calculate common key from B's value</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="common_key_a_text"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_11">
+            <item>
+             <widget class="QPushButton" name="get_common_key_b_btn">
+              <property name="text">
+               <string>Calculate common key from A's value</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="common_key_b_text"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -418,7 +527,7 @@
      <x>0</x>
      <y>0</y>
      <width>1089</width>
-     <height>24</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="file_menu">

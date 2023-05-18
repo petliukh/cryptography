@@ -8,10 +8,8 @@ namespace petliukh::cryptography {
 
 class Knapsack_cipher : public Cipher {
 public:
-    constexpr static uint8_t char16_bit = 16;
-    constexpr static uint8_t char_bit = 8;
-    constexpr static size_t text_keysize = sizeof(char16_t) * char16_bit;
-    constexpr static size_t bin_keysize = sizeof(char) * char_bit;
+    constexpr static size_t text_keysize = 16;
+    constexpr static size_t bin_keysize = 8;
 
     struct Key {
         std::vector<BigInt> superinc_seq;

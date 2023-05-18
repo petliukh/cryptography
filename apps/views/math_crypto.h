@@ -68,6 +68,20 @@ private slots:
 
     void on_rsa_keygen_btn_clicked();
 
+    void on_gen_dh_pair_btn_clicked();
+
+    void on_generate_a_secret_btn_clicked();
+
+    void on_generate_b_secret_btn_clicked();
+
+    void on_get_common_key_a_btn_clicked();
+
+    void on_get_common_key_b_btn_clicked();
+
+    void on_share_a_clicked();
+
+    void on_share_b_clicked();
+
 private:
     Ui::Math_crypto* ui;
     ctrl::Cipher_controller m_controller;

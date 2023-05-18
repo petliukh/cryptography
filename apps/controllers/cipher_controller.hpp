@@ -1,8 +1,8 @@
 #include "cipher_base.hpp"
 
-#include <string>
-#include <memory>
 #include <array>
+#include <memory>
+#include <string>
 
 namespace petliukh::controllers {
 namespace cr = petliukh::cryptography;
@@ -37,16 +37,31 @@ public:
     std::string decrypt_raw_bytes(const std::string& bytes);
     std::map<char16_t, int> calc_freqs(std::string content);
 
-    std::map<int, std::string>
-    brute_force(const std::string& message);
+    std::map<int, std::string> brute_force(const std::string& message);
 
-    std::string break_trithemius_cipher_key(std::string enc, std::string dec, int vec_size);
+    std::string
+    break_trithemius_cipher_key(std::string enc, std::string dec, int vec_size);
     void generate_rand_keyword(const std::string& filename);
-    void generate_rand_knapsack_key(const std::string& filename, size_t inc_digits);
+    void
+    generate_rand_knapsack_key(const std::string& filename, size_t inc_digits);
     std::string get_knapsack_key() const;
 
     void generate_rsa_key(const std::string& filename, size_t key_digits);
     std::string get_rsa_key() const;
+
+    std::string diffie_hellman_gen_common_pair();
+    std::string diffie_hellman_gen_a_secret();
+    std::string diffie_hellman_gen_b_secret();
+    std::string diffie_hellman_share_a_side(
+            const std::string& g, const std::string& p, const std::string& a);
+    std::string diffie_hellman_share_b_side(
+            const std::string& g, const std::string& p, const std::string& b);
+    std::string calc_common_key_from_b_shared(
+            const std::string& shared_b, const std::string& a,
+            const std::string& p);
+    std::string calc_common_key_from_a_shared(
+            const std::string& shared_a, const std::string& b,
+            const std::string& p);
 
 private:
     std::array<std::unique_ptr<cr::Cipher>, 4> m_ciphers;
