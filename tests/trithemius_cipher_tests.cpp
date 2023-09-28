@@ -1,10 +1,12 @@
 #include "crypto_utils.hpp"
 #include "trithemius_cipher.hpp"
 
+#include <filesystem>
 #include <fstream>
 #include <gtest/gtest.h>
 
 namespace cr = petliukh::cryptography;
+namespace fs = std::filesystem;
 using T_key = cr::Trithemius_cipher::Key;
 using T_key_type = cr::Trithemius_cipher::Key_type;
 
@@ -122,6 +124,7 @@ TEST(trithemius_test, encrypts_decrypts_raw_bytes_vec2_correctly)
     std::string file_bytes(
             (std::istreambuf_iterator<char>(file)),
             std::istreambuf_iterator<char>());
+    fs::remove(tmp_fname);
 
     cr::Trithemius_cipher cipher;
     cipher.set_key(u"1,2");
@@ -129,6 +132,7 @@ TEST(trithemius_test, encrypts_decrypts_raw_bytes_vec2_correctly)
     std::string decrypted_bytes = cipher.decrypt_raw_bytes(encrypted_bytes);
     std::string checksum1 = cr::sha256(file_bytes);
     std::string checksum2 = cr::sha256(decrypted_bytes);
+
     ASSERT_EQ(checksum1, checksum2);
 }
 
@@ -153,6 +157,7 @@ TEST(trithemius_test, encrypts_decrypts_raw_bytes_vec3_correctly)
     std::string file_bytes(
             (std::istreambuf_iterator<char>(file)),
             std::istreambuf_iterator<char>());
+    fs::remove(tmp_fname);
 
     cr::Trithemius_cipher cipher;
     cipher.set_key(u"1,2,3");
@@ -160,6 +165,7 @@ TEST(trithemius_test, encrypts_decrypts_raw_bytes_vec3_correctly)
     std::string decrypted_bytes = cipher.decrypt_raw_bytes(encrypted_bytes);
     std::string checksum1 = cr::sha256(file_bytes);
     std::string checksum2 = cr::sha256(decrypted_bytes);
+
     ASSERT_EQ(checksum1, checksum2);
 }
 
@@ -184,6 +190,7 @@ TEST(trithemius_test, encrypts_decrypts_raw_bytes_kw_correctly)
     std::string file_bytes(
             (std::istreambuf_iterator<char>(file)),
             std::istreambuf_iterator<char>());
+    fs::remove(tmp_fname);
 
     cr::Trithemius_cipher cipher;
     cipher.set_key(u"keyword");

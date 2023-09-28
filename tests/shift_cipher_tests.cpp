@@ -76,6 +76,8 @@ TEST(shift_cipher_test, encrypts_decrypts_raw_bytes_correctly)
             (std::istreambuf_iterator<char>(file)),
             std::istreambuf_iterator<char>());
 
+    fs::remove(tmp_fname);
+
     cr::Shift_cipher cipher;
     cipher.set_key(6);
 
@@ -89,8 +91,6 @@ TEST(shift_cipher_test, encrypts_decrypts_raw_bytes_correctly)
     std::string checksum2 = cr::sha256(decrypted_bytes);
 
     EXPECT_EQ(checksum1, checksum2);
-
-    fs::remove(tmp_fname);
 }
 
 TEST(shift_cipher_test, bruteforce_breaks_cipher_en)
