@@ -75,3 +75,7 @@ Thumbs.db
 build/
 .cache/
 Testing/
+
+# script venvs
+venv/
+.venv/
